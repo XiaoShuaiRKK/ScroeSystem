@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.score.system.mapper.UserMapper">
+
+    <!-- 根据用户名查找用户 -->
+    <select id="findByUsername" resultType="com.score.system.entity.user.User">
+        SELECT * FROM user WHERE username = #{username} LIMIT 1
+    </select>
+
+    <!-- 检查用户名是否已存在 -->
+    <select id="existsByUsername" resultType="java.lang.Boolean">
+        SELECT COUNT(*) > 0 FROM user WHERE username = #{username}
+    </select>
+
+    <!-- 自定义批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO user (name, username, password_hash, level, role, created_at, updated_at)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name}, #{item.username}, #{item.passwordHash},
+            #{item.level}, #{item.role}, #{item.createdAt}, #{item.updatedAt})
+        </foreach>
+    </insert>
+
+</mapper>
