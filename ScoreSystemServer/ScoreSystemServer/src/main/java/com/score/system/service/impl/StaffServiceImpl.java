@@ -2,6 +2,7 @@ package com.score.system.service.impl;
 
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.user.*;
+import com.score.system.mapper.ClassMapper;
 import com.score.system.mapper.StudentMapper;
 import com.score.system.mapper.TeacherMapper;
 import com.score.system.mapper.UserMapper;
@@ -18,18 +19,23 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
     private final TeacherMapper teacherMapper;
     private final StudentMapper studentMapper;
+    private final ClassMapper classMapper;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, UserMapper userMapper) {
+    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, ClassMapper classMapper, UserMapper userMapper) {
         this.teacherMapper = teacherMapper;
         this.studentMapper = studentMapper;
+        this.classMapper = classMapper;
         this.userMapper = userMapper;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> addStudent(StudentDTO studentDTO) {
+        if(classMapper.selectById(studentDTO.getClassId()) == null){
+            return ResponseResult.fail("班级不存在",false);
+        }
         User user = new User();
         user.setName(studentDTO.getName());
         user.setUsername(studentDTO.getUsername());

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.score.system.mapper.ClassMapper">
+    <insert id="batchInsertClass">
+        INSERT INTO classes (name, grade,head_teacher_id, subject_group_id,created_at,updated_at)
+        VALUES
+        <foreach collection="classList" item="item" separator=",">
+            (#{item.name},#{item.grade},#{item.headTeacherId},#{item.subjectGroupId},#{item.createdAt},#{item.updatedAt})
+        </foreach>
+    </insert>
+</mapper>
