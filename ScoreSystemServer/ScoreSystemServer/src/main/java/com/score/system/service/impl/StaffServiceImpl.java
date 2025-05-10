@@ -28,7 +28,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> addStudent(StudentDTO studentDTO) {
         User user = new User();
         user.setName(studentDTO.getName());
@@ -51,7 +51,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> addTeacher(TeacherDTO teacherDTO) {
         User user = new User();
         user.setName(teacherDTO.getName());

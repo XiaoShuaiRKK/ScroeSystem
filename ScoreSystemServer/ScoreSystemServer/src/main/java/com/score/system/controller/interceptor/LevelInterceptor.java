@@ -21,19 +21,21 @@ public class LevelInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod)handler;
         LevelRequired levelRequired = handlerMethod.getMethodAnnotation(LevelRequired.class);
         if(levelRequired == null) return true;
-        String token = request.getHeader("Authorization");
-        if(token == null){
+        String authorizationHeader = request.getHeader("Authorization");
+        // 如果请求头为空或者不以 Bearer 开头，返回未授权错误
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
-        String levelStr = (String) redisUtil.get("login:level:" + token);
+        String token = authorizationHeader.substring(7);
+        String levelStr = (String) redisUtil.get("login:level:" + token,String.class);
         if(levelStr == null){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
         int userLevel = Integer.parseInt(levelStr);
         int requiredLevel = levelRequired.value();
-        if(userLevel < requiredLevel){
+        if(userLevel > requiredLevel){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }

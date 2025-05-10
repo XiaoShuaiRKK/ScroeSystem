@@ -1,5 +1,6 @@
 package com.score.system.controller;
 
+import com.score.system.controller.interceptor.LevelRequired;
 import com.score.system.entity.request.LoginRequest;
 import com.score.system.entity.request.RegisterRequest;
 import com.score.system.entity.ResponseResult;
@@ -49,11 +50,12 @@ public class UserController {
         return staffService.addStudent(studentDTO);
     }
 
-    @PostMapping("/batch/add/teacher")
+    @PostMapping("/batch/add/student")
     public ResponseResult<Boolean> batchAddStudent(@Valid @RequestBody List<StudentDTO> studentDTOList){
         return staffService.batchAddStudent(studentDTOList);
     }
 
+    @LevelRequired(1)
     @PostMapping("/add/teacher")
     public ResponseResult<Boolean> addTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
         return staffService.addTeacher(teacherDTO);
