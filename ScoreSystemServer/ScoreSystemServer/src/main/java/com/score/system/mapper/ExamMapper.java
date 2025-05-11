@@ -1,0 +1,17 @@
+package com.score.system.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.score.system.entity.school.Exam;
+import com.score.system.entity.school.ExamDTO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
+@Mapper
+public interface ExamMapper extends BaseMapper<Exam> {
+    @Select("select * from exams where name = #{examName}")
+    Exam selectByExamName(String examName);
+    int batchInsertExams(@Param("exams") List<ExamDTO> examDTOList);
+}

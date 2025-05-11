@@ -2,6 +2,7 @@ package com.score.system.controller;
 
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.Course;
+import com.score.system.entity.school.ExamDTO;
 import com.score.system.entity.school.TeacherCourse;
 import com.score.system.service.CourseService;
 import jakarta.validation.Valid;
@@ -46,4 +47,8 @@ public class CourseController {
     public ResponseResult<Boolean> assignTeacherToCourse(@RequestBody @Valid TeacherCourse teacherCourse) {
         return courseService.assignTeacherToCourse(teacherCourse);
     }
+
+
+
+
 }

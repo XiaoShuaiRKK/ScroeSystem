@@ -2,6 +2,7 @@ package com.score.system.service;
 
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.Course;
+import com.score.system.entity.school.ExamDTO;
 import com.score.system.entity.school.TeacherCourse;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CourseService {
      * @return
      */
     ResponseResult<Boolean> assignTeacherToCourse(TeacherCourse teacherCourse);
+    ResponseResult<Boolean> addExam(ExamDTO examDTO);
+    ResponseResult<List<ExamDTO>> getExams();
 }
