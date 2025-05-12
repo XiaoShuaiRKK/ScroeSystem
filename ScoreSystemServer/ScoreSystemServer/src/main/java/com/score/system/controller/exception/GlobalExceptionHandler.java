@@ -52,4 +52,10 @@ public class GlobalExceptionHandler {
         log.error("[系统异常]",ex);
         return ResponseResult.error("服务器内部错误,请练习管理员");
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseResult<?> handleIllegalArgumentException(IllegalArgumentException ex){
+        return ResponseResult.fail("请求错误: " + ex.getMessage());
+    }
 }

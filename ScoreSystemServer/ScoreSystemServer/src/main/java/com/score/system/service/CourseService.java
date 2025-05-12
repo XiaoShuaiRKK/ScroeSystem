@@ -18,6 +18,8 @@ public interface CourseService {
      * @return
      */
     ResponseResult<Boolean> assignTeacherToCourse(TeacherCourse teacherCourse);
+    ResponseResult<Boolean> batchAssignTeacherToCourse(List<TeacherCourse> teacherCourses);
     ResponseResult<Boolean> addExam(ExamDTO examDTO);
     ResponseResult<List<ExamDTO>> getExams();
+    ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList);
 }

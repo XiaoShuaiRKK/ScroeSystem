@@ -7,7 +7,7 @@
         INSERT INTO exams (name, grade, start_date, end_date, created_at, updated_at)
         VALUES
         <foreach collection="exams" item="exam" separator=",">
-            (#{exam.name}, #{exam.grade}, #{exam.startDate}, #{exam.endDate}, #{exam.created_at}, #{updated_at})
+            (#{exam.name}, #{exam.grade}, #{exam.startDate}, #{exam.endDate}, #{exam.createdAt}, #{exam.updatedAt})
         </foreach>
     </insert>
 </mapper>

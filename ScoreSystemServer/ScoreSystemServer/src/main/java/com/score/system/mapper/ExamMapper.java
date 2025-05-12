@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface ExamMapper extends BaseMapper<Exam> {
-    @Select("select * from exams where name = #{examName}")
-    Exam selectByExamName(String examName);
-    int batchInsertExams(@Param("exams") List<ExamDTO> examDTOList);
+    @Select("select * from exams where name = #{examName} and grade = #{grade} limit 1")
+    Exam selectByExamName(String examName, int grade);
+    int batchInsertExams(@Param("exams") List<Exam> examList);
 }

@@ -15,7 +15,4 @@ public class Course {
     private Long id;
     @NotBlank(message = "科目名称不能为空")
     private String name;
-    @Min(value = 1, message = "年级必须在1到6之间")
-    @Max(value = 6, message = "年级必须在1到6之间")
-    private int grade;
 }

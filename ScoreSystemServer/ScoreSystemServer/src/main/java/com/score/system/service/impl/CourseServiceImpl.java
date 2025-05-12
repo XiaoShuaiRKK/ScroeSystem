@@ -37,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ResponseResult<Boolean> addCourse(Course course) {
-        Course existing = courseMapper.selectByNameAndGrade(course.getName(), course.getGrade());
+        Course existing = courseMapper.selectByName(course.getName());
         if(existing != null){
             return ResponseResult.fail("该科目已存在,不能重复添加");
         }
@@ -50,14 +50,13 @@ public class CourseServiceImpl implements CourseService {
     public ResponseResult<Boolean> batchAddCourse(List<Course> courses) {
         Set<String> courseKeySet = new HashSet<>();
         for (Course course : courses){
-            String key = course.getName() + "-" + course.getGrade();
-            if (!courseKeySet.add(key)) {
-                return ResponseResult.fail("批量中存在重复课程: " + course.getName() + " 年级：" + course.getGrade());
+            if (!courseKeySet.add(course.getName())) {
+                return ResponseResult.fail("批量中存在重复课程: " + course.getName());
             }
 
-            Course existing = courseMapper.selectByNameAndGrade(course.getName(), course.getGrade());
+            Course existing = courseMapper.selectByName(course.getName());
             if (existing != null) {
-                return ResponseResult.fail("课程已存在: " + course.getName() + " 年级：" + course.getGrade());
+                return ResponseResult.fail("课程已存在: " + course.getName());
             }
         }
         int result = courseMapper.batchInsertCourse(courses);
@@ -68,25 +67,48 @@ public class CourseServiceImpl implements CourseService {
     public ResponseResult<Boolean> assignTeacherToCourse(TeacherCourse teacherCourse) {
         // 检查老师是否存在
         if (teacherMapper.selectById(teacherCourse.getTeacherId()) == null) {
-            return ResponseResult.error("教师不存在");
+            throw new IllegalArgumentException("教师不存在: ID=" + teacherCourse.getTeacherId());
         }
 
         // 检查课程是否存在
         if (courseMapper.selectById(teacherCourse.getCourseId()) == null) {
-            return ResponseResult.error("课程不存在");
+            throw new IllegalArgumentException("课程不存在: ID=" + teacherCourse.getCourseId());
         }
 
         // 检查班级是否存在
         if (classMapper.selectById(teacherCourse.getClassId()) == null) {
-            return ResponseResult.error("班级不存在");
+            throw new IllegalArgumentException("班级不存在: ID=" + teacherCourse.getClassId());
+        }
+
+        TeacherCourse teacherCourseOne = teacherCourseMapper.getTeacherCourseOne(teacherCourse.getTeacherId(), teacherCourse.getCourseId(), teacherCourse.getClassId());
+        if(teacherCourseOne != null){
+            throw new IllegalArgumentException("老师科目已设置 " + teacherCourse.getClassId());
+        }
+        if(teacherCourseMapper.selectClassCourse(teacherCourse.getCourseId(),teacherCourse.getClassId()) != null){
+            throw new IllegalArgumentException("班级科目已被设置  " + teacherCourse.getClassId());
         }
         int result = teacherCourseMapper.insert(teacherCourse);
-        return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("设置失败");
+        if(result <= 0){
+            throw new RuntimeException("设置失败: 教师ID=" + teacherCourse.getTeacherId()
+                    + ", 课程ID=" + teacherCourse.getCourseId()
+                    + ", 班级ID=" + teacherCourse.getClassId());
+        }
+        return ResponseResult.success("设置成功",true);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult<Boolean> batchAssignTeacherToCourse(List<TeacherCourse> teacherCourses) {
+        for (TeacherCourse teacherCourse : teacherCourses){
+            assignTeacherToCourse(teacherCourse);
+        }
+        return ResponseResult.success("批量设置成功",true);
+    }
+
+    @Override
+    @Transactional
     public ResponseResult<Boolean> addExam(ExamDTO examDTO) {
-        if(examMapper.selectByExamName(examDTO.getName()) != null){
+        if(examMapper.selectByExamName(examDTO.getName(), examDTO.getGrade()) != null){
             return ResponseResult.fail("该考试已存在, 不能重复添加");
         }
         if (examDTO.getStartDate() == null || examDTO.getEndDate() == null) {
@@ -107,13 +129,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList) {
+        List<Exam> examList = new ArrayList<>();
         Set<String> examNames = new HashSet<>();
 
         LocalDate today = LocalDate.now();
 
         for (ExamDTO exam : examDTOList) {
+            String key = exam.getName() + "-" + exam.getGrade();
             // 名称重复校验
-            if (!examNames.add(exam.getName())) {
+            if (!examNames.add(key)) {
                 return ResponseResult.fail("批量中存在重复考试名称：" + exam.getName());
             }
 
@@ -129,12 +153,16 @@ public class CourseServiceImpl implements CourseService {
             }
 
             // 数据库中名称重复校验（可选）
-            if (examMapper.selectByExamName(exam.getName()) != null) {
+            if (examMapper.selectByExamName(exam.getName(), exam.getGrade()) != null) {
                 return ResponseResult.fail("考试名称已存在：" + exam.getName());
             }
+            Exam entity = ExamConverter.toEntity(exam);
+            entity.setCreatedAt(LocalDateTime.now());
+            entity.setUpdatedAt(LocalDateTime.now());
+            examList.add(entity);
         }
 
-        int result = examMapper.batchInsertExams(examDTOList);
+        int result = examMapper.batchInsertExams(examList);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("批量添加考试失败");
     }
 

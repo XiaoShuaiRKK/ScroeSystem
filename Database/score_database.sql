@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : local
  Source Server Type    : MySQL
  Source Server Version : 80012
- Source Host           : 127.0.0.1:3306
+ Source Host           : localhost:3306
  Source Schema         : score_database
 
  Target Server Type    : MySQL
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 11/05/2025 01:43:22
+ Date: 12/05/2025 08:43:54
 */
 
 SET NAMES utf8mb4;
@@ -45,14 +45,21 @@ DROP TABLE IF EXISTS `courses`;
 CREATE TABLE `courses`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `grade` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of courses
 -- ----------------------------
-INSERT INTO `courses` VALUES (1, '数学', 1);
+INSERT INTO `courses` VALUES (1, '数学');
+INSERT INTO `courses` VALUES (2, '语文');
+INSERT INTO `courses` VALUES (3, '英语');
+INSERT INTO `courses` VALUES (4, '物理');
+INSERT INTO `courses` VALUES (5, '历史');
+INSERT INTO `courses` VALUES (6, '化学');
+INSERT INTO `courses` VALUES (7, '政治');
+INSERT INTO `courses` VALUES (8, '地理');
+INSERT INTO `courses` VALUES (9, '生物');
 
 -- ----------------------------
 -- Table structure for evaluation
@@ -80,11 +87,11 @@ CREATE TABLE `evaluation`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `exams`;
 CREATE TABLE `exams`  (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `semester` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `grade` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -93,6 +100,10 @@ CREATE TABLE `exams`  (
 -- ----------------------------
 -- Records of exams
 -- ----------------------------
+INSERT INTO `exams` VALUES (1, '第一次期末考试', '2025-05-12', '2025-05-12', 1, '2025-05-12 07:42:56', '2025-05-12 07:42:56');
+INSERT INTO `exams` VALUES (2, '第三次集中考试', '2025-05-12', '2025-05-13', 2, '2025-05-12 07:42:56', '2025-05-12 07:42:56');
+INSERT INTO `exams` VALUES (3, '第一次期末考试', '2025-05-12', '2025-05-12', 2, '2025-05-12 07:55:05', '2025-05-12 07:55:05');
+INSERT INTO `exams` VALUES (4, '第三次集中考试', '2025-05-12', '2025-05-12', 3, '2025-05-12 07:55:05', '2025-05-12 07:55:05');
 
 -- ----------------------------
 -- Table structure for role
@@ -140,8 +151,9 @@ CREATE TABLE `scores`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student`  (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `student_number` bigint(20) NOT NULL,
   `class_id` int(11) NOT NULL,
   `enrollment_date` datetime NOT NULL,
@@ -154,6 +166,8 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
+INSERT INTO `student` VALUES (1, 9, '胡旻旻', 20250012, 1, '2025-05-10 12:49:42', 1, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
+INSERT INTO `student` VALUES (2, 10, '陈颖影', 20250013, 1, '2025-05-10 12:49:42', 1, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
 
 -- ----------------------------
 -- Table structure for student_state
@@ -201,7 +215,7 @@ CREATE TABLE `subject_group`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subject_group
@@ -328,6 +342,10 @@ INSERT INTO `user` VALUES (2, '王媛媛', 'wangyuanyuan', '$2a$10$BY6AaIzgwLnCy
 INSERT INTO `user` VALUES (3, '王媛媛', 'wangyuanyuan', '$2a$10$FI29AIIff0I786n0tXageOVqEW7UFWuRrMinGODgsyQGIdHm1t44.', 2, 2, '2025-05-10 13:08:31', '2025-05-10 13:08:31');
 INSERT INTO `user` VALUES (4, '王媛媛', 'wangyuanyuan', '$2a$10$Wx7YWuZ2gxLlKXzalwRnyO0dHGWGbLzvUuw0n.tITzopbdvTDC5Ee', 2, 2, '2025-05-10 13:09:07', '2025-05-10 13:09:07');
 INSERT INTO `user` VALUES (6, '黄云华', 'huayunhua', '$2a$10$YClr9zw1GJZRVrJy9XlLQOOZrtWhG2UxiuBz7yjGMTSYaicxzuFau', 2, 2, '2025-05-10 13:27:09', '2025-05-10 13:27:09');
+INSERT INTO `user` VALUES (7, '胡旻旻', 'huminmin', '$2a$10$Mj6EhQC91vi2ZGHmgq2Maug6c80qfRF47jsGFlclD7Gy6/rKWx/hW', 3, 3, '2025-05-12 08:14:00', '2025-05-12 08:14:00');
+INSERT INTO `user` VALUES (8, '胡旻旻', 'huminmin', '$2a$10$0uByLDdtWy4Bqu.ymb/Mx..slpzDmDwTgd36fk3JfAZmHpTxa.M7i', 3, 3, '2025-05-12 08:15:20', '2025-05-12 08:15:20');
+INSERT INTO `user` VALUES (9, '胡旻旻', 'huminmin', '$2a$10$wKQjGL1.ILcXj4xLqghFLOcLe5zANxwD/.ZjQOtUdMW3aDPiVcWp2', 3, 3, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
+INSERT INTO `user` VALUES (10, '陈颖影', 'chenyinyin', '$2a$10$YbgBya7xjko5dnQhhFzgbOXSbW3jRIPVlxlxEwnoiqTWPWluLODIi', 3, 3, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
 
 -- ----------------------------
 -- Table structure for user_level

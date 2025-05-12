@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
-    @Select("select * from courses where name = #{name} and grade = #{grade} limit 1")
-    Course selectByNameAndGrade(String name,int grade);
+    @Select("select * from courses where name = #{name} limit 1")
+    Course selectByName(String name);
     int batchInsertCourse(@Param("courses")List<Course> courses);
 }

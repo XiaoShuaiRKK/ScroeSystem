@@ -48,7 +48,9 @@ public class CourseController {
         return courseService.assignTeacherToCourse(teacherCourse);
     }
 
-
-
+    @PostMapping("/batchAssign")
+    public ResponseResult<Boolean> batchAssignTeacherToCourse(@RequestBody @Valid List<TeacherCourse> teacherCourses){
+        return courseService.batchAssignTeacherToCourse(teacherCourses);
+    }
 
 }
