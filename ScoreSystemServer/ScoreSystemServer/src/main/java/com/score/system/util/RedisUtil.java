@@ -31,4 +31,21 @@ public class RedisUtil {
     public boolean exists(String key) {
         return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
+
+    public void zadd(String key, double score, String member) {
+        redisTemplate.opsForZSet().add(key, member, score);
+    }
+
+    public Long zrevrank(String key, String member) {
+        return redisTemplate.opsForZSet().reverseRank(key, member);
+    }
+
+    public Long zcount(String key) {
+        return redisTemplate.opsForZSet().zCard(key);
+    }
+
+
+    public RedisTemplate<String, Object> getRedisTemplate() {
+        return redisTemplate;
+    }
 }

@@ -1,6 +1,9 @@
 package com.score.system.entity.user;
 
+import com.score.system.entity.school.Score;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class StudentConverter {
     public static StudentDTO toDTO(Student student) {
@@ -26,5 +29,14 @@ public class StudentConverter {
         student.setCreatedAt(LocalDateTime.now());
         student.setUpdatedAt(LocalDateTime.now());
         return student;
+    }
+
+    public static StudentScoreVO toScoreVO(Student student,String className, List<Score> scores){
+        StudentScoreVO studentScoreVO = new StudentScoreVO();
+        studentScoreVO.setStudentNumber(student.getStudentNumber());
+        studentScoreVO.setName(student.getName());
+        studentScoreVO.setClassName(className);
+        studentScoreVO.setScores(scores);
+        return studentScoreVO;
     }
 }

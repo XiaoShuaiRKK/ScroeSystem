@@ -1,7 +1,9 @@
 package com.score.system.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -18,4 +20,13 @@ public class StudentDTO {
     private Long state;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime enrollmentDate;
+    @NotNull(message = "科目组合ID不能为空")
+    @Min(value = 1, message = "选科ID错误")
+    private Long subjectGroupId;
+    @NotNull(message = "选修课1不能为空")
+    @Min(value = 1, message = "选修课1 ID错误")
+    private Long electiveCourse1Id;
+    @NotNull(message = "选修课2不能为空")
+    @Min(value = 1, message = "选修课2 ID错误")
+    private Long electiveCourse2Id;
 }
