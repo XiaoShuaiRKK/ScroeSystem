@@ -11,13 +11,15 @@ public class ClassConverter {
         return classEntity;
     }
 
-    public static ClassDTO toDTO(ClassEntity classEntity){
+    public static ClassDTO toDTO(ClassEntity classEntity, String teacherName){
         if (classEntity == null) return null;
         ClassDTO classDTO = new ClassDTO();
+        classDTO.setId(classEntity.getId());
         classDTO.setGrade(classEntity.getGrade());
         classDTO.setName(classEntity.getName());
         classDTO.setHeadTeacherId(classEntity.getHeadTeacherId());
         classDTO.setSubjectGroupId(classEntity.getSubjectGroupId());
+        classDTO.setTeacherName(teacherName);
         return classDTO;
     }
 }

@@ -5,10 +5,7 @@ import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.ClassEntity;
 import com.score.system.entity.school.Score;
 import com.score.system.entity.user.*;
-import com.score.system.mapper.ClassMapper;
-import com.score.system.mapper.ScoreMapper;
-import com.score.system.mapper.StudentMapper;
-import com.score.system.mapper.TeacherMapper;
+import com.score.system.mapper.*;
 import com.score.system.service.TeacherService;
 import org.springframework.stereotype.Service;
 
@@ -21,35 +18,47 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
     private final ClassMapper classMapper;
     private final ScoreMapper scoreMapper;
+    private final StudentSubjectSelectionMapper studentSubjectSelectionMapper;
 
-    public TeacherServiceImpl(StudentMapper studentMapper, TeacherMapper teacherMapper, ClassMapper classMapper, ScoreMapper scoreMapper) {
+    public TeacherServiceImpl(StudentMapper studentMapper, TeacherMapper teacherMapper, ClassMapper classMapper, ScoreMapper scoreMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper) {
         this.studentMapper = studentMapper;
         this.teacherMapper = teacherMapper;
         this.classMapper = classMapper;
         this.scoreMapper = scoreMapper;
+        this.studentSubjectSelectionMapper = studentSubjectSelectionMapper;
     }
 
     @Override
-    public ResponseResult<List<StudentDTO>> selectStudentsByClass(Long teacherId,Long classId) {
-        Teacher teacher = teacherMapper.selectById(teacherId);
-        if(teacher == null){
-            return ResponseResult.fail("老师不存在 : " + teacherId);
-        }
+    public ResponseResult<List<StudentVO>> selectStudentsByClass(Long classId) {
         ClassEntity classEntity = classMapper.selectById(classId);
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         studentLambdaQueryWrapper.eq(Student::getClassId, classEntity.getId());
         List<Student> students = studentMapper.selectList(studentLambdaQueryWrapper);
-        List<StudentDTO> studentDTOS = students.stream().map(StudentConverter::toDTO).toList();
-        return ResponseResult.success(studentDTOS);
+        List<StudentVO> studentVOList = new ArrayList<>();
+        for(Student student : students){
+            StudentSubjectSelection selection = studentSubjectSelectionMapper.selectOne(
+                    new LambdaQueryWrapper<StudentSubjectSelection>()
+                            .eq(StudentSubjectSelection::getStudentNumber, student.getStudentNumber())
+            );
+            studentVOList.add(StudentConverter.toVO(student, selection));
+        }
+        return ResponseResult.success(studentVOList);
     }
 
     @Override
-    public ResponseResult<StudentDTO> selectStudentByTeacherId(Long teacherId, String studentNumber) {
+    public ResponseResult<StudentVO> selectStudentByTeacherId(String studentNumber) {
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         studentLambdaQueryWrapper.eq(Student::getStudentNumber, studentNumber);
         Student student = studentMapper.selectOne(studentLambdaQueryWrapper);
-        StudentDTO studentDTO = StudentConverter.toDTO(student);
-        return studentDTO == null ? ResponseResult.fail("该学号不存在", null) : ResponseResult.success(studentDTO);
+        if(student == null){
+            return ResponseResult.fail("该学号不存在", null);
+        }
+        StudentSubjectSelection selection = studentSubjectSelectionMapper.selectOne(
+                new LambdaQueryWrapper<StudentSubjectSelection>()
+                        .eq(StudentSubjectSelection::getStudentNumber, student.getStudentNumber())
+        );
+        StudentVO studentVO = StudentConverter.toVO(student, selection);
+        return ResponseResult.success(studentVO);
     }
 
     @Override

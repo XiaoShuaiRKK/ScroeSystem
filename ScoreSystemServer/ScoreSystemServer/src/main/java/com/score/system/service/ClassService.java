@@ -8,4 +8,5 @@ import java.util.List;
 public interface ClassService {
     ResponseResult<Boolean> addClass(ClassDTO classDTO);
     ResponseResult<Boolean> batchAddClass(List<ClassDTO> classDTOList);
+    ResponseResult<List<ClassDTO>> getAllClasses();
 }

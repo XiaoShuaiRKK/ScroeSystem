@@ -3,6 +3,7 @@ package com.score.system.controller;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.user.StudentDTO;
 import com.score.system.entity.user.StudentScoreVO;
+import com.score.system.entity.user.StudentVO;
 import com.score.system.service.TeacherService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +21,13 @@ public class TeacherController {
     }
 
     @GetMapping("/get/student/byClass")
-    public ResponseResult<List<StudentDTO>> selectClassStudent(@RequestParam("teacher_id")Long teacherId,
-                                                               @RequestParam("class_id")Long classId) {
-        return teacherService.selectStudentsByClass(teacherId, classId);
+    public ResponseResult<List<StudentVO>> selectClassStudent(@RequestParam("class_id")Long classId) {
+        return teacherService.selectStudentsByClass(classId);
     }
 
     @GetMapping("/get/student")
-    public ResponseResult<StudentDTO> selectStudentByNumber(@RequestParam("teacher_id")Long teacherId,
-                                                            @RequestParam("student_number")String studentNumber) {
-        return teacherService.selectStudentByTeacherId(teacherId, studentNumber);
+    public ResponseResult<StudentVO> selectStudentByNumber(@RequestParam("student_number")String studentNumber) {
+        return teacherService.selectStudentByTeacherId(studentNumber);
     }
 
     @GetMapping("/getClass/studentScore")

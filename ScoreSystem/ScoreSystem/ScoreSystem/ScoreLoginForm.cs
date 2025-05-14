@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ScoreSystem.Data;
+using ScoreSystem.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,34 @@ namespace ScoreSystem
 {
     public partial class ScoreLoginForm : Form
     {
+        private UserService userService = UserService.GetIntance();
         public ScoreLoginForm()
         {
             InitializeComponent();
+        }
+
+        private void ScoreLoginForm_Load(object sender, EventArgs e)
+        {
+            this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 登录";
+            
+        }
+
+        private void button_register_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new ScoreRegistionForm(this).ShowDialog();
+        }
+
+        private async void button_login_Click(object sender, EventArgs e)
+        {
+            string username = textBox_username.Text;
+            string password = textBox_password.Text;
+            bool isSuccess = await userService.Login(username, password);
+            if (isSuccess)
+            {
+                new ScoreMainForm(this).Show();
+                this.Hide();
+            }
         }
     }
 }

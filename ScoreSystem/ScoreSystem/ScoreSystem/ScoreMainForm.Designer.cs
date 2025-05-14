@@ -1,0 +1,140 @@
+﻿namespace ScoreSystem
+{
+    partial class ScoreMainForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.label_hello = new System.Windows.Forms.Label();
+            this.label_time = new System.Windows.Forms.Label();
+            this.timer_now_time = new System.Windows.Forms.Timer(this.components);
+            this.comboBox_class = new System.Windows.Forms.ComboBox();
+            this.label_class = new System.Windows.Forms.Label();
+            this.dataGridView_students = new System.Windows.Forms.DataGridView();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menu_logout = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // label_hello
+            // 
+            this.label_hello.AutoSize = true;
+            this.label_hello.Location = new System.Drawing.Point(31, 32);
+            this.label_hello.Name = "label_hello";
+            this.label_hello.Size = new System.Drawing.Size(29, 12);
+            this.label_hello.TabIndex = 0;
+            this.label_hello.Text = "你好";
+            // 
+            // label_time
+            // 
+            this.label_time.AutoSize = true;
+            this.label_time.Location = new System.Drawing.Point(550, 32);
+            this.label_time.Name = "label_time";
+            this.label_time.Size = new System.Drawing.Size(59, 12);
+            this.label_time.TabIndex = 1;
+            this.label_time.Text = "当前时间:";
+            // 
+            // comboBox_class
+            // 
+            this.comboBox_class.FormattingEnabled = true;
+            this.comboBox_class.Location = new System.Drawing.Point(75, 76);
+            this.comboBox_class.Name = "comboBox_class";
+            this.comboBox_class.Size = new System.Drawing.Size(121, 20);
+            this.comboBox_class.TabIndex = 2;
+            this.comboBox_class.SelectedIndexChanged += new System.EventHandler(this.comboBox_class_SelectedIndexChanged);
+            // 
+            // label_class
+            // 
+            this.label_class.AutoSize = true;
+            this.label_class.Location = new System.Drawing.Point(31, 79);
+            this.label_class.Name = "label_class";
+            this.label_class.Size = new System.Drawing.Size(35, 12);
+            this.label_class.TabIndex = 3;
+            this.label_class.Text = "班级:";
+            // 
+            // dataGridView_students
+            // 
+            this.dataGridView_students.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_students.Location = new System.Drawing.Point(33, 114);
+            this.dataGridView_students.Name = "dataGridView_students";
+            this.dataGridView_students.RowTemplate.Height = 23;
+            this.dataGridView_students.Size = new System.Drawing.Size(725, 324);
+            this.dataGridView_students.TabIndex = 4;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_logout});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(800, 25);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menu_logout
+            // 
+            this.menu_logout.Name = "menu_logout";
+            this.menu_logout.Size = new System.Drawing.Size(68, 21);
+            this.menu_logout.Text = "退出登录";
+            this.menu_logout.Click += new System.EventHandler(this.menu_logout_Click);
+            // 
+            // ScoreMainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView_students);
+            this.Controls.Add(this.label_class);
+            this.Controls.Add(this.comboBox_class);
+            this.Controls.Add(this.label_time);
+            this.Controls.Add(this.label_hello);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "ScoreMainForm";
+            this.Text = "ScoreMainForm";
+            this.Load += new System.EventHandler(this.ScoreMainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label label_hello;
+        private System.Windows.Forms.Label label_time;
+        private System.Windows.Forms.Timer timer_now_time;
+        private System.Windows.Forms.ComboBox comboBox_class;
+        private System.Windows.Forms.Label label_class;
+        private System.Windows.Forms.DataGridView dataGridView_students;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menu_logout;
+    }
+}

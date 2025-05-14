@@ -31,6 +31,21 @@ public class StudentConverter {
         return student;
     }
 
+    public static StudentVO toVO(Student student,StudentSubjectSelection selection) {
+        if (student == null) return null;
+        if (selection == null) return null;
+        StudentVO studentVO = new StudentVO();
+        studentVO.setStudentNumber(student.getStudentNumber());
+        studentVO.setName(student.getName());
+        studentVO.setState(student.getState());
+        studentVO.setEnrollmentDate(student.getEnrollmentDate());
+        studentVO.setClassId(student.getClassId());
+        studentVO.setSubjectGroupId(selection.getSubjectGroupId());
+        studentVO.setElectiveCourse1Id(selection.getElectiveCourse1Id());
+        studentVO.setElectiveCourse2Id(selection.getElectiveCourse2Id());
+        return studentVO;
+    }
+
     public static StudentScoreVO toScoreVO(Student student,String className, List<Score> scores){
         StudentScoreVO studentScoreVO = new StudentScoreVO();
         studentScoreVO.setStudentNumber(student.getStudentNumber());

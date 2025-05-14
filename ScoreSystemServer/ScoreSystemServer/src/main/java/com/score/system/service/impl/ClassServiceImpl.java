@@ -55,4 +55,16 @@ public class ClassServiceImpl implements ClassService {
                 ? ResponseResult.success("导入成功",true)
                 : ResponseResult.fail("导入失败");
     }
+
+    @Override
+    public ResponseResult<List<ClassDTO>> getAllClasses() {
+        List<ClassEntity> classEntities = classMapper.selectList(null);
+        List<ClassDTO> classDTOList = new ArrayList<>();
+        for (ClassEntity classEntity : classEntities){
+            String name = teacherMapper.selectById(classEntity.getHeadTeacherId()).getName();
+            ClassDTO classDTO = ClassConverter.toDTO(classEntity,name);
+            classDTOList.add(classDTO);
+        }
+        return ResponseResult.success(classDTOList);
+    }
 }
