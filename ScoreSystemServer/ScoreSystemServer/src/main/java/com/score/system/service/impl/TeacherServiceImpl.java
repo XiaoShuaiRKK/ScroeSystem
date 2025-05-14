@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.ClassEntity;
 import com.score.system.entity.school.Score;
-import com.score.system.entity.user.Student;
-import com.score.system.entity.user.StudentConverter;
-import com.score.system.entity.user.StudentDTO;
-import com.score.system.entity.user.StudentScoreVO;
+import com.score.system.entity.user.*;
 import com.score.system.mapper.ClassMapper;
 import com.score.system.mapper.ScoreMapper;
 import com.score.system.mapper.StudentMapper;
@@ -33,17 +30,16 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseResult<List<StudentDTO>> selectStudentsByClass(Long teacherId) {
-        LambdaQueryWrapper<ClassEntity> classEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        classEntityLambdaQueryWrapper.eq(ClassEntity::getHeadTeacherId, teacherId);
-        ClassEntity classEntity = classMapper.selectOne(classEntityLambdaQueryWrapper);
-        if(classEntity == null) {
-            return ResponseResult.fail("该老师不是班主任", null);
+    public ResponseResult<List<StudentDTO>> selectStudentsByClass(Long teacherId,Long classId) {
+        Teacher teacher = teacherMapper.selectById(teacherId);
+        if(teacher == null){
+            return ResponseResult.fail("老师不存在 : " + teacherId);
         }
+        ClassEntity classEntity = classMapper.selectById(classId);
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         studentLambdaQueryWrapper.eq(Student::getClassId, classEntity.getId());
         List<Student> students = studentMapper.selectList(studentLambdaQueryWrapper);
-        List<StudentDTO> studentDTOS = students.stream().map(student -> StudentConverter.toDTO(student)).toList();
+        List<StudentDTO> studentDTOS = students.stream().map(StudentConverter::toDTO).toList();
         return ResponseResult.success(studentDTOS);
     }
 

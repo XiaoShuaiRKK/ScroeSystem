@@ -42,4 +42,16 @@ public class ScoreController {
                                                                         @RequestParam("student_number")String studentNumber){
         return scoreService.calculateGradeRankings(studentNumber, examId);
     }
+
+    @PostMapping("/rankings/total/class")
+    public ResponseResult<ClassRankingDTO> calculateTotalScoreClassRankings(@RequestParam("exam_id")Long examId,
+                                                                            @RequestParam("student_number")String studentNumber){
+        return scoreService.calculateTotalScoreClassRankings(studentNumber, examId);
+    }
+
+    @PostMapping("/rankings/total/grade")
+    public ResponseResult<GradeRankingDTO> calculateTotalScoreGradeRankings(@RequestParam("exam_id")Long examId,
+                                                                            @RequestParam("student_number")String studentNumber){
+        return scoreService.calculateTotalScoreGradeRankings(studentNumber, examId);
+    }
 }

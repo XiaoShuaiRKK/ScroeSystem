@@ -44,6 +44,24 @@ public class RedisUtil {
         return redisTemplate.opsForZSet().zCard(key);
     }
 
+    public Double zscore(String key, String member) {
+        try {
+            return redisTemplate.opsForZSet().score(key, member);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean expire(String key, long time, TimeUnit unit) {
+        try {
+            return redisTemplate.expire(key, time, unit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public RedisTemplate<String, Object> getRedisTemplate() {
         return redisTemplate;

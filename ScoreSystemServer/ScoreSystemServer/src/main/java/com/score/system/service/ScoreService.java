@@ -13,4 +13,6 @@ public interface ScoreService {
     ResponseResult<Boolean> batchAddScores(List<Score> scores);
     ResponseResult<List<ClassRankingDTO>> calculateClassRankings(String studentNumber, Long examId);
     ResponseResult<List<GradeRankingDTO>> calculateGradeRankings(String studentNumber, Long examId);
+    ResponseResult<ClassRankingDTO> calculateTotalScoreClassRankings(String studentNumber, Long examId);
+    ResponseResult<GradeRankingDTO> calculateTotalScoreGradeRankings(String studentNumber, Long examId);
 }

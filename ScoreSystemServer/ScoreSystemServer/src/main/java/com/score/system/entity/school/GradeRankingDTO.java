@@ -6,7 +6,7 @@ import lombok.Data;
 public class GradeRankingDTO {
     private String studentNumber;
     private Long courseId;
-    private Integer score;
+    private Double score;
     private int gradeRank;
     private int totalStudents;
 }

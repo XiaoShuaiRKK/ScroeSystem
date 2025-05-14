@@ -19,7 +19,7 @@ public class Score extends BaseEntity {
     @TableField("exam_id")
     private Long examId;
     @TableField("score")
-    private Integer score;
+    private Double score;
     @TableField("comment")
     private String comment;
 }

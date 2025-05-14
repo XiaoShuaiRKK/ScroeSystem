@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ClassRankingDTO {
     private Long courseId;
-    private Integer score;
+    private Double score;
     private Integer rank;
     private Long totalInClass;
 }

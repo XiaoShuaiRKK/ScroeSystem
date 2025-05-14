@@ -5,10 +5,7 @@ import com.score.system.entity.request.LoginRequest;
 import com.score.system.entity.request.RegisterRequest;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.result.LoginResult;
-import com.score.system.entity.user.StudentDTO;
-import com.score.system.entity.user.TeacherDTO;
-import com.score.system.entity.user.User;
-import com.score.system.entity.user.UserLevel;
+import com.score.system.entity.user.*;
 import com.score.system.service.StaffService;
 import com.score.system.service.UserService;
 import jakarta.validation.Valid;
@@ -32,6 +29,11 @@ public class UserController {
     @GetMapping("/levels")
     public ResponseResult<List<UserLevel>> getUserLevels() {
         return userService.getUserLevels();
+    }
+
+    @GetMapping("/roles")
+    public ResponseResult<List<UserRole>> getUserRoles() {
+        return userService.getUserRoles();
     }
 
     @PostMapping("/register")
@@ -65,4 +67,5 @@ public class UserController {
     public ResponseResult<Boolean> batchAddTeacher(@Valid @RequestBody List<TeacherDTO> teacherDTOList){
         return staffService.batchAddTeacher(teacherDTOList);
     }
+
 }

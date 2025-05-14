@@ -5,13 +5,11 @@ import com.score.system.entity.request.LoginRequest;
 import com.score.system.entity.request.RegisterRequest;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.result.LoginResult;
-import com.score.system.entity.user.Teacher;
-import com.score.system.entity.user.User;
-import com.score.system.entity.user.UserLevel;
-import com.score.system.entity.user.UserVO;
+import com.score.system.entity.user.*;
 import com.score.system.mapper.TeacherMapper;
 import com.score.system.mapper.UserLevelMapper;
 import com.score.system.mapper.UserMapper;
+import com.score.system.mapper.UserRoleMapper;
 import com.score.system.service.UserService;
 import com.score.system.util.RedisUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,12 +24,14 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserLevelMapper userLevelMapper;
+    private final UserRoleMapper userRoleMapper;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final RedisUtil redisUtil;
 
-    public UserServiceImpl(UserMapper userMapper, UserLevelMapper userLevelMapper, RedisUtil redisUtil) {
+    public UserServiceImpl(UserMapper userMapper, UserLevelMapper userLevelMapper, UserRoleMapper userRoleMapper, RedisUtil redisUtil) {
         this.userMapper = userMapper;
         this.userLevelMapper = userLevelMapper;
+        this.userRoleMapper = userRoleMapper;
         this.redisUtil = redisUtil;
     }
 
@@ -85,5 +85,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseResult<List<UserLevel>> getUserLevels() {
         return ResponseResult.success(userLevelMapper.selectList(null));
+    }
+
+    @Override
+    public ResponseResult<List<UserRole>> getUserRoles() {
+        return ResponseResult.success(userRoleMapper.selectList(null));
     }
 }
