@@ -23,7 +23,7 @@ namespace ScoreSystem
         private void ScoreLoginForm_Load(object sender, EventArgs e)
         {
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 登录";
-            
+            this.AcceptButton = button_login;
         }
 
         private void button_register_Click(object sender, EventArgs e)

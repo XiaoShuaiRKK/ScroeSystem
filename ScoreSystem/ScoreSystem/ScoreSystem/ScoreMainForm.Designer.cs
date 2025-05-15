@@ -37,6 +37,9 @@
             this.dataGridView_students = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menu_logout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_exam = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_score = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_class_or_student = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -89,7 +92,10 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menu_logout});
+            this.menu_logout,
+            this.menu_exam,
+            this.menu_score,
+            this.menu_class_or_student});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -102,6 +108,26 @@
             this.menu_logout.Size = new System.Drawing.Size(68, 21);
             this.menu_logout.Text = "退出登录";
             this.menu_logout.Click += new System.EventHandler(this.menu_logout_Click);
+            // 
+            // menu_exam
+            // 
+            this.menu_exam.Name = "menu_exam";
+            this.menu_exam.Size = new System.Drawing.Size(68, 21);
+            this.menu_exam.Text = "考试操作";
+            // 
+            // menu_score
+            // 
+            this.menu_score.Name = "menu_score";
+            this.menu_score.Size = new System.Drawing.Size(68, 21);
+            this.menu_score.Text = "分数操作";
+            this.menu_score.Click += new System.EventHandler(this.menu_score_Click);
+            // 
+            // menu_class_or_student
+            // 
+            this.menu_class_or_student.Name = "menu_class_or_student";
+            this.menu_class_or_student.Size = new System.Drawing.Size(97, 21);
+            this.menu_class_or_student.Text = "班级/学生操作";
+            this.menu_class_or_student.Click += new System.EventHandler(this.menu_class_or_student_Click);
             // 
             // ScoreMainForm
             // 
@@ -136,5 +162,8 @@
         private System.Windows.Forms.DataGridView dataGridView_students;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menu_logout;
+        private System.Windows.Forms.ToolStripMenuItem menu_exam;
+        private System.Windows.Forms.ToolStripMenuItem menu_score;
+        private System.Windows.Forms.ToolStripMenuItem menu_class_or_student;
     }
 }

@@ -1,4 +1,5 @@
-﻿using ScoreSystem.Data;
+﻿using NPOI.Util;
+using ScoreSystem.Data;
 using ScoreSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,22 @@ namespace ScoreSystem.Service
             {
                 MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new List<Student>();
+            };
+        }
+
+        public async Task<Student> GetStudent(string studentNumber)
+        {
+            string url = HttpUtil.GetUrl($"/teacher/get/student?student_number={studentNumber}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            ApiResponse<Student> response = JsonSerializer.Deserialize<ApiResponse<Student>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             };
         }
     }

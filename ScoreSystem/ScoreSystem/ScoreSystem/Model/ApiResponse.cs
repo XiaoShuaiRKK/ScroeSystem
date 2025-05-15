@@ -13,6 +13,7 @@ namespace ScoreSystem.Model
         private T data;
         private long timestamp;
 
+
         public int Code { get => code; set => code = value; }
         public string Message { get => message; set => message = value; }
         public T Data { get => data; set => data = value; }

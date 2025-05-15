@@ -31,16 +31,14 @@ public class TeacherController {
     }
 
     @GetMapping("/getClass/studentScore")
-    public ResponseResult<List<StudentScoreVO>> selectTeacherClassStudentScore(@RequestParam("teacher_id") Long teacherId,
-                                                                               @RequestParam("class_id") Long classId,
+    public ResponseResult<List<StudentScoreVO>> selectTeacherClassStudentScore(@RequestParam("class_id") Long classId,
                                                                                @RequestParam("exam_id")Long examId){
-        return teacherService.selectStudentScoreByTeacherId(teacherId, classId,examId);
+        return teacherService.selectStudentScoreByTeacherId(classId,examId);
     }
 
     @GetMapping("/studentScore")
-    public ResponseResult<StudentScoreVO> selectStudentScore(@RequestParam("teacher_id")Long teacherId,
-                                                             @RequestParam("student_number")String studentNumber,
+    public ResponseResult<StudentScoreVO> selectStudentScore(@RequestParam("student_number")String studentNumber,
                                                              @RequestParam("exam_id")Long examId){
-        return teacherService.selectStudentScoreByStudentId(teacherId, studentNumber, examId);
+        return teacherService.selectStudentScoreByStudentId(studentNumber, examId);
     }
 }

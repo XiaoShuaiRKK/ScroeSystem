@@ -16,7 +16,7 @@ namespace ScoreSystem
     public partial class ScoreMainForm : Form
     {
         private UserService userService = UserService.GetIntance();
-        private ClassService classService = new ClassService();
+        private ClassService classService = ClassService.GetIntance();
         private TeacherService teacherService = new TeacherService();
         private ScoreLoginForm loginForm;
         private User user;
@@ -98,6 +98,18 @@ namespace ScoreSystem
                 入学时间 = s.EnrollmentDate
             }).ToList();
             dataGridView_students.DataSource = displayStudents;
+        }
+
+        private void menu_class_or_student_Click(object sender, EventArgs e)
+        {
+            new ScoreClassOrStudentOperateForm().ShowDialog();
+            StudentDataInit();
+        }
+
+        private void menu_score_Click(object sender, EventArgs e)
+        {
+            new ScoreScoreForm(this).Show();
+            this.Hide();
         }
     }
 }

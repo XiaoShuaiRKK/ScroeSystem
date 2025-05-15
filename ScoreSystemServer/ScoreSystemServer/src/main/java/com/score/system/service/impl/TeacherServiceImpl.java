@@ -62,7 +62,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseResult<List<StudentScoreVO>> selectStudentScoreByTeacherId(Long teacherId,Long classId, Long examId) {
+    public ResponseResult<List<StudentScoreVO>> selectStudentScoreByTeacherId(Long classId, Long examId) {
         ClassEntity classEntity = classMapper.selectById(classId);
         if(classEntity == null) {
             return ResponseResult.fail("班级不存在 class id: " + classId);
@@ -81,7 +81,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResponseResult<StudentScoreVO> selectStudentScoreByStudentId(Long studentId, String studentNumber, Long examId) {
+    public ResponseResult<StudentScoreVO> selectStudentScoreByStudentId(String studentNumber, Long examId) {
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
         studentLambdaQueryWrapper.eq(Student::getStudentNumber, studentNumber);
         Student student = studentMapper.selectOne(studentLambdaQueryWrapper);

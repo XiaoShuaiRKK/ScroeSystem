@@ -4,15 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.user.*;
-import com.score.system.mapper.ClassMapper;
-import com.score.system.mapper.StudentMapper;
-import com.score.system.mapper.TeacherMapper;
-import com.score.system.mapper.UserMapper;
+import com.score.system.mapper.*;
 import com.score.system.service.StaffService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +21,15 @@ public class StaffServiceImpl implements StaffService {
     private final StudentMapper studentMapper;
     private final ClassMapper classMapper;
     private final UserMapper userMapper;
+    private final StudentSubjectSelectionMapper studentSubjectSelectionMapper;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, ClassMapper classMapper, UserMapper userMapper) {
+    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, ClassMapper classMapper, UserMapper userMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper) {
         this.teacherMapper = teacherMapper;
         this.studentMapper = studentMapper;
         this.classMapper = classMapper;
         this.userMapper = userMapper;
+        this.studentSubjectSelectionMapper = studentSubjectSelectionMapper;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class StaffServiceImpl implements StaffService {
         if(classMapper.selectById(studentDTO.getClassId()) == null){
             return ResponseResult.fail("班级不存在",false);
         }
-        if(studentDTO.getEnrollmentDate() != null && studentDTO.getEnrollmentDate().isAfter(LocalDateTime.now())){
+        if(studentDTO.getEnrollmentDate() != null && studentDTO.getEnrollmentDate().isAfter(LocalDate.now())){
             return ResponseResult.fail("入学时间不能晚于当前时间", false);
         }
         LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
@@ -48,7 +48,7 @@ public class StaffServiceImpl implements StaffService {
         }
         User user = new User();
         user.setName(studentDTO.getName());
-        user.setUsername(studentDTO.getUsername());
+        user.setUsername(studentDTO.getUserName());
         user.setPasswordHash(passwordEncoder.encode(studentDTO.getPassword()));
         user.setLevel(3);// 普通用户
         user.setRole(3);// 学生
@@ -58,6 +58,12 @@ public class StaffServiceImpl implements StaffService {
         userMapper.insert(user);
         Student student = StudentConverter.toEntity(studentDTO, user.getId());
         studentMapper.insert(student);
+        StudentSubjectSelection selection = new StudentSubjectSelection();
+        selection.setStudentNumber(student.getStudentNumber());
+        selection.setSubjectGroupId(studentDTO.getSubjectGroupId());
+        selection.setElectiveCourse1Id(studentDTO.getElectiveCourse1Id());
+        selection.setElectiveCourse2Id(studentDTO.getElectiveCourse2Id());
+        studentSubjectSelectionMapper.insert(selection);
         return ResponseResult.success("添加成功",true);
     }
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.score.system.entity.BaseEntity;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,7 +29,7 @@ public class Student extends BaseEntity {
     private Integer classId;
 
     @TableField("enrollment_date")
-    private LocalDateTime enrollmentDate;
+    private LocalDate enrollmentDate;
 
     @TableField("state")
     private Long state;

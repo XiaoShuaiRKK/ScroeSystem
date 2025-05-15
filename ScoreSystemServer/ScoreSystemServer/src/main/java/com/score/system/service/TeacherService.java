@@ -10,6 +10,6 @@ import java.util.List;
 public interface TeacherService {
     ResponseResult<List<StudentVO>> selectStudentsByClass(Long classId);
     ResponseResult<StudentVO> selectStudentByTeacherId(String studentNumber);
-    ResponseResult<List<StudentScoreVO>> selectStudentScoreByTeacherId(Long teacherId,Long classId,Long examId);
-    ResponseResult<StudentScoreVO> selectStudentScoreByStudentId(Long studentId,String studentNumber,Long examId);
+    ResponseResult<List<StudentScoreVO>> selectStudentScoreByTeacherId(Long classId,Long examId);
+    ResponseResult<StudentScoreVO> selectStudentScoreByStudentId(String studentNumber,Long examId);
 }

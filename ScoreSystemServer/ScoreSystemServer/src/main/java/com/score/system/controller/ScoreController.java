@@ -31,25 +31,25 @@ public class ScoreController {
         return scoreService.batchAddScores(scores);
     }
 
-    @PostMapping("/rankings/class")
+    @GetMapping("/rankings/class")
     public ResponseResult<List<ClassRankingDTO>> calculateClassRankings(@RequestParam("exam_id") Long examId,
                                                                         @RequestParam("student_number")String studentNumber) {
         return scoreService.calculateClassRankings(studentNumber, examId);
     }
 
-    @PostMapping("/rankings/grade")
+    @GetMapping("/rankings/grade")
     public ResponseResult<List<GradeRankingDTO>> calculateGradeRankings(@RequestParam("exam_id") Long examId,
                                                                         @RequestParam("student_number")String studentNumber){
         return scoreService.calculateGradeRankings(studentNumber, examId);
     }
 
-    @PostMapping("/rankings/total/class")
+    @GetMapping("/rankings/total/class")
     public ResponseResult<ClassRankingDTO> calculateTotalScoreClassRankings(@RequestParam("exam_id")Long examId,
                                                                             @RequestParam("student_number")String studentNumber){
         return scoreService.calculateTotalScoreClassRankings(studentNumber, examId);
     }
 
-    @PostMapping("/rankings/total/grade")
+    @GetMapping("/rankings/total/grade")
     public ResponseResult<GradeRankingDTO> calculateTotalScoreGradeRankings(@RequestParam("exam_id")Long examId,
                                                                             @RequestParam("student_number")String studentNumber){
         return scoreService.calculateTotalScoreGradeRankings(studentNumber, examId);

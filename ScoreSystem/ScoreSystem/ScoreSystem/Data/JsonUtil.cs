@@ -14,9 +14,19 @@ namespace ScoreSystem.Data
             PropertyNameCaseInsensitive = true
         };
 
+        private static JsonSerializerOptions questOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         public static JsonSerializerOptions GetOptions()
         {
             return options;
+        }
+
+        public static JsonSerializerOptions GetRequestOptions()
+        {
+            return questOptions;
         }
     }
 }
