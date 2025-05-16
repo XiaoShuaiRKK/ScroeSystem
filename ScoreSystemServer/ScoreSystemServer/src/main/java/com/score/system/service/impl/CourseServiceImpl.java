@@ -1,5 +1,6 @@
 package com.score.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.*;
 import com.score.system.mapper.*;
@@ -21,13 +22,15 @@ public class CourseServiceImpl implements CourseService {
     private final TeacherCourseMapper teacherCourseMapper;
     private final ClassMapper classMapper;
     private final ExamMapper examMapper;
+    private final ExamSubjectThresholdMapper examSubjectThresholdMapper;
 
-    public CourseServiceImpl(CourseMapper courseMapper, TeacherMapper teacherMapper, TeacherCourseMapper teacherCourseMapper, ClassMapper classMapper, ExamMapper examMapper) {
+    public CourseServiceImpl(CourseMapper courseMapper, TeacherMapper teacherMapper, TeacherCourseMapper teacherCourseMapper, ClassMapper classMapper, ExamMapper examMapper, ExamSubjectThresholdMapper examSubjectThresholdMapper) {
         this.courseMapper = courseMapper;
         this.teacherMapper = teacherMapper;
         this.teacherCourseMapper = teacherCourseMapper;
         this.classMapper = classMapper;
         this.examMapper = examMapper;
+        this.examSubjectThresholdMapper = examSubjectThresholdMapper;
     }
 
     @Override
@@ -67,29 +70,29 @@ public class CourseServiceImpl implements CourseService {
     public ResponseResult<Boolean> assignTeacherToCourse(TeacherCourse teacherCourse) {
         // 检查老师是否存在
         if (teacherMapper.selectById(teacherCourse.getTeacherId()) == null) {
-            throw new IllegalArgumentException("教师不存在: ID=" + teacherCourse.getTeacherId());
+            return ResponseResult.fail("教师不存在: ID=" + teacherCourse.getTeacherId());
         }
 
         // 检查课程是否存在
         if (courseMapper.selectById(teacherCourse.getCourseId()) == null) {
-            throw new IllegalArgumentException("课程不存在: ID=" + teacherCourse.getCourseId());
+            return ResponseResult.fail("课程不存在: ID=" + teacherCourse.getCourseId());
         }
 
         // 检查班级是否存在
         if (classMapper.selectById(teacherCourse.getClassId()) == null) {
-            throw new IllegalArgumentException("班级不存在: ID=" + teacherCourse.getClassId());
+            return ResponseResult.fail("班级不存在: ID=" + teacherCourse.getClassId());
         }
 
         TeacherCourse teacherCourseOne = teacherCourseMapper.getTeacherCourseOne(teacherCourse.getTeacherId(), teacherCourse.getCourseId(), teacherCourse.getClassId());
         if(teacherCourseOne != null){
-            throw new IllegalArgumentException("老师科目已设置 " + teacherCourse.getClassId());
+            return ResponseResult.fail("老师科目已设置 " + teacherCourse.getClassId());
         }
         if(teacherCourseMapper.selectClassCourse(teacherCourse.getCourseId(),teacherCourse.getClassId()) != null){
-            throw new IllegalArgumentException("班级科目已被设置  " + teacherCourse.getClassId());
+            return ResponseResult.fail("班级科目已被设置  " + teacherCourse.getClassId());
         }
         int result = teacherCourseMapper.insert(teacherCourse);
         if(result <= 0){
-            throw new RuntimeException("设置失败: 教师ID=" + teacherCourse.getTeacherId()
+            return ResponseResult.fail("设置失败: 教师ID=" + teacherCourse.getTeacherId()
                     + ", 课程ID=" + teacherCourse.getCourseId()
                     + ", 班级ID=" + teacherCourse.getClassId());
         }
@@ -100,7 +103,10 @@ public class CourseServiceImpl implements CourseService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> batchAssignTeacherToCourse(List<TeacherCourse> teacherCourses) {
         for (TeacherCourse teacherCourse : teacherCourses){
-            assignTeacherToCourse(teacherCourse);
+            ResponseResult<Boolean> result = assignTeacherToCourse(teacherCourse);
+            if(result.getCode() != 200){
+                throw new IllegalArgumentException(result.getMessage());
+            }
         }
         return ResponseResult.success("批量设置成功",true);
     }
@@ -164,6 +170,44 @@ public class CourseServiceImpl implements CourseService {
 
         int result = examMapper.batchInsertExams(examList);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("批量添加考试失败");
+    }
+
+    @Override
+    public ResponseResult<Boolean> addExamSubjectThreshold(ExamSubjectThreshold examSubjectThreshold) {
+        if (examSubjectThreshold.getExamId() == null || examSubjectThreshold.getCourseId() == null || examSubjectThreshold.getThresholdScore() == null) {
+            return ResponseResult.fail("参数不能为空");
+        }
+        // 校验考试是否存在
+        if (examMapper.selectById(examSubjectThreshold.getExamId()) == null) {
+            return ResponseResult.fail("考试ID不存在：" + examSubjectThreshold.getExamId());
+        }
+        // 可选：检查是否已存在
+        LambdaQueryWrapper<ExamSubjectThreshold> query = new LambdaQueryWrapper<>();
+        query.eq(ExamSubjectThreshold::getExamId, examSubjectThreshold.getExamId())
+                .eq(ExamSubjectThreshold::getCourseId, examSubjectThreshold.getCourseId());
+        if (examSubjectThresholdMapper.selectOne(query) != null) {
+            return ResponseResult.fail("该考试科目的达标线已设置");
+        }
+
+        int result = examSubjectThresholdMapper.insert(examSubjectThreshold);
+        return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("添加失败");
+    }
+
+    @Override
+    public ResponseResult<Boolean> batchAddExamSubjectThreshold(List<ExamSubjectThreshold> examSubjectThresholds) {
+        for (ExamSubjectThreshold threshold : examSubjectThresholds){
+            ResponseResult<Boolean> result = addExamSubjectThreshold(threshold);
+            if(result.getCode() != 200){
+                throw new IllegalArgumentException(result.getMessage());
+            }
+        }
+        return ResponseResult.success("批量设置成功",true);
+    }
+
+    @Override
+    public ResponseResult<List<ExamSubjectThreshold>> getExamSubjectThresholds(int examId) {
+        List<ExamSubjectThreshold> list = examSubjectThresholdMapper.selectByExamId(examId);
+        return ResponseResult.success(list);
     }
 
 

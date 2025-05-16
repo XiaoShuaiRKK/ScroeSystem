@@ -1,5 +1,6 @@
 ﻿using MathNet.Numerics.Distributions;
 using NPOI.Util;
+using Org.BouncyCastle.Utilities;
 using ScoreSystem.Data;
 using ScoreSystem.Model;
 using System;
@@ -41,6 +42,32 @@ namespace ScoreSystem.Service
             {
                 MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new List<Exam>();
+            }
+        }
+
+        public async Task<bool> AddExams(List<Exam> exams)
+        {
+            string url = HttpUtil.GetUrl("/exam/batchAdd");
+            var examList = exams.Select(e => new
+            {
+                name = e.Name,
+                grade = e.Grade,
+                startDate = e.StartDate.ToString("yyyy-MM-dd"),
+                endDate = e.EndDate.ToString("yyyy-MM-dd")
+            }).ToList();
+
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(examList, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -92,6 +119,40 @@ namespace ScoreSystem.Service
             {
                 MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        public async Task<bool> AddThreshold(List<ExamSubjectThreshold> thresholds)
+        {
+            string url = HttpUtil.GetUrl("/exam/threshold/batchAdd");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(thresholds, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<List<ExamSubjectThreshold>> GetThresholds(int examId)
+        {
+            string url = HttpUtil.GetUrl($"/exam/threshold/list?exam_id={examId}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<ExamSubjectThreshold>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<ExamSubjectThreshold>();
             }
         }
     }

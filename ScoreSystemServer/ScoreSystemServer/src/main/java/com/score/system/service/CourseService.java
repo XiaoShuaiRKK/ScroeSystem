@@ -3,6 +3,7 @@ package com.score.system.service;
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.Course;
 import com.score.system.entity.school.ExamDTO;
+import com.score.system.entity.school.ExamSubjectThreshold;
 import com.score.system.entity.school.TeacherCourse;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface CourseService {
     ResponseResult<Boolean> addExam(ExamDTO examDTO);
     ResponseResult<List<ExamDTO>> getExams();
     ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList);
+    ResponseResult<Boolean> addExamSubjectThreshold(ExamSubjectThreshold examSubjectThreshold);
+    ResponseResult<Boolean> batchAddExamSubjectThreshold(List<ExamSubjectThreshold> examSubjectThresholds);
+    ResponseResult<List<ExamSubjectThreshold>> getExamSubjectThresholds(int examId);
 }

@@ -73,7 +73,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<StudentScoreVO> studentScoreVOS = new ArrayList<>();
         for(Student student : students) {
             LambdaQueryWrapper<Score> scoreLambdaQueryWrapper = new LambdaQueryWrapper<>();
-            scoreLambdaQueryWrapper.eq(Score::getStudentNumber, student.getStudentNumber());
+            scoreLambdaQueryWrapper.eq(Score::getStudentNumber, student.getStudentNumber()).eq(Score::getExamId, examId);
             List<Score> scores = scoreMapper.selectList(scoreLambdaQueryWrapper);
             studentScoreVOS.add(StudentConverter.toScoreVO(student, classEntity.getName(), scores));
         }

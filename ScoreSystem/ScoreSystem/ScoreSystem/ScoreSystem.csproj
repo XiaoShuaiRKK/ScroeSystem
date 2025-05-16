@@ -127,10 +127,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassRankingControlForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ClassRankingControlForm.Designer.cs">
+      <DependentUpon>ClassRankingControlForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataUtil.cs" />
     <Compile Include="Data\HttpUtil.cs" />
     <Compile Include="Data\JsonUtil.cs" />
     <Compile Include="Data\ProjectSystemData.cs" />
+    <Compile Include="GradeRankingControlForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GradeRankingControlForm.Designer.cs">
+      <DependentUpon>GradeRankingControlForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoadForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,12 +153,17 @@
     <Compile Include="Model\ClassEntity.cs" />
     <Compile Include="Model\CourseEnum.cs" />
     <Compile Include="Model\Exam.cs" />
+    <Compile Include="Model\ExamSubjectThreshold.cs" />
+    <Compile Include="Model\GradeEnum.cs" />
     <Compile Include="Model\LoginResult.cs" />
+    <Compile Include="Model\Ranking.cs" />
+    <Compile Include="Model\RankModeEnum.cs" />
     <Compile Include="Model\ScoreEntity.cs" />
     <Compile Include="Model\ScoreVO.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\StudentDTO.cs" />
     <Compile Include="Model\StudentFormVO.cs" />
+    <Compile Include="Model\StudentRanking.cs" />
     <Compile Include="Model\StudentScore.cs" />
     <Compile Include="Model\StudentStateEnum.cs" />
     <Compile Include="Model\SubjectGroupEnum.cs" />
@@ -158,6 +175,12 @@
     </Compile>
     <Compile Include="ScoreClassOrStudentOperateForm.Designer.cs">
       <DependentUpon>ScoreClassOrStudentOperateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScoreExamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreExamForm.Designer.cs">
+      <DependentUpon>ScoreExamForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ScoreImportForm.cs">
       <SubType>Form</SubType>
@@ -177,6 +200,12 @@
     <Compile Include="ScoreMainForm.Designer.cs">
       <DependentUpon>ScoreMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreRankingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreRankingForm.Designer.cs">
+      <DependentUpon>ScoreRankingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScoreRegistionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,11 +218,24 @@
     <Compile Include="ScoreScoreForm.Designer.cs">
       <DependentUpon>ScoreScoreForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreThresholdForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreThresholdForm.Designer.cs">
+      <DependentUpon>ScoreThresholdForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service\ClassService.cs" />
+    <Compile Include="Service\RankingService.cs" />
     <Compile Include="Service\ScoreService.cs" />
     <Compile Include="Service\StudentService.cs" />
     <Compile Include="Service\TeacherService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <EmbeddedResource Include="ClassRankingControlForm.resx">
+      <DependentUpon>ClassRankingControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GradeRankingControlForm.resx">
+      <DependentUpon>GradeRankingControlForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadForm.resx">
       <DependentUpon>LoadForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,6 +251,9 @@
     <EmbeddedResource Include="ScoreClassOrStudentOperateForm.resx">
       <DependentUpon>ScoreClassOrStudentOperateForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScoreExamForm.resx">
+      <DependentUpon>ScoreExamForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScoreImportForm.resx">
       <DependentUpon>ScoreImportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,11 +263,17 @@
     <EmbeddedResource Include="ScoreMainForm.resx">
       <DependentUpon>ScoreMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScoreRankingForm.resx">
+      <DependentUpon>ScoreRankingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScoreRegistionForm.resx">
       <DependentUpon>ScoreRegistionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreScoreForm.resx">
       <DependentUpon>ScoreScoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreThresholdForm.resx">
+      <DependentUpon>ScoreThresholdForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

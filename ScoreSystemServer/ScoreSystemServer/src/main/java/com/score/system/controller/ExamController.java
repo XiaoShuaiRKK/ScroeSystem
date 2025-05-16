@@ -2,6 +2,7 @@ package com.score.system.controller;
 
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.ExamDTO;
+import com.score.system.entity.school.ExamSubjectThreshold;
 import com.score.system.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
@@ -38,5 +39,29 @@ public class ExamController {
     @PostMapping("/batchAdd")
     public ResponseResult<Boolean> batchAddExams(@RequestBody @Valid List<ExamDTO> examDTOList) {
         return courseService.batchAddExam(examDTOList);
+    }
+
+    /**
+     * 添加一条达标线
+     */
+    @PostMapping("/threshold/add")
+    public ResponseResult<Boolean> addThreshold(@RequestBody ExamSubjectThreshold threshold) {
+        return courseService.addExamSubjectThreshold(threshold);
+    }
+
+    /**
+     * 批量添加达标线
+     */
+    @PostMapping("/threshold/batchAdd")
+    public ResponseResult<Boolean> batchAddThreshold(@RequestBody List<ExamSubjectThreshold> thresholds) {
+        return courseService.batchAddExamSubjectThreshold(thresholds);
+    }
+
+    /**
+     * 查询某次考试的所有达标线
+     */
+    @GetMapping("/threshold/list")
+    public ResponseResult<List<ExamSubjectThreshold>> getThresholds(@RequestParam("exam_id") Long examId) {
+        return courseService.getExamSubjectThresholds(examId.intValue());
     }
 }

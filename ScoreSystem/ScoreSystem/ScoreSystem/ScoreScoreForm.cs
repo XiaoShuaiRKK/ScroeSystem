@@ -17,6 +17,7 @@ namespace ScoreSystem
     {
         private ScoreMainForm scoreMainForm;
         private List<Exam> exams;
+        private List<ExamSubjectThreshold> thresholds;
         private List<ClassEntity> classEntities;
         private List<StudentScore> studentScores;
         private ScoreService scoreService = ScoreService.GetIntance();
@@ -46,7 +47,12 @@ namespace ScoreSystem
         {
             comboBox_exam.DataSource = null;
             exams = await scoreService.GetExams();
-            comboBox_exam.DataSource = exams;
+            var examDisplayList = exams.Select(e => new
+            {
+                Id = e.Id,
+                Name = $"{e.Name}（{(Enum.IsDefined(typeof(GradeEnum), e.Grade) ? ((GradeEnum)e.Grade).ToString() : "未知年级")}）"
+            }).ToList();
+            comboBox_exam.DataSource = examDisplayList;
             comboBox_exam.DisplayMember = "Name";
             comboBox_exam.ValueMember = "Id";
             comboBox_class.DataSource = null;
@@ -65,6 +71,16 @@ namespace ScoreSystem
                 int examId = (int)comboBox_exam.SelectedValue;
                 int classId = (int)comboBox_class.SelectedValue;
                 studentScores = await scoreService.GetScoresByClass(examId, classId);
+                thresholds = await scoreService.GetThresholds(examId);
+                // 构建达标线提示文本
+                StringBuilder thresholdTextBuilder = new StringBuilder("各科达标线：");
+                foreach (var t in thresholds)
+                {
+                    string courseName = ((CourseEnum)t.CourseId).ToString();
+                    thresholdTextBuilder.Append($"{courseName}: {t.ThresholdScore}  ");
+                }
+                label_threshold.Text = thresholdTextBuilder.ToString();
+                //
                 var allCourseNames = Enum.GetNames(typeof(CourseEnum));
                 //构建DataTable
                 DataTable dt = new DataTable();
@@ -119,6 +135,40 @@ namespace ScoreSystem
         {
             new ScoreImportForm().ShowDialog();
             ScoreInit();
+        }
+
+        private void dataGridView_score_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView_score.DataSource == null || thresholds == null) return;
+
+            // 获取当前列名（即课程名）
+            string columnName = dataGridView_score.Columns[e.ColumnIndex].HeaderText;
+
+            // 如果列名是科目名（排除“姓名”、“学号”、“班级”）
+            if (Enum.TryParse<CourseEnum>(columnName, out CourseEnum courseEnumObj))
+            {
+                var courseEnum = courseEnumObj;
+                int courseId = (int)courseEnum;
+
+                // 获取该课程的达标线
+                var threshold = thresholds.FirstOrDefault(t => t.CourseId == courseId);
+                if (threshold == null) return;
+
+                // 当前单元格的值
+                if (e.Value != null && double.TryParse(e.Value.ToString(), out double score))
+                {
+                    if (score < threshold.ThresholdScore)
+                    {
+                        e.CellStyle.BackColor = Color.Red;
+                        e.CellStyle.ForeColor = Color.White;
+                    }
+                }
+            }
+        }
+
+        private void menu_rank_Click(object sender, EventArgs e)
+        {
+            new ScoreRankingForm().ShowDialog();
         }
     }
 }

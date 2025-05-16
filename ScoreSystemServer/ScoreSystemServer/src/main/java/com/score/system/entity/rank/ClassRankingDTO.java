@@ -1,4 +1,4 @@
-package com.score.system.entity.school;
+package com.score.system.entity.rank;
 
 import lombok.Data;
 

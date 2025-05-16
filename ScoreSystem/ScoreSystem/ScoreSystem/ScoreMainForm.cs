@@ -111,5 +111,10 @@ namespace ScoreSystem
             new ScoreScoreForm(this).Show();
             this.Hide();
         }
+
+        private void menu_exam_Click(object sender, EventArgs e)
+        {
+            new ScoreExamForm().ShowDialog();
+        }
     }
 }

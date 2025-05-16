@@ -1,12 +1,12 @@
 package com.score.system.service;
 
 import com.score.system.entity.ResponseResult;
-import com.score.system.entity.school.ClassRankingDTO;
-import com.score.system.entity.school.GradeRankingDTO;
+import com.score.system.entity.rank.ClassRankingDTO;
+import com.score.system.entity.rank.GradeRankingDTO;
+import com.score.system.entity.rank.StudentRanking;
 import com.score.system.entity.school.Score;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ScoreService {
     ResponseResult<Boolean> addScore(Score score);
@@ -15,4 +15,10 @@ public interface ScoreService {
     ResponseResult<List<GradeRankingDTO>> calculateGradeRankings(String studentNumber, Long examId);
     ResponseResult<ClassRankingDTO> calculateTotalScoreClassRankings(String studentNumber, Long examId);
     ResponseResult<GradeRankingDTO> calculateTotalScoreGradeRankings(String studentNumber, Long examId);
+    ResponseResult<StudentRanking> getStudentAllRankings(String studentNumber, Long examId);
+    ResponseResult<List<StudentRanking>> getClassTotalRankings(Integer classId, Long examId);
+    ResponseResult<List<StudentRanking>> getGradeTotalRankings(Integer gradeId, Long examId);
+    ResponseResult<List<StudentRanking>> getClassCourseRankings(Integer classId, Long examId);
+    ResponseResult<List<StudentRanking>> getGradeCourseRankings(Integer gradeId, Long examId);
+
 }

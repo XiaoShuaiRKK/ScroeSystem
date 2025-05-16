@@ -219,6 +219,7 @@ namespace ScoreSystem
                     if (scores == null || !scores.Any())
                     {
                         MessageBox.Show("未导入学生数据 无法添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                     bool isSuccess = await scoreService.AddScore(scores);
                     if (isSuccess)

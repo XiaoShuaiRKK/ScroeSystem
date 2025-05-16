@@ -72,3 +72,8 @@ F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\bin\Debug\System.
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreScoreForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreImportForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.LoadForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreExamForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreThresholdForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ClassRankingControlForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.GradeRankingControlForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreRankingForm.resources
