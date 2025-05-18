@@ -16,10 +16,7 @@ import com.score.system.util.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -530,6 +527,14 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public ResponseResult<List<StudentRanking>> getClassCourseRankings(Integer classId, Long examId) {
+        // 构建唯一Redis缓存键
+        String redisKey = "classCourseRankings:" + classId + ":" + examId;
+        // 检查缓存是否存在
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取班级各科成绩排名成功（缓存）", cached);
+        }
+
         // 1. 查出班级所有学生
         List<Student> students = studentMapper.selectList(
                 new LambdaQueryWrapper<Student>().eq(Student::getClassId, classId)
@@ -598,7 +603,7 @@ public class ScoreServiceImpl implements ScoreService {
                 studentRankingMap.get(studentNumber).getRanks().add(ranking);
             }
 
-            // 没有成绩的学生也添加
+            // 处理无成绩的学生
             for (String studentNumber : studentNumbers) {
                 if (!studentScores.containsKey(studentNumber)) {
                     Ranking ranking = new Ranking();
@@ -613,13 +618,26 @@ public class ScoreServiceImpl implements ScoreService {
             }
         }
 
-        return ResponseResult.success("获取班级各科成绩排名成功",
-                new ArrayList<>(studentRankingMap.values()));
+        // 转换为列表并过滤空数据
+        List<StudentRanking> result = new ArrayList<>(studentRankingMap.values());
+
+        // 将结果存入Redis，有效期10分钟
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+
+        return ResponseResult.success("获取班级各科成绩排名成功", result);
     }
 
 
     @Override
     public ResponseResult<List<StudentRanking>> getGradeCourseRankings(Integer gradeId, Long examId) {
+        // 构建唯一Redis缓存键
+        String redisKey = "gradeCourseRankings:" + gradeId + ":" + examId;
+        // 检查缓存是否存在
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取年级各科成绩排名成功（缓存）", cached);
+        }
+
         // 1. 获取年级下所有班级
         List<ClassEntity> classEntities = classMapper.selectList(
                 new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId)
@@ -697,6 +715,7 @@ public class ScoreServiceImpl implements ScoreService {
                 studentRankingMap.get(studentNumber).getRanks().add(ranking);
             }
 
+            // 处理无成绩的学生
             for (String studentNumber : studentNumbers) {
                 if (!studentScores.containsKey(studentNumber)) {
                     Ranking ranking = new Ranking();
@@ -711,8 +730,355 @@ public class ScoreServiceImpl implements ScoreService {
             }
         }
 
-        return ResponseResult.success("获取年级各科成绩排名成功",
-                new ArrayList<>(studentRankingMap.values()));
+        // 转换为列表
+        List<StudentRanking> result = new ArrayList<>(studentRankingMap.values());
+
+        // 将结果存入Redis，有效期10分钟
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+
+        return ResponseResult.success("获取年级各科成绩排名成功", result);
+    }
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getClassRankingWithGroupCourse(Integer classId, Long examId) {
+        String redisKey = "rank:class:" + classId + ":exam:" + examId;
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取成功（缓存）", cached);
+        }
+
+        // 获取班级信息
+        ClassEntity classEntity = classMapper.selectById(classId);
+        if (classEntity == null) return ResponseResult.fail("班级不存在");
+
+        int subjectGroupId = classEntity.getSubjectGroupId().intValue();
+        Long extraCourseId = getExtraCourseId(subjectGroupId);
+
+        // 获取学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().eq(Student::getClassId, classId));
+        if (students.isEmpty()) return ResponseResult.fail("该班级无学生");
+
+        Map<String, String> nameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+        List<String> studentNumbers = new ArrayList<>(nameMap.keySet());
+
+        // 获取成绩
+        List<Score> scores = scoreMapper.selectList(new LambdaQueryWrapper<Score>()
+                .eq(Score::getExamId, examId)
+                .in(Score::getStudentNumber, studentNumbers)
+                .in(Score::getCourseId, List.of(1L, 2L, 3L, extraCourseId)));
+
+        Map<String, Double> totalScoreMap = new HashMap<>();
+        for (Score score : scores) {
+            totalScoreMap.merge(score.getStudentNumber(), score.getScore() == null ? 0.0 : score.getScore(), Double::sum);
+        }
+
+        for (String sn : studentNumbers) {
+            totalScoreMap.putIfAbsent(sn, 0.0);
+        }
+
+        // 排序
+        List<Map.Entry<String, Double>> sorted = new ArrayList<>(totalScoreMap.entrySet());
+        sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue())); // 倒序
+
+        // 构建返回数据
+        int total = sorted.size();
+        int rank = 1;
+        List<StudentRanking> result = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : sorted) {
+            Ranking r = new Ranking();
+            r.setCourseId(0L);
+            r.setScore(entry.getValue());
+            r.setRank(rank++);
+            r.setTotal(total);
+            r.setScope("班级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(entry.getKey());
+            sr.setStudentName(nameMap.get(entry.getKey()));
+            sr.setRanks(List.of(r));
+
+            result.add(sr);
+        }
+
+        // 缓存结果（非 ZSet）
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+        return ResponseResult.success("获取成功", result);
+    }
+
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getGradeRankingWithGroupCourse(Integer gradeId, Long examId, Integer subjectGroupId) {
+        String redisKey = "grade:ranking:exam:" + examId + ":grade:" + gradeId + ":subjectGroup:" + subjectGroupId;
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取成功（缓存）", cached);
+        }
+
+        // 1. 获取年级下所有班级，过滤subjectGroupId相同的
+        List<ClassEntity> classEntities = classMapper.selectList(
+                        new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId)
+                                .eq(ClassEntity::getSubjectGroupId, subjectGroupId)
+                ).stream()
+                .toList();
+
+        if (classEntities.isEmpty()) {
+            return ResponseResult.fail("该年级无匹配的班级");
+        }
+
+        List<Integer> classIds = classEntities.stream().map(e -> e.getId().intValue()).toList();
+
+        // 2. 获取学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds)
+        );
+        if (students.isEmpty()) {
+            return ResponseResult.fail("无学生信息");
+        }
+
+        Map<String, String> studentNameMap = students.stream().collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+        List<String> studentNumbers = students.stream().map(Student::getStudentNumber).toList();
+
+        // 3. 获取成绩
+        List<Score> scores = scoreMapper.selectList(
+                new LambdaQueryWrapper<Score>()
+                        .eq(Score::getExamId, examId)
+                        .in(Score::getStudentNumber, studentNumbers)
+                        .in(Score::getCourseId, List.of(1L, 2L, 3L, getExtraCourseId(subjectGroupId)))
+        );
+
+        Map<String, Double> studentTotalScoreMap = new HashMap<>();
+        for (Score score : scores) {
+            if (score.getScore() != null) {
+                studentTotalScoreMap.merge(score.getStudentNumber(), score.getScore(), Double::sum);
+            }
+        }
+
+        // 所有学生都要参与排名（即使无成绩）
+        for (String sn : studentNumbers) {
+            studentTotalScoreMap.putIfAbsent(sn, 0.0);
+        }
+
+        // 排序
+        List<Map.Entry<String, Double>> sorted = new ArrayList<>(studentTotalScoreMap.entrySet());
+        sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        int total = sorted.size();
+        int rank = 1;
+        List<StudentRanking> result = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : sorted) {
+            Ranking r = new Ranking();
+            r.setCourseId(0L);
+            r.setScore(entry.getValue());
+            r.setRank(rank++);
+            r.setTotal(total);
+            r.setScope("年级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(entry.getKey());
+            sr.setStudentName(studentNameMap.get(entry.getKey()));
+            sr.setRanks(List.of(r));
+
+            result.add(sr);
+        }
+
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+        return ResponseResult.success("获取成功", result);
+    }
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getClassRankingWith312(Integer classId, Long examId) {
+        String redisKey = "rank:class312:" + classId + ":exam:" + examId;
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取成功（缓存）", cached);
+        }
+
+        // 获取学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().eq(Student::getClassId, classId));
+        if (students.isEmpty()) return ResponseResult.fail("该班级无学生");
+
+        Map<String, String> nameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+        List<String> studentNumbers = new ArrayList<>(nameMap.keySet());
+
+        // 获取选科信息
+        List<StudentSubjectSelection> selections = studentSubjectSelectionMapper.selectList(
+                new LambdaQueryWrapper<StudentSubjectSelection>().in(StudentSubjectSelection::getStudentNumber, studentNumbers));
+
+        Map<String, List<Long>> electiveMap = new HashMap<>();
+        for (StudentSubjectSelection s : selections) {
+            List<Long> courseIds = new ArrayList<>();
+            courseIds.add(1L); // 语文
+            courseIds.add(2L); // 数学
+            courseIds.add(3L); // 英语
+            courseIds.add(s.getSubjectGroupId()); // 首选（如物理/历史）
+            courseIds.add(s.getElectiveCourse1Id());
+            courseIds.add(s.getElectiveCourse2Id());
+            electiveMap.put(s.getStudentNumber(), courseIds);
+        }
+
+        // 获取成绩（每人实际选课不同）
+        Map<String, Double> totalScoreMap = new HashMap<>();
+        for (String sn : studentNumbers) {
+            List<Long> courseIds = electiveMap.getOrDefault(sn, List.of(1L, 2L, 3L)); // 如果没有选课信息就只算主科
+            List<Score> scores = scoreMapper.selectList(
+                    new LambdaQueryWrapper<Score>()
+                            .eq(Score::getExamId, examId)
+                            .eq(Score::getStudentNumber, sn)
+                            .in(Score::getCourseId, courseIds));
+            double total = scores.stream().mapToDouble(s -> s.getScore() == null ? 0.0 : s.getScore()).sum();
+            totalScoreMap.put(sn, total);
+        }
+
+        // 排序
+        List<Map.Entry<String, Double>> sorted = new ArrayList<>(totalScoreMap.entrySet());
+        sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        int total = sorted.size();
+        int rank = 1;
+        List<StudentRanking> result = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : sorted) {
+            Ranking r = new Ranking();
+            r.setCourseId(0L);
+            r.setScore(entry.getValue());
+            r.setRank(rank++);
+            r.setTotal(total);
+            r.setScope("班级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(entry.getKey());
+            sr.setStudentName(nameMap.get(entry.getKey()));
+            sr.setRanks(List.of(r));
+            result.add(sr);
+        }
+
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+        return ResponseResult.success("获取成功", result);
+    }
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getGradeRankingWith312(Integer gradeId, Long examId, Integer subjectGroupId) {
+        String redisKey = "rank:grade312:grade:" + gradeId + ":exam:" + examId + ":sgid:" + subjectGroupId;
+        if (redisUtil.exists(redisKey)) {
+            List<StudentRanking> cached = redisUtil.get(redisKey, List.class);
+            return ResponseResult.success("获取成功（缓存）", cached);
+        }
+
+        // 获取所有班级
+        List<ClassEntity> classEntities = classMapper.selectList(
+                new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId));
+        if (classEntities.isEmpty()) return ResponseResult.fail("年级无班级");
+
+        List<Integer> classIds = classEntities.stream().map(c -> c.getId().intValue()).toList();
+
+        // 获取所有学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds));
+        if (students.isEmpty()) return ResponseResult.fail("无学生");
+
+        Map<String, String> nameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+        List<String> studentNumbers = students.stream().map(Student::getStudentNumber).toList();
+
+        // 获取该 subjectGroupId 的学生选科信息
+        List<StudentSubjectSelection> selections = studentSubjectSelectionMapper.selectList(
+                new LambdaQueryWrapper<StudentSubjectSelection>()
+                        .in(StudentSubjectSelection::getStudentNumber, studentNumbers)
+                        .eq(StudentSubjectSelection::getSubjectGroupId, subjectGroupId));
+
+        if (selections.isEmpty()) return ResponseResult.fail("该年级该选科组合无学生");
+
+        Map<String, List<Long>> electiveMap = new HashMap<>();
+        for (StudentSubjectSelection s : selections) {
+            List<Long> courseIds = new ArrayList<>();
+            courseIds.add(1L); // 语文
+            courseIds.add(2L); // 数学
+            courseIds.add(3L); // 英语
+            courseIds.add(s.getSubjectGroupId());
+            courseIds.add(s.getElectiveCourse1Id());
+            courseIds.add(s.getElectiveCourse2Id());
+            electiveMap.put(s.getStudentNumber(), courseIds);
+        }
+
+        // 获取成绩
+        Map<String, Double> totalScoreMap = new HashMap<>();
+        for (String sn : electiveMap.keySet()) {
+            List<Long> courseIds = electiveMap.get(sn);
+            List<Score> scores = scoreMapper.selectList(
+                    new LambdaQueryWrapper<Score>()
+                            .eq(Score::getExamId, examId)
+                            .eq(Score::getStudentNumber, sn)
+                            .in(Score::getCourseId, courseIds));
+            double total = scores.stream().mapToDouble(s -> s.getScore() == null ? 0.0 : s.getScore()).sum();
+            totalScoreMap.put(sn, total);
+        }
+
+        // 排序
+        List<Map.Entry<String, Double>> sorted = new ArrayList<>(totalScoreMap.entrySet());
+        sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        int total = sorted.size();
+        int rank = 1;
+        List<StudentRanking> result = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : sorted) {
+            Ranking r = new Ranking();
+            r.setCourseId(0L);
+            r.setScore(entry.getValue());
+            r.setRank(rank++);
+            r.setTotal(total);
+            r.setScope("年级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(entry.getKey());
+            sr.setStudentName(nameMap.get(entry.getKey()));
+            sr.setRanks(List.of(r));
+            result.add(sr);
+        }
+
+        redisUtil.set(redisKey, result, TimeUnit.MINUTES, 10);
+        return ResponseResult.success("获取成功", result);
+    }
+
+
+    //
+    private ResponseResult<List<StudentRanking>> buildRankingsFromCache(Set<Object> members, String redisKey, String scope) {
+        List<Student> students = studentMapper.selectList(new LambdaQueryWrapper<Student>()
+                .in(Student::getStudentNumber, members));
+        Map<String, String> nameMap = students.stream().collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+
+        List<StudentRanking> result = new ArrayList<>();
+        int total = members.size();
+        for (Object sn : members) {
+            Double score = redisUtil.zscore(redisKey, sn);
+            Long rank = redisUtil.zrevrank(redisKey, sn);
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber((String) sn);
+            sr.setStudentName(nameMap.getOrDefault(sn, "未知"));
+
+            Ranking r = new Ranking();
+            r.setCourseId(0L);
+            r.setScore(score);
+            r.setRank(rank != null ? rank.intValue() + 1 : null);
+            r.setTotal(total);
+            r.setScope(scope);
+
+            sr.setRanks(List.of(r));
+            result.add(sr);
+        }
+        return ResponseResult.success(scope + "总分排名成功", result);
+    }
+
+    //获取分科对应的科目
+    private Long getExtraCourseId(int subjectGroupId) {
+        return switch (subjectGroupId) {
+            case 2 -> 5L;
+            case 3 -> 4L;
+            default -> 0L;
+        };
     }
 
 
@@ -783,6 +1149,143 @@ public class ScoreServiceImpl implements ScoreService {
         }};
     }
 
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getClassTop3CourseTotalRankings(Integer classId, Long examId) {
+        // 1. 查询班级下所有学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().eq(Student::getClassId, classId)
+        );
+        if (students.isEmpty()) {
+            return ResponseResult.fail("该班级没有学生");
+        }
+
+        List<String> studentNumbers = students.stream().map(Student::getStudentNumber).toList();
+        Map<String, String> studentNameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+
+        // 2. 查询成绩，仅限课程ID为1,2,3
+        List<Score> scores = scoreMapper.selectList(
+                new LambdaQueryWrapper<Score>()
+                        .eq(Score::getExamId, examId)
+                        .in(Score::getStudentNumber, studentNumbers)
+                        .in(Score::getCourseId, List.of(1L, 2L, 3L))
+        );
+
+        // 3. 汇总三科总分
+        Map<String, Double> totalScoreMap = new HashMap<>();
+        for (Score score : scores) {
+            if (score.getScore() != null) {
+                totalScoreMap.merge(score.getStudentNumber(), score.getScore(), Double::sum);
+            }
+        }
+
+        // 4. 排序
+        List<String> allStudentNumbers = new ArrayList<>(studentNumbers);
+        allStudentNumbers.sort((a, b) -> {
+            Double scoreA = totalScoreMap.getOrDefault(a, 0.0);
+            Double scoreB = totalScoreMap.getOrDefault(b, 0.0);
+            return Double.compare(scoreB, scoreA); // 降序
+        });
+
+        // 5. 构建返回结果
+        List<StudentRanking> result = new ArrayList<>();
+        int total = allStudentNumbers.size();
+        int rank = 1;
+        for (String studentNumber : allStudentNumbers) {
+            Double score = totalScoreMap.get(studentNumber);
+
+            Ranking ranking = new Ranking();
+            ranking.setCourseId(0L); // 表示总分
+            ranking.setScore(score);
+            ranking.setRank(score != null ? rank++ : null);
+            ranking.setTotal(total);
+            ranking.setScope("班级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(studentNumber);
+            sr.setStudentName(studentNameMap.get(studentNumber));
+            sr.setRanks(List.of(ranking));
+
+            result.add(sr);
+        }
+
+        return ResponseResult.success("获取班级三科总分排名成功", result);
+    }
+
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getGradeTop3CourseTotalRankings(Integer gradeId, Long examId) {
+        // 1. 查询年级下所有班级
+        List<ClassEntity> classEntities = classMapper.selectList(
+                new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId)
+        );
+        if (classEntities.isEmpty()) {
+            return ResponseResult.fail("该年级没有班级");
+        }
+
+        List<Long> classIds = classEntities.stream().map(ClassEntity::getId).toList();
+
+        // 2. 查询所有学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds)
+        );
+        if (students.isEmpty()) {
+            return ResponseResult.fail("该年级没有学生");
+        }
+
+        List<String> studentNumbers = students.stream().map(Student::getStudentNumber).toList();
+        Map<String, String> studentNameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+
+        // 3. 查询成绩，仅限课程ID为1,2,3
+        List<Score> scores = scoreMapper.selectList(
+                new LambdaQueryWrapper<Score>()
+                        .eq(Score::getExamId, examId)
+                        .in(Score::getStudentNumber, studentNumbers)
+                        .in(Score::getCourseId, List.of(1L, 2L, 3L))
+        );
+
+        // 4. 汇总总分
+        Map<String, Double> totalScoreMap = new HashMap<>();
+        for (Score score : scores) {
+            if (score.getScore() != null) {
+                totalScoreMap.merge(score.getStudentNumber(), score.getScore(), Double::sum);
+            }
+        }
+
+        // 5. 排序
+        List<String> allStudentNumbers = new ArrayList<>(studentNumbers);
+        allStudentNumbers.sort((a, b) -> {
+            Double scoreA = totalScoreMap.getOrDefault(a, 0.0);
+            Double scoreB = totalScoreMap.getOrDefault(b, 0.0);
+            return Double.compare(scoreB, scoreA); // 降序
+        });
+
+        // 6. 构建结果
+        List<StudentRanking> result = new ArrayList<>();
+        int total = allStudentNumbers.size();
+        int rank = 1;
+        for (String studentNumber : allStudentNumbers) {
+            Double score = totalScoreMap.get(studentNumber);
+
+            Ranking ranking = new Ranking();
+            ranking.setCourseId(0L);
+            ranking.setScore(score);
+            ranking.setRank(score != null ? rank++ : null);
+            ranking.setTotal(total);
+            ranking.setScope("年级");
+
+            StudentRanking sr = new StudentRanking();
+            sr.setStudentNumber(studentNumber);
+            sr.setStudentName(studentNameMap.get(studentNumber));
+            sr.setRanks(List.of(ranking));
+
+            result.add(sr);
+        }
+
+        return ResponseResult.success("获取年级三科总分排名成功", result);
+    }
 
 
 

@@ -12,7 +12,9 @@ import lombok.Data;
 public class ClassEntity extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
+    @TableField("name")
     private String name;
+    @TableField("grade")
     private int grade;
     @TableField("head_teacher_id")
     private Long headTeacherId;

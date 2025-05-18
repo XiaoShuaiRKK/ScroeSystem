@@ -20,5 +20,10 @@ public interface ScoreService {
     ResponseResult<List<StudentRanking>> getGradeTotalRankings(Integer gradeId, Long examId);
     ResponseResult<List<StudentRanking>> getClassCourseRankings(Integer classId, Long examId);
     ResponseResult<List<StudentRanking>> getGradeCourseRankings(Integer gradeId, Long examId);
-
+    ResponseResult<List<StudentRanking>> getClassTop3CourseTotalRankings(Integer classId, Long examId);
+    ResponseResult<List<StudentRanking>> getGradeTop3CourseTotalRankings(Integer gradeId, Long examId);
+    ResponseResult<List<StudentRanking>> getClassRankingWithGroupCourse(Integer classId, Long examId);
+    ResponseResult<List<StudentRanking>> getGradeRankingWithGroupCourse(Integer gradeId, Long examId,Integer subjectGroupId);
+    ResponseResult<List<StudentRanking>> getClassRankingWith312(Integer classId, Long examId);
+    ResponseResult<List<StudentRanking>> getGradeRankingWith312(Integer gradeId, Long examId, Integer subjectGroupId);
 }

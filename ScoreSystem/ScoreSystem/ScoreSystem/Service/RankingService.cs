@@ -56,12 +56,80 @@ namespace ScoreSystem.Service
             }
         }
 
+        public async Task<List<StudentRanking>> GetClassRanking3Course(int examId,int classId)
+        {
+            string url = HttpUtil.GetUrl($"/score/rankings/3-course/class?class_id={classId}&exam_id={examId}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<StudentRanking>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentRanking>();
+            }
+        }
+
+        public async Task<List<StudentRanking>> GetGradeRanking3Course(int examId, int grade)
+        {
+            string url = HttpUtil.GetUrl($"/score/rankings/3-course/grade?exam_id={examId}&grade={grade}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<StudentRanking>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentRanking>();
+            }
+        }
+
+        public async Task<List<StudentRanking>> GetClassRanking31Course(int examId, int classId)
+        {
+            string url = HttpUtil.GetUrl($"/score/rankings/group/one/class?class_id={classId}&exam_id={examId}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<StudentRanking>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentRanking>();
+            }
+        }
+
+        public async Task<List<StudentRanking>> GetGradeRanking31Course(int examId, int classId, int subjectGroupId)
+        {
+            string url = HttpUtil.GetUrl($"/score/rankings/group/one/grade?class_id={classId}&exam_id={examId}&subject_group_id");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<StudentRanking>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentRanking>();
+            }
+        }
+
         public async Task<List<StudentRanking>> GetClassRanking(int examId,int classId,RankModeEnum mode)
         {
             switch (mode)
             {
                 case RankModeEnum.总分:
                     return await GetClassRankingByTotal(examId, classId);
+                case RankModeEnum.三科总分:
+                    return await GetClassRanking3Course(examId, classId);
+                case RankModeEnum.三加一总分:
+                    return await GetClassRanking31Course(examId, classId);
                 default:
                     return new List<StudentRanking>();
             }

@@ -75,13 +75,52 @@ public class ScoreController {
     }
 
     @GetMapping("/rankings/course/grade")
-    public ResponseResult<List<StudentRanking>> getGradeCourseRankings(Integer gradeId, Long examId){
-        return scoreService.getGradeCourseRankings(gradeId, examId);
+    public ResponseResult<List<StudentRanking>> getGradeCourseRankings(@RequestParam("grade") Integer grade,
+                                                                       @RequestParam("exam_id") Long examId){
+        return scoreService.getGradeCourseRankings(grade, examId);
     }
 
     @GetMapping("/rankings/course/class")
-    public ResponseResult<List<StudentRanking>> getClassCourseRankings(Integer classId, Long examId){
+    public ResponseResult<List<StudentRanking>> getClassCourseRankings(@RequestParam("class_id") Integer classId,
+                                                                       @RequestParam("exam_id") Long examId){
         return scoreService.getClassCourseRankings(classId, examId);
     }
 
+    @GetMapping("/rankings/3-course/class")
+    public ResponseResult<List<StudentRanking>> getClassTop3CourseRankings(@RequestParam("class_id") Integer classId,
+                                                                           @RequestParam("exam_id")Long examId){
+        return scoreService.getClassTop3CourseTotalRankings(classId, examId);
+    }
+
+    @GetMapping("/rankings/3-course/grade")
+    public ResponseResult<List<StudentRanking>> getGradeTop3CourseTotalRankings(@RequestParam("grade") Integer grade,
+                                                                                @RequestParam("exam_id") Long examId){
+        return scoreService.getGradeTop3CourseTotalRankings(grade, examId);
+    }
+
+    @GetMapping("/rankings/group/one/class")
+    public ResponseResult<List<StudentRanking>> getClassRankingWithGroupCourse(@RequestParam("class_id") Integer classId,
+                                                                               @RequestParam("exam_id") Long examId){
+        return scoreService.getClassRankingWithGroupCourse(classId, examId);
+    }
+
+    @GetMapping("/rankings/group/one/grade")
+    public ResponseResult<List<StudentRanking>> getGradeRankingWithGroupCourse(@RequestParam("grade") Integer grade,
+                                                                               @RequestParam("exam_id") Long examId,
+                                                                               @RequestParam("subject_group_id")Integer subjectGroupId){
+        return scoreService.getGradeRankingWithGroupCourse(grade, examId, subjectGroupId);
+    }
+
+    @GetMapping("/rankings/group/312/class")
+    public ResponseResult<List<StudentRanking>> getClassRankingWith312(@RequestParam("class_id") Integer classId,
+                                                                       @RequestParam("exam_id") Long examId){
+        return scoreService.getClassRankingWith312(classId, examId);
+    }
+
+    @GetMapping("/rankings/group/312/grade")
+    public ResponseResult<List<StudentRanking>> getGradeRankingWith312(@RequestParam("grade") Integer grade,
+                                                                       @RequestParam("exam_id") Long examId,
+                                                                       @RequestParam("subject_group_id") Integer subjectGroupId){
+        return scoreService.getGradeRankingWith312(grade, examId, subjectGroupId);
+    }
 }

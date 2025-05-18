@@ -36,7 +36,7 @@ public class RedisUtil {
         redisTemplate.opsForZSet().add(key, member, score);
     }
 
-    public Long zrevrank(String key, String member) {
+    public Long zrevrank(String key, Object member) {
         return redisTemplate.opsForZSet().reverseRank(key, member);
     }
 
@@ -44,7 +44,7 @@ public class RedisUtil {
         return redisTemplate.opsForZSet().zCard(key);
     }
 
-    public Double zscore(String key, String member) {
+    public Double zscore(String key, Object member) {
         try {
             return redisTemplate.opsForZSet().score(key, member);
         } catch (Exception e) {
