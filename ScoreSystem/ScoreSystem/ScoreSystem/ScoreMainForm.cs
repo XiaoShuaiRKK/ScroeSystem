@@ -116,5 +116,11 @@ namespace ScoreSystem
         {
             new ScoreExamForm().ShowDialog();
         }
+
+        private void menu_university_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new ScoreUniversityThresholdForm(this).Show();
+        }
     }
 }

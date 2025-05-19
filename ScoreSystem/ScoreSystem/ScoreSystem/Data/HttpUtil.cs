@@ -33,11 +33,8 @@ namespace ScoreSystem.Data
             //{
                 var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-                return null;
+                return await response.Content.ReadAsStringAsync();
+            
             //}
             //catch(Exception e)
             //{

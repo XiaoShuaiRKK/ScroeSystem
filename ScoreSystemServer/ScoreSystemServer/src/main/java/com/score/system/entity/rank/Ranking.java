@@ -1,7 +1,11 @@
 package com.score.system.entity.rank;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Ranking {
     private Long courseId;

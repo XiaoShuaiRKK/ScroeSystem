@@ -77,3 +77,5 @@ F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSy
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ClassRankingControlForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.GradeRankingControlForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreRankingForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreUniversityForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreUniversityThresholdForm.resources

@@ -40,6 +40,7 @@
             this.menu_exam = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_score = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_class_or_student = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_university = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,7 +96,8 @@
             this.menu_logout,
             this.menu_exam,
             this.menu_score,
-            this.menu_class_or_student});
+            this.menu_class_or_student,
+            this.menu_university});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -129,6 +131,13 @@
             this.menu_class_or_student.Size = new System.Drawing.Size(68, 21);
             this.menu_class_or_student.Text = "学生管理";
             this.menu_class_or_student.Click += new System.EventHandler(this.menu_class_or_student_Click);
+            // 
+            // menu_university
+            // 
+            this.menu_university.Name = "menu_university";
+            this.menu_university.Size = new System.Drawing.Size(68, 21);
+            this.menu_university.Text = "上线情况";
+            this.menu_university.Click += new System.EventHandler(this.menu_university_Click);
             // 
             // ScoreMainForm
             // 
@@ -166,5 +175,6 @@
         private System.Windows.Forms.ToolStripMenuItem menu_exam;
         private System.Windows.Forms.ToolStripMenuItem menu_score;
         private System.Windows.Forms.ToolStripMenuItem menu_class_or_student;
+        private System.Windows.Forms.ToolStripMenuItem menu_university;
     }
 }

@@ -67,8 +67,6 @@ namespace ScoreSystem
             RankInit();
         }
 
-
-
         private async void RankInit()
         {
             if (!isLoaded) return;
@@ -78,15 +76,14 @@ namespace ScoreSystem
             int rankModeValue = (int)comboBox_mode.SelectedValue;
             RankModeEnum rankMode = (RankModeEnum)rankModeValue;
 
-            // 获取排名数据
             List<StudentRanking> studentRankings = await rankingService.GetClassRanking(examId, classId, rankMode);
 
             DataTable dt = new DataTable();
             dt.Columns.Add("姓名");
             dt.Columns.Add("学号");
 
-            // 确定要显示的课程（按模式过滤）
             List<CourseEnum> displayCourses = new List<CourseEnum>();
+            bool includeTotal = false;
 
             if (rankMode == RankModeEnum.总分)
             {
@@ -100,25 +97,43 @@ namespace ScoreSystem
             else if (rankMode == RankModeEnum.三科总分)
             {
                 displayCourses = new List<CourseEnum> { CourseEnum.语文, CourseEnum.数学, CourseEnum.英语 };
+                includeTotal = true;
             }
-            else if (rankMode == RankModeEnum.三加一总分 || rankMode == RankModeEnum.三加一加二总分)
+            else if (rankMode == RankModeEnum.三加一总分)
             {
-                // 假设你从 Ranking 数据中能自动知道是哪几门科目属于“一”或“二”
-                // 这里先收集所有科目，再筛掉非语数英
+                var firstThree = new List<CourseEnum> { CourseEnum.语文, CourseEnum.数学, CourseEnum.英语 };
+
+                var others = studentRankings
+                    .SelectMany(s => s.Ranks)
+                    .Where(r => r.CourseId != 0)
+                    .Select(r => (CourseEnum)(r.CourseId - 1))
+                    .Except(firstThree)
+                    .Distinct()
+                    .Take(1)
+                    .ToList();
+
+                displayCourses = firstThree.Concat(others).ToList();
+                includeTotal = true;
+            }
+            else if (rankMode == RankModeEnum.三加一加二总分)
+            {
                 var firstThree = new List<CourseEnum> { CourseEnum.语文, CourseEnum.数学, CourseEnum.英语 };
 
                 var allCoursesInData = studentRankings
                     .SelectMany(s => s.Ranks)
-                    .Select(r => (CourseEnum)r.CourseId)
+                    .Where(r => r.CourseId != 0)
+                    .Select(r => (CourseEnum)(r.CourseId - 1))
                     .Distinct()
                     .ToList();
 
-                // 三加一或三加二等：语数英 + 其余（选1或2门）
-                var others = allCoursesInData.Except(firstThree).Take(rankMode == RankModeEnum.三加一总分 ? 1 : 2).ToList();
-                displayCourses = firstThree.Concat(others).ToList();
+                displayCourses = allCoursesInData
+                    .Union(firstThree)
+                    .Distinct()
+                    .ToList();
+
+                includeTotal = true;
             }
 
-            // 构建列
             if (rankMode != RankModeEnum.总分)
             {
                 foreach (var course in displayCourses)
@@ -126,40 +141,41 @@ namespace ScoreSystem
                     dt.Columns.Add($"{course}分数");
                     dt.Columns.Add($"{course}排名");
                 }
+
+                if (includeTotal)
+                {
+                    dt.Columns.Add("总分");
+                    dt.Columns.Add("排名");
+                }
             }
 
-            // 填充数据
             foreach (var student in studentRankings)
             {
                 DataRow row = dt.NewRow();
                 row["姓名"] = student.StudentName;
                 row["学号"] = student.StudentNumber;
 
-                if (rankMode == RankModeEnum.总分)
+                foreach (var rank in student.Ranks)
                 {
-                    var totalRank = student.Ranks.FirstOrDefault(r => r.CourseName == "总分");
-                    if (totalRank != null)
+                    if (rank.CourseId == 0)
                     {
-                        row["总分"] = totalRank.Score;
-                        row["排名"] = $"{totalRank.Rank}/{totalRank.Total}";
-                    }
-                }
-                else
-                {
-                    foreach (var rank in student.Ranks)
-                    {
-                        CourseEnum course = (CourseEnum)rank.CourseId;
-                        if (displayCourses.Contains(course))
+                        if (dt.Columns.Contains("总分"))
                         {
-                            string scoreCol = $"{course}分数";
-                            string rankCol = $"{course}排名";
-
-                            if (dt.Columns.Contains(scoreCol))
-                                row[scoreCol] = rank.Score;
-                            if (dt.Columns.Contains(rankCol))
-                                row[rankCol] = $"{rank.Rank}/{rank.Total}";
+                            row["总分"] = rank.Score;
+                            row["排名"] = $"{rank.Rank}/{rank.Total}";
                         }
+                        continue;
                     }
+
+                    CourseEnum course = (CourseEnum)(rank.CourseId - 1);
+
+                    string scoreCol = $"{course}分数";
+                    string rankCol = $"{course}排名";
+
+                    if (dt.Columns.Contains(scoreCol))
+                        row[scoreCol] = rank.Score;
+                    if (dt.Columns.Contains(rankCol))
+                        row[rankCol] = $"{rank.Rank}/{rank.Total}";
                 }
 
                 dt.Rows.Add(row);

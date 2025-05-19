@@ -35,9 +35,10 @@
             this.dataGridView_score = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menu_import = new System.Windows.Forms.ToolStripMenuItem();
-            this.button_back = new System.Windows.Forms.Button();
             this.menu_rank = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_back = new System.Windows.Forms.Button();
             this.label_threshold = new System.Windows.Forms.Label();
+            this.menu_print = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_score)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +87,7 @@
             this.dataGridView_score.Location = new System.Drawing.Point(41, 103);
             this.dataGridView_score.Name = "dataGridView_score";
             this.dataGridView_score.RowTemplate.Height = 23;
-            this.dataGridView_score.Size = new System.Drawing.Size(713, 335);
+            this.dataGridView_score.Size = new System.Drawing.Size(713, 328);
             this.dataGridView_score.TabIndex = 4;
             this.dataGridView_score.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView_score_CellFormatting);
             // 
@@ -94,7 +95,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_import,
-            this.menu_rank});
+            this.menu_rank,
+            this.menu_print});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -108,6 +110,13 @@
             this.menu_import.Text = "分数导入";
             this.menu_import.Click += new System.EventHandler(this.menu_import_Click);
             // 
+            // menu_rank
+            // 
+            this.menu_rank.Name = "menu_rank";
+            this.menu_rank.Size = new System.Drawing.Size(44, 21);
+            this.menu_rank.Text = "排行";
+            this.menu_rank.Click += new System.EventHandler(this.menu_rank_Click);
+            // 
             // button_back
             // 
             this.button_back.Location = new System.Drawing.Point(41, 39);
@@ -118,13 +127,6 @@
             this.button_back.UseVisualStyleBackColor = true;
             this.button_back.Click += new System.EventHandler(this.button_back_Click);
             // 
-            // menu_rank
-            // 
-            this.menu_rank.Name = "menu_rank";
-            this.menu_rank.Size = new System.Drawing.Size(44, 21);
-            this.menu_rank.Text = "排行";
-            this.menu_rank.Click += new System.EventHandler(this.menu_rank_Click);
-            // 
             // label_threshold
             // 
             this.label_threshold.AutoSize = true;
@@ -134,6 +136,13 @@
             this.label_threshold.Size = new System.Drawing.Size(41, 12);
             this.label_threshold.TabIndex = 7;
             this.label_threshold.Text = "达标线";
+            // 
+            // menu_print
+            // 
+            this.menu_print.Name = "menu_print";
+            this.menu_print.Size = new System.Drawing.Size(44, 21);
+            this.menu_print.Text = "打印";
+            this.menu_print.Click += new System.EventHandler(this.menu_print_Click);
             // 
             // ScoreScoreForm
             // 
@@ -172,5 +181,6 @@
         private System.Windows.Forms.Button button_back;
         private System.Windows.Forms.ToolStripMenuItem menu_rank;
         private System.Windows.Forms.Label label_threshold;
+        private System.Windows.Forms.ToolStripMenuItem menu_print;
     }
 }

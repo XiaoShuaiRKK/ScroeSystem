@@ -35,6 +35,8 @@
             this.dataGridView_rank = new System.Windows.Forms.DataGridView();
             this.comboBox_subject_group = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBox_grade = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_rank)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,6 +47,7 @@
             this.comboBox_mode.Name = "comboBox_mode";
             this.comboBox_mode.Size = new System.Drawing.Size(121, 20);
             this.comboBox_mode.TabIndex = 14;
+            this.comboBox_mode.SelectedIndexChanged += new System.EventHandler(this.comboBox_mode_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -61,8 +64,9 @@
             this.comboBox_exam.FormattingEnabled = true;
             this.comboBox_exam.Location = new System.Drawing.Point(76, 51);
             this.comboBox_exam.Name = "comboBox_exam";
-            this.comboBox_exam.Size = new System.Drawing.Size(255, 20);
+            this.comboBox_exam.Size = new System.Drawing.Size(114, 20);
             this.comboBox_exam.TabIndex = 12;
+            this.comboBox_exam.SelectedIndexChanged += new System.EventHandler(this.comboBox_exam_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -90,6 +94,7 @@
             this.comboBox_subject_group.Name = "comboBox_subject_group";
             this.comboBox_subject_group.Size = new System.Drawing.Size(86, 20);
             this.comboBox_subject_group.TabIndex = 16;
+            this.comboBox_subject_group.SelectedIndexChanged += new System.EventHandler(this.comboBox_subject_group_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -101,10 +106,31 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "分科";
             // 
+            // comboBox_grade
+            // 
+            this.comboBox_grade.FormattingEnabled = true;
+            this.comboBox_grade.Location = new System.Drawing.Point(250, 51);
+            this.comboBox_grade.Name = "comboBox_grade";
+            this.comboBox_grade.Size = new System.Drawing.Size(86, 20);
+            this.comboBox_grade.TabIndex = 18;
+            this.comboBox_grade.SelectedIndexChanged += new System.EventHandler(this.comboBox_grade_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
+            this.label4.Location = new System.Drawing.Point(205, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 16);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "年级";
+            // 
             // GradeRankingControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.comboBox_grade);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox_subject_group);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox_mode);
@@ -130,5 +156,7 @@
         private System.Windows.Forms.DataGridView dataGridView_rank;
         private System.Windows.Forms.ComboBox comboBox_subject_group;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox_grade;
+        private System.Windows.Forms.Label label4;
     }
 }

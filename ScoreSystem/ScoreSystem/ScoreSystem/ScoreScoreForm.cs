@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,19 @@ namespace ScoreSystem
         private ScoreService scoreService = ScoreService.GetIntance();
         private ClassService classService = ClassService.GetIntance();
         private bool isLoaded = false;
+        //print
+        private PrintDocument printDocument = new PrintDocument();
+        private int currentRowIndex = 0;
+        private int rowHeight = 30;
+        //private Bitmap dgvBitmap;
+
+
 
         public ScoreScoreForm(ScoreMainForm scoreMainForm)
         {
             this.scoreMainForm = scoreMainForm;
             InitializeComponent();
+            printDocument.PrintPage += PrintDocument_PrintPage;
         }
 
         private void ScoreScoreForm_Load(object sender, EventArgs e)
@@ -169,6 +178,103 @@ namespace ScoreSystem
         private void menu_rank_Click(object sender, EventArgs e)
         {
             new ScoreRankingForm().ShowDialog();
+        }
+
+        private void menu_print_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_score.DataSource == null)
+            {
+                MessageBox.Show("暂无数据可打印！");
+                return;
+            }
+
+            currentRowIndex = 0; // 重置行索引
+
+            PrintPreviewDialog previewDialog = new PrintPreviewDialog();
+            previewDialog.Document = printDocument;
+            previewDialog.ShowDialog();
+        }
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int topMargin = e.MarginBounds.Top;
+            int leftMargin = e.MarginBounds.Left;
+            int y = topMargin;
+            int rowHeightLocal = 25;
+
+            Font font = new Font("Arial", 8);
+            Brush brush = Brushes.Black;
+            Pen pen = Pens.Black;
+
+            int colCount = dataGridView_score.Columns.Count;
+
+            // 1. 获取原始列宽总宽度（来自DataGridView实际宽度）
+            int totalGridWidth = dataGridView_score.Columns.Cast<DataGridViewColumn>().Sum(c => c.Width);
+
+            // 2. 根据打印区域等比例缩放每列宽度
+            Dictionary<int, int> scaledColWidths = new Dictionary<int, int>();
+            int printAreaWidth = e.MarginBounds.Width;
+            foreach (DataGridViewColumn col in dataGridView_score.Columns)
+            {
+                float colRatio = (float)col.Width / totalGridWidth;
+                scaledColWidths[col.Index] = (int)(colRatio * printAreaWidth);
+            }
+
+            // 打印表头
+            int x = leftMargin;
+            foreach (DataGridViewColumn col in dataGridView_score.Columns)
+            {
+                int colWidth = scaledColWidths[col.Index];
+                Rectangle rect = new Rectangle(x, y, colWidth, rowHeightLocal);
+                e.Graphics.DrawRectangle(pen, rect);
+
+                StringFormat format = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                };
+                e.Graphics.DrawString(col.HeaderText, font, brush, rect, format);
+                x += colWidth;
+            }
+
+            y += rowHeightLocal;
+
+            // 打印每一行数据
+            while (currentRowIndex < dataGridView_score.Rows.Count)
+            {
+                DataGridViewRow row = dataGridView_score.Rows[currentRowIndex];
+                if (row.IsNewRow) break;
+
+                x = leftMargin;
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    int colWidth = scaledColWidths[cell.ColumnIndex];
+                    Rectangle rect = new Rectangle(x, y, colWidth, rowHeightLocal);
+                    e.Graphics.DrawRectangle(pen, rect);
+
+                    string value = cell.Value?.ToString() ?? "";
+                    StringFormat format = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center,
+                        LineAlignment = StringAlignment.Center
+                    };
+                    e.Graphics.DrawString(value, font, brush, rect, format);
+
+                    x += colWidth;
+                }
+
+                currentRowIndex++;
+                y += rowHeightLocal;
+
+                // 是否分页
+                if (y + rowHeightLocal > e.MarginBounds.Bottom)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+            }
+
+            e.HasMorePages = false;
         }
     }
 }

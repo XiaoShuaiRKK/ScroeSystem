@@ -155,6 +155,7 @@
     <Compile Include="Model\Exam.cs" />
     <Compile Include="Model\ExamSubjectThreshold.cs" />
     <Compile Include="Model\GradeEnum.cs" />
+    <Compile Include="Model\GradeThresholdPredictionResult.cs" />
     <Compile Include="Model\LoginResult.cs" />
     <Compile Include="Model\Ranking.cs" />
     <Compile Include="Model\RankModeEnum.cs" />
@@ -167,6 +168,9 @@
     <Compile Include="Model\StudentScore.cs" />
     <Compile Include="Model\StudentStateEnum.cs" />
     <Compile Include="Model\SubjectGroupEnum.cs" />
+    <Compile Include="Model\ThresholdPredictionResult.cs" />
+    <Compile Include="Model\University.cs" />
+    <Compile Include="Model\UniversityLevelEnum.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -224,11 +228,24 @@
     <Compile Include="ScoreThresholdForm.Designer.cs">
       <DependentUpon>ScoreThresholdForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreUniversityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreUniversityForm.Designer.cs">
+      <DependentUpon>ScoreUniversityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScoreUniversityThresholdForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreUniversityThresholdForm.Designer.cs">
+      <DependentUpon>ScoreUniversityThresholdForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service\ClassService.cs" />
     <Compile Include="Service\RankingService.cs" />
     <Compile Include="Service\ScoreService.cs" />
     <Compile Include="Service\StudentService.cs" />
     <Compile Include="Service\TeacherService.cs" />
+    <Compile Include="Service\UniversitySevice.cs" />
     <Compile Include="Service\UserService.cs" />
     <EmbeddedResource Include="ClassRankingControlForm.resx">
       <DependentUpon>ClassRankingControlForm.cs</DependentUpon>
@@ -274,6 +291,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreThresholdForm.resx">
       <DependentUpon>ScoreThresholdForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreUniversityForm.resx">
+      <DependentUpon>ScoreUniversityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreUniversityThresholdForm.resx">
+      <DependentUpon>ScoreUniversityThresholdForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
