@@ -44,5 +44,55 @@ namespace ScoreSystem.Service
                 return null;
             };
         }
+
+        public async Task<List<StudentClassHistory>> GetStudentClassHistoryByNumber(string studentNumber)
+        {
+            string url = HttpUtil.GetUrl($"/teacher/getClass/history?student_number={studentNumber}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            ApiResponse<List<StudentClassHistory>> response = JsonSerializer.Deserialize<ApiResponse<List<StudentClassHistory>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentClassHistory>();
+            };
+        }
+
+        public async Task<bool> AddTeacher(List<Teacher> teachers)
+        {
+            string url = HttpUtil.GetUrl("/batch/add/teacher");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(teachers, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<List<TeacherVO>> GetTeachers()
+        {
+            string url = HttpUtil.GetUrl($"/user/get/teachers");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            ApiResponse<List<TeacherVO>> response = JsonSerializer.Deserialize<ApiResponse<List<TeacherVO>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<TeacherVO>();
+            };
+        }
     }
 }

@@ -19,13 +19,15 @@ public class TeacherServiceImpl implements TeacherService {
     private final ClassMapper classMapper;
     private final ScoreMapper scoreMapper;
     private final StudentSubjectSelectionMapper studentSubjectSelectionMapper;
+    private final StudentClassHistoryMapper studentClassHistoryMapper;
 
-    public TeacherServiceImpl(StudentMapper studentMapper, TeacherMapper teacherMapper, ClassMapper classMapper, ScoreMapper scoreMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper) {
+    public TeacherServiceImpl(StudentMapper studentMapper, TeacherMapper teacherMapper, ClassMapper classMapper, ScoreMapper scoreMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper, StudentClassHistoryMapper studentClassHistoryMapper) {
         this.studentMapper = studentMapper;
         this.teacherMapper = teacherMapper;
         this.classMapper = classMapper;
         this.scoreMapper = scoreMapper;
         this.studentSubjectSelectionMapper = studentSubjectSelectionMapper;
+        this.studentClassHistoryMapper = studentClassHistoryMapper;
     }
 
     @Override
@@ -91,5 +93,14 @@ public class TeacherServiceImpl implements TeacherService {
         List<Score> scores = scoreMapper.selectList(scoreLambdaQueryWrapper);
         StudentScoreVO studentScoreVO = StudentConverter.toScoreVO(student, classEntity.getName(), scores);
         return ResponseResult.success(studentScoreVO);
+    }
+
+    @Override
+    public ResponseResult<List<StudentClassHistory>> selectStudentByStudentNumber(String studentNumber) {
+        if(studentNumber == null || studentNumber.trim().isEmpty()){
+            return ResponseResult.fail("学号不能为空");
+        }
+        LambdaQueryWrapper<StudentClassHistory> query = new LambdaQueryWrapper<StudentClassHistory>().eq(StudentClassHistory::getStudentNumber, studentNumber);
+        return ResponseResult.success(studentClassHistoryMapper.selectList(query));
     }
 }

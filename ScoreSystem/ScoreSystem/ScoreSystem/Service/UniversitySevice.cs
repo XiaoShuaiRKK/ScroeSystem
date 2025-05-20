@@ -62,7 +62,39 @@ namespace ScoreSystem.Service
 
         public async Task<List<GradeThresholdPredictionResult>> PredictGradeThresholdProbability(int grade)
         {
-            string url = HttpUtil.GetUrl($"/university/threshold/predict/grade");
+            string url = HttpUtil.GetUrl($"/university/threshold/predict/grade?grade={grade}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<GradeThresholdPredictionResult>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<GradeThresholdPredictionResult>();
+            }
+        }
+
+        public async Task<ThresholdRankingResult> GetGradeThresholdRanking(int grade,int examId)
+        {
+            string url = HttpUtil.GetUrl($"/university/threshold/grade/ranking?grade={grade}&exam_id={examId}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<ThresholdRankingResult>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public async Task<List<GradeThresholdPredictionResult>> GetGradeThresholdPredictionResults(int grade,int universityLevel)
+        {
+            string url = HttpUtil.GetUrl($"/university/threshold/predict/grade?grade={grade}&university_level={universityLevel}");
             string jsonResult = await HttpUtil.GetAsync(url);
             var response = JsonSerializer.Deserialize<ApiResponse<List<GradeThresholdPredictionResult>>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200)

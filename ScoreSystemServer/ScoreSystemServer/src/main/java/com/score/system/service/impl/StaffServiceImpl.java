@@ -3,6 +3,7 @@ package com.score.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.score.system.entity.ResponseResult;
+import com.score.system.entity.school.ClassEntity;
 import com.score.system.entity.user.*;
 import com.score.system.mapper.*;
 import com.score.system.service.StaffService;
@@ -22,50 +23,78 @@ public class StaffServiceImpl implements StaffService {
     private final ClassMapper classMapper;
     private final UserMapper userMapper;
     private final StudentSubjectSelectionMapper studentSubjectSelectionMapper;
+    private final StudentClassHistoryMapper studentClassHistoryMapper;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, ClassMapper classMapper, UserMapper userMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper) {
+    public StaffServiceImpl(TeacherMapper teacherMapper, StudentMapper studentMapper, ClassMapper classMapper, UserMapper userMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper, StudentClassHistoryMapper studentClassHistoryMapper) {
         this.teacherMapper = teacherMapper;
         this.studentMapper = studentMapper;
         this.classMapper = classMapper;
         this.userMapper = userMapper;
         this.studentSubjectSelectionMapper = studentSubjectSelectionMapper;
+        this.studentClassHistoryMapper = studentClassHistoryMapper;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> addStudent(StudentDTO studentDTO) {
-        if(classMapper.selectById(studentDTO.getClassId()) == null){
-            return ResponseResult.fail("班级不存在",false);
+        if (classMapper.selectById(studentDTO.getClassId()) == null) {
+            return ResponseResult.fail("班级不存在", false);
         }
-        if(studentDTO.getEnrollmentDate() != null && studentDTO.getEnrollmentDate().isAfter(LocalDate.now())){
+
+        if (studentDTO.getEnrollmentDate() != null && studentDTO.getEnrollmentDate().isAfter(LocalDate.now())) {
             return ResponseResult.fail("入学时间不能晚于当前时间", false);
         }
+
+        // 检查学号是否重复
         LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Student::getStudentNumber, studentDTO.getStudentNumber());
-        if(studentMapper.selectOne(queryWrapper) != null){
+        if (studentMapper.selectOne(queryWrapper) != null) {
             return ResponseResult.fail("学号已存在", false);
         }
+
+        // 创建用户
         User user = new User();
         user.setName(studentDTO.getName());
         user.setUsername(studentDTO.getUserName());
         user.setPasswordHash(passwordEncoder.encode(studentDTO.getPassword()));
-        user.setLevel(3);// 普通用户
-        user.setRole(3);// 学生
-        LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
-        query.eq(User::getUsername, user.getUsername());
-        if(userMapper.selectOne(query) != null) return ResponseResult.fail(user.getName() + " 用户名已经存在");
+        user.setLevel(3); // 普通用户
+        user.setRole(3);  // 学生
+
+        LambdaQueryWrapper<User> userQuery = new LambdaQueryWrapper<>();
+        userQuery.eq(User::getUsername, user.getUsername());
+        if (userMapper.selectOne(userQuery) != null) {
+            return ResponseResult.fail(user.getName() + " 用户名已经存在");
+        }
+
         userMapper.insert(user);
+
+        // 插入学生记录
         Student student = StudentConverter.toEntity(studentDTO, user.getId());
         studentMapper.insert(student);
+
+        // 插入选科记录
         StudentSubjectSelection selection = new StudentSubjectSelection();
         selection.setStudentNumber(student.getStudentNumber());
         selection.setSubjectGroupId(studentDTO.getSubjectGroupId());
         selection.setElectiveCourse1Id(studentDTO.getElectiveCourse1Id());
         selection.setElectiveCourse2Id(studentDTO.getElectiveCourse2Id());
         studentSubjectSelectionMapper.insert(selection);
-        return ResponseResult.success("添加成功",true);
+
+        // 获取班级信息以获取年级
+        ClassEntity classEntity = classMapper.selectById(studentDTO.getClassId());
+
+        // 插入学生历史班级记录
+        StudentClassHistory history = new StudentClassHistory();
+        history.setStudentNumber(student.getStudentNumber());
+        history.setClassId(studentDTO.getClassId().longValue());
+        history.setGrade(classEntity.getGrade());
+        history.setYear(studentDTO.getYear()); // 注意：year 由前端传入
+        studentClassHistoryMapper.insert(history);
+
+        return ResponseResult.success("添加成功", true);
     }
+
 
     @Override
     @Transactional
@@ -124,5 +153,10 @@ public class StaffServiceImpl implements StaffService {
         }
         return ResponseResult.success("添加成功",true);
 
+    }
+
+    @Override
+    public ResponseResult<List<Teacher>> getAllTeachers() {
+        return ResponseResult.success(teacherMapper.selectList(null));
     }
 }

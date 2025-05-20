@@ -32,6 +32,7 @@ namespace ScoreSystem
 
 
 
+
         public ScoreScoreForm(ScoreMainForm scoreMainForm)
         {
             this.scoreMainForm = scoreMainForm;

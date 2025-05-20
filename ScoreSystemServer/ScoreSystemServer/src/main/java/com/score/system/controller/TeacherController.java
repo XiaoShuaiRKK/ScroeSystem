@@ -1,6 +1,7 @@
 package com.score.system.controller;
 
 import com.score.system.entity.ResponseResult;
+import com.score.system.entity.user.StudentClassHistory;
 import com.score.system.entity.user.StudentDTO;
 import com.score.system.entity.user.StudentScoreVO;
 import com.score.system.entity.user.StudentVO;
@@ -40,5 +41,10 @@ public class TeacherController {
     public ResponseResult<StudentScoreVO> selectStudentScore(@RequestParam("student_number")String studentNumber,
                                                              @RequestParam("exam_id")Long examId){
         return teacherService.selectStudentScoreByStudentId(studentNumber, examId);
+    }
+
+    @GetMapping("/getClass/history")
+    public ResponseResult<List<StudentClassHistory>> getStudentClassHistoryByStudentNumber(@RequestParam("student_number")String studentNumber){
+        return teacherService.selectStudentByStudentNumber(studentNumber);
     }
 }

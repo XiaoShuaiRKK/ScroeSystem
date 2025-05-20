@@ -9,6 +9,7 @@ public class ExamConverter {
         examDTO.setGrade(exam.getGrade());
         examDTO.setEndDate(exam.getEndDate());
         examDTO.setStartDate(exam.getStartDate());
+        examDTO.setYear(exam.getYear());
         return examDTO;
     }
 
@@ -20,6 +21,7 @@ public class ExamConverter {
         exam.setGrade(examDTO.getGrade());
         exam.setEndDate(examDTO.getEndDate());
         exam.setStartDate(examDTO.getStartDate());
+        exam.setYear(examDTO.getYear());
         return exam;
     }
 }

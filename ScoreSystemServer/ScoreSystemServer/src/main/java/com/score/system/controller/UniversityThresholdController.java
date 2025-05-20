@@ -66,7 +66,8 @@ public class UniversityThresholdController {
     }
 
     @GetMapping("/predict/grade")
-    public ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(@RequestParam("grade") Integer grade){
-        return  universityThresholdService.predictGradeThresholdProbability(grade);
+    public ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(@RequestParam("grade") Integer grade,
+                                                                                                 @RequestParam("university_level")Long universityLevel){
+        return  universityThresholdService.predictGradeThresholdProbability(grade,universityLevel);
     }
 }

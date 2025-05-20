@@ -114,37 +114,42 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public ResponseResult<Boolean> addExam(ExamDTO examDTO) {
-        if(examMapper.selectByExamName(examDTO.getName(), examDTO.getGrade()) != null){
-            return ResponseResult.fail("该考试已存在, 不能重复添加");
+        // 加入 year 参数的唯一性校验
+        if (examMapper.selectByExamNameAndGradeAndYear(examDTO.getName(), examDTO.getGrade(), examDTO.getYear()) != null) {
+            return ResponseResult.fail("该考试已存在，不能重复添加");
         }
+
         if (examDTO.getStartDate() == null || examDTO.getEndDate() == null) {
             return ResponseResult.fail("考试时间不能为空");
         }
+
         LocalDate today = LocalDate.now();
-        if(examDTO.getStartDate().isBefore(today)){
+        if (examDTO.getStartDate().isBefore(today)) {
             return ResponseResult.fail("考试开始时间不能早于今天");
         }
         if (examDTO.getEndDate().isBefore(examDTO.getStartDate())) {
             return ResponseResult.fail("考试结束时间不能早于开始时间");
         }
+
         Exam exam = ExamConverter.toEntity(examDTO);
         int result = examMapper.insert(exam);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("添加考试失败");
     }
 
+
     @Override
     @Transactional
     public ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList) {
         List<Exam> examList = new ArrayList<>();
-        Set<String> examNames = new HashSet<>();
-
+        Set<String> examKeys = new HashSet<>();
         LocalDate today = LocalDate.now();
 
         for (ExamDTO exam : examDTOList) {
-            String key = exam.getName() + "-" + exam.getGrade();
-            // 名称重复校验
-            if (!examNames.add(key)) {
-                return ResponseResult.fail("批量中存在重复考试名称：" + exam.getName());
+            String key = exam.getName() + "-" + exam.getGrade() + "-" + exam.getYear();
+
+            // 校验批量中是否重复
+            if (!examKeys.add(key)) {
+                return ResponseResult.fail("批量中存在重复考试：" + exam.getName() + "（年级：" + exam.getGrade() + ", 学年：" + exam.getYear() + "）");
             }
 
             // 时间合法性校验
@@ -158,10 +163,11 @@ public class CourseServiceImpl implements CourseService {
                 return ResponseResult.fail("考试 " + exam.getName() + " 的结束时间不能早于开始时间");
             }
 
-            // 数据库中名称重复校验（可选）
-            if (examMapper.selectByExamName(exam.getName(), exam.getGrade()) != null) {
-                return ResponseResult.fail("考试名称已存在：" + exam.getName());
+            // 数据库唯一性校验
+            if (examMapper.selectByExamNameAndGradeAndYear(exam.getName(), exam.getGrade(), exam.getYear()) != null) {
+                return ResponseResult.fail("考试名称已存在：" + exam.getName() + "（年级：" + exam.getGrade() + ", 学年：" + exam.getYear() + "）");
             }
+
             Exam entity = ExamConverter.toEntity(exam);
             entity.setCreatedAt(LocalDateTime.now());
             entity.setUpdatedAt(LocalDateTime.now());
@@ -171,6 +177,7 @@ public class CourseServiceImpl implements CourseService {
         int result = examMapper.batchInsertExams(examList);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("批量添加考试失败");
     }
+
 
     @Override
     public ResponseResult<Boolean> addExamSubjectThreshold(ExamSubjectThreshold examSubjectThreshold) {

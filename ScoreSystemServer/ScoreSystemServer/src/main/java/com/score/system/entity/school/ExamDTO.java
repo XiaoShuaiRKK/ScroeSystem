@@ -17,6 +17,7 @@ public class ExamDTO {
     @Min(value = 1, message = "年级必须在1到6之间")
     @Max(value = 6, message = "年级必须在1到6之间")
     private int grade;
+    private int year;
     private LocalDate startDate;
     private LocalDate endDate;
 }

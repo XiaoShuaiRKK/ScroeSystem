@@ -17,6 +17,7 @@ public class Exam extends BaseEntity {
     private Long id;
     private String name;
     private int grade;
+    private int year;
     @TableField("start_date")
     private LocalDate startDate;
     @TableField("end_date")

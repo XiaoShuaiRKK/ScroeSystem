@@ -13,5 +13,5 @@ public interface UniversityThresholdService {
     ResponseResult<ThresholdRankingResult> getGradeThresholdRanking(Integer grade, Long examId);
     ResponseResult<List<ThresholdPredictionResult>> predictStudentThresholdProbability(String studentNumber);
     ResponseResult<List<StudentRanking>> getClassLevelStudentList(Integer classId, Long universityLevel, Long examId);
-    ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(Integer gradeId);
+    ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(Integer gradeId, Long universityLevel);
 }

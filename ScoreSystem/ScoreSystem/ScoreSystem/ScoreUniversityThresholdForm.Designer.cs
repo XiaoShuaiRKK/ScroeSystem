@@ -31,12 +31,14 @@
             this.dataGridView_threshold = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menu_university = new System.Windows.Forms.ToolStripMenuItem();
-            this.上线预测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_predict = new System.Windows.Forms.ToolStripMenuItem();
             this.button_back = new System.Windows.Forms.Button();
             this.comboBox_grade = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox_exam = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox_university_level = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_threshold)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +56,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_university,
-            this.上线预测ToolStripMenuItem});
+            this.menu_predict});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -68,11 +70,12 @@
             this.menu_university.Text = "大学信息管理";
             this.menu_university.Click += new System.EventHandler(this.menu_university_Click);
             // 
-            // 上线预测ToolStripMenuItem
+            // menu_predict
             // 
-            this.上线预测ToolStripMenuItem.Name = "上线预测ToolStripMenuItem";
-            this.上线预测ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.上线预测ToolStripMenuItem.Text = "上线预测";
+            this.menu_predict.Name = "menu_predict";
+            this.menu_predict.Size = new System.Drawing.Size(68, 21);
+            this.menu_predict.Text = "上线预测";
+            this.menu_predict.Click += new System.EventHandler(this.menu_predict_Click);
             // 
             // button_back
             // 
@@ -122,11 +125,31 @@
             this.label1.TabIndex = 19;
             this.label1.Text = "考试";
             // 
+            // comboBox_university_level
+            // 
+            this.comboBox_university_level.FormattingEnabled = true;
+            this.comboBox_university_level.Location = new System.Drawing.Point(293, 65);
+            this.comboBox_university_level.Name = "comboBox_university_level";
+            this.comboBox_university_level.Size = new System.Drawing.Size(134, 20);
+            this.comboBox_university_level.TabIndex = 24;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F);
+            this.label2.Location = new System.Drawing.Point(216, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 16);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "大学等级";
+            // 
             // ScoreUniversityThresholdForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBox_university_level);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox_grade);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox_exam);
@@ -156,6 +179,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox_exam;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem 上线预测ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menu_predict;
+        private System.Windows.Forms.ComboBox comboBox_university_level;
+        private System.Windows.Forms.Label label2;
     }
 }

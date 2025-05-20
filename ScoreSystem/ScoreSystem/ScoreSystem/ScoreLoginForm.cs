@@ -34,6 +34,7 @@ namespace ScoreSystem
 
         private async void button_login_Click(object sender, EventArgs e)
         {
+            this.button_login.Enabled = false;
             string username = textBox_username.Text;
             string password = textBox_password.Text;
             bool isSuccess = await userService.Login(username, password);
@@ -42,6 +43,7 @@ namespace ScoreSystem
                 new ScoreMainForm(this).Show();
                 this.Hide();
             }
+            this.button_login.Enabled = true;
         }
     }
 }

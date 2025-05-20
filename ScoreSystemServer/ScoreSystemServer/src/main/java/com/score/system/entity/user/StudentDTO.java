@@ -18,6 +18,7 @@ public class StudentDTO {
     @NotBlank(message = "学号不能为空")
     private String studentNumber;
     private Integer classId;
+    private Integer year;
     private Long state;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate enrollmentDate;

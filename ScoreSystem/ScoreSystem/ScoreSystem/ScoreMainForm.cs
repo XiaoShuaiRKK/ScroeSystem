@@ -22,6 +22,8 @@ namespace ScoreSystem
         private User user;
         private List<Student> students;
         private bool isLoadClass = false;
+        private ScoreTrendForm trendForm = null;
+        private string trendFormStudentNumber = null;
         public ScoreMainForm(ScoreLoginForm loginForm)
         {
             this.loginForm = loginForm;
@@ -35,6 +37,7 @@ namespace ScoreSystem
             dataGridView_students.ReadOnly = true;
             dataGridView_students.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView_students.MultiSelect = false;
+            dataGridView_students.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.FormClosed += (s, ev) =>
             {
                 Environment.Exit(0);
@@ -122,5 +125,60 @@ namespace ScoreSystem
             this.Hide();
             new ScoreUniversityThresholdForm(this).Show();
         }
+
+        private void menu_trend_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_students.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("请选择一名学生进行走势分析。");
+                return;
+            }
+
+            var selectedRow = dataGridView_students.SelectedRows[0];
+            string studentNumber = selectedRow.Cells["学号"].Value.ToString();
+
+            // 找到完整学生对象
+            var student = students.FirstOrDefault(s => s.StudentNumber == studentNumber);
+            if (student == null)
+            {
+                MessageBox.Show("未能获取到学生详细信息。");
+                return;
+            }
+
+            // 判断是否已有窗口打开，且是同一位学生
+            if (trendForm != null && !trendForm.IsDisposed)
+            {
+                if (trendFormStudentNumber == studentNumber)
+                {
+                    trendForm.BringToFront();  // 已打开，前置
+                    return;
+                }
+                else
+                {
+                    trendForm.Close();  // 不是同一学生，关闭旧窗体
+                }
+            }
+
+            trendForm = new ScoreTrendForm(student);
+            trendFormStudentNumber = studentNumber;
+            trendForm.FormClosed += (s, args) =>
+            {
+                trendForm = null;
+                trendFormStudentNumber = null;
+            };
+            trendForm.Show();
+        }
+
+        private void menu_critical_Click(object sender, EventArgs e)
+        {
+            new ScoreCriticalForm().ShowDialog();
+        }
+
+        private void menu_teacher_Click(object sender, EventArgs e)
+        {
+            new ScoreTeacherForm().ShowDialog();
+        }
+
+
     }
 }

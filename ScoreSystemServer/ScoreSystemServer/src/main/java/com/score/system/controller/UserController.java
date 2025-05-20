@@ -68,4 +68,8 @@ public class UserController {
         return staffService.batchAddTeacher(teacherDTOList);
     }
 
+    @GetMapping("/get/teachers")
+    public ResponseResult<List<Teacher>> getTeachers() {
+        return staffService.getAllTeachers();
+    }
 }

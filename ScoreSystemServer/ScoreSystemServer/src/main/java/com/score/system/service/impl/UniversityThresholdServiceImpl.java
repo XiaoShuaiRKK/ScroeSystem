@@ -46,7 +46,7 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
     public ResponseResult<ThresholdRankingResult> getGradeThresholdRanking(Integer gradeId, Long examId) {
         List<ClassEntity> classEntities = classMapper.selectList(new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId));
         List<Integer> classIds = classEntities.stream().map(c -> c.getId().intValue()).toList();
-
+        if(classIds.isEmpty()) return ResponseResult.fail("此年级无班级信息");
         List<Student> students = studentMapper.selectList(new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds));
         if (students.isEmpty()) return ResponseResult.fail("无学生数据");
 
@@ -87,7 +87,7 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
                     .collect(Collectors.toList());
 
             levelCounts.put(levelName, qualified.size());
-            levelRates.put(levelName, (double) qualified.size() / total);
+            levelRates.put(levelName, total == 0 ? 0.0 : (double) qualified.size() / total); // 避免 NaN
             levelStudentList.put(levelName, qualified);
         }
 
@@ -159,34 +159,42 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
     }
 
     @Override
-    public ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(Integer gradeId) {
-        String redisKey = "grade:threshold:probability:" + gradeId;
+    public ResponseResult<List<GradeThresholdPredictionResult>> predictGradeThresholdProbability(Integer gradeId, Long universityLevel) {
+        String redisKey = "grade:threshold:probability:" + gradeId + ":" + universityLevel;
 
-        // 从 Redis 缓存读取
         if (redisUtil.exists(redisKey)) {
             List<GradeThresholdPredictionResult> cachedResult = redisUtil.get(redisKey, List.class);
             return ResponseResult.success("获取成功（来自缓存）", cachedResult);
         }
 
-        // 没有缓存则继续查询逻辑
-        List<ClassEntity> classEntities = classMapper.selectList(new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId));
+        List<ClassEntity> classEntities = classMapper.selectList(
+                new LambdaQueryWrapper<ClassEntity>().eq(ClassEntity::getGrade, gradeId));
         List<Integer> classIds = classEntities.stream().map(c -> c.getId().intValue()).toList();
+        if (classIds.isEmpty()) return ResponseResult.fail("该年级无班级数据");
 
-        List<Student> students = studentMapper.selectList(new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds));
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds));
         if (students.isEmpty()) return ResponseResult.fail("无学生数据");
 
-        Map<String, Student> studentMap = students.stream().collect(Collectors.toMap(Student::getStudentNumber, s -> s));
+        Map<String, Student> studentMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, s -> s));
         List<String> studentNumbers = new ArrayList<>(studentMap.keySet());
 
-        List<Score> scores = scoreMapper.selectList(new LambdaQueryWrapper<Score>().in(Score::getStudentNumber, studentNumbers));
-        Map<String, List<Score>> groupedByStudent = scores.stream().collect(Collectors.groupingBy(Score::getStudentNumber));
+        List<Score> scores = scoreMapper.selectList(
+                new LambdaQueryWrapper<Score>().in(Score::getStudentNumber, studentNumbers));
+        Map<String, List<Score>> groupedByStudent = scores.stream()
+                .collect(Collectors.groupingBy(Score::getStudentNumber));
 
-        List<University> universities = universityMapper.selectList(null);
+        // 只选对应层次的大学
+        List<University> universities = universityMapper.selectList(
+                new LambdaQueryWrapper<University>().eq(University::getUniversityLevel, universityLevel));
+        if (universities.isEmpty()) return ResponseResult.fail("无对应层次的大学数据");
+
         List<GradeThresholdPredictionResult> resultList = new ArrayList<>();
-
         for (String studentNumber : studentNumbers) {
             List<Score> studentScores = groupedByStudent.getOrDefault(studentNumber, List.of());
-            Map<Long, List<Score>> examGrouped = studentScores.stream().collect(Collectors.groupingBy(Score::getExamId));
+            Map<Long, List<Score>> examGrouped = studentScores.stream()
+                    .collect(Collectors.groupingBy(Score::getExamId));
 
             List<ThresholdPredictionResult> predictionList = new ArrayList<>();
             for (University u : universities) {
@@ -205,6 +213,9 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
                 predictionList.add(tpr);
             }
 
+            // ✅ 按概率从高到低排序
+            predictionList.sort((a, b) -> Double.compare(b.getProbability(), a.getProbability()));
+
             GradeThresholdPredictionResult gtr = new GradeThresholdPredictionResult();
             gtr.setStudentNumber(studentNumber);
             gtr.setStudentName(studentMap.get(studentNumber).getName());
@@ -213,9 +224,8 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
             resultList.add(gtr);
         }
 
-        // 设置缓存：缓存 30 分钟
-        redisUtil.set(redisKey, resultList, TimeUnit.MINUTES, 30);
-
+        // 缓存 10 分钟
+        redisUtil.set(redisKey, resultList, TimeUnit.MINUTES, 10);
         return ResponseResult.success("获取成功", resultList);
     }
 
@@ -227,7 +237,7 @@ public class UniversityThresholdServiceImpl implements UniversityThresholdServic
 
     private String getLevelName(Long level) {
         return switch (level.intValue()) {
-            case 1 -> "985";
+            case 1 -> "九八五";
             case 2 -> "双一流";
             case 3 -> "优投";
             case 4 -> "本科";
