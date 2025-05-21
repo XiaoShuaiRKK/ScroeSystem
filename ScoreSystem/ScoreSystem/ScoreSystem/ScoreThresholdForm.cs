@@ -73,13 +73,16 @@ namespace ScoreSystem
             num_threshold.Increment = 0.5M;
             num_threshold.Minimum = 0M;
             num_threshold.Maximum = 150M;
-
-            this.isLoaded = true;
+            if (exams.Any())
+            {
+                this.isLoaded = true;
+            }
             ExamThresholdLoad();
         }
 
         private async void ExamThresholdLoad()
         {
+            if (!isLoaded) return;
             int examId = (int)comboBox_exam.SelectedValue;
             examSubjectThresholds = await scoreService.GetThresholds(examId);
             var displayData = examSubjectThresholds.Select(t => new
@@ -171,7 +174,7 @@ namespace ScoreSystem
                     //提示
                     IRow tipRow = sheet.CreateRow(0);
                     tipRow.HeightInPoints = 60;
-                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写考试达标分信息，严禁修改表头顺序。考试名称不能有特殊符号。年级格式应为高一上学期、高二下学期。开始时间不能早于今天、结束时间不能早于开始时间。此行不用删除！！！");
+                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写考试达标分信息，严禁修改表头顺序。考试名称不能有特殊符号。年级格式应为高一上学期、高二下学期。开始时间不能早于今天、结束时间不能早于开始时间。此行禁止删除！！！");
                     //合并单元格
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 3));
                     // 设置提示样式

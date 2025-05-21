@@ -63,7 +63,7 @@ namespace ScoreSystem.Service
 
         public async Task<bool> AddTeacher(List<Teacher> teachers)
         {
-            string url = HttpUtil.GetUrl("/batch/add/teacher");
+            string url = HttpUtil.GetUrl("/user/batch/add/teacher");
             // 序列化为 JSON
             string jsonBody = JsonSerializer.Serialize(teachers, JsonUtil.GetRequestOptions());
             string jsonResult = await HttpUtil.PostAsync(url, jsonBody);

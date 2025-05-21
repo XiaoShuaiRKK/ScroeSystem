@@ -76,7 +76,10 @@ namespace ScoreSystem
                 }).ToList();
             comboBox_grade.DisplayMember = "Name";
             comboBox_grade.ValueMember = "Value";
-            isLoaded = true;
+            if (exams.Any())
+            {
+                isLoaded = true;
+            }
             RankInit();
         }
 

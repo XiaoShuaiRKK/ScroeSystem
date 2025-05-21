@@ -59,6 +59,7 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public ResponseResult<List<ClassDTO>> getAllClasses() {
         List<ClassEntity> classEntities = classMapper.selectList(null);
+        if (classEntities == null) return ResponseResult.success(new ArrayList<>());
         List<ClassDTO> classDTOList = new ArrayList<>();
         for (ClassEntity classEntity : classEntities){
             String name = teacherMapper.selectById(classEntity.getHeadTeacherId()).getName();
@@ -66,5 +67,34 @@ public class ClassServiceImpl implements ClassService {
             classDTOList.add(classDTO);
         }
         return ResponseResult.success(classDTOList);
+    }
+
+    @Override
+    public ResponseResult<Boolean> updateClass(ClassDTO classDTO) {
+        // 1. 校验班主任是否存在
+        Long teacherId = classDTO.getHeadTeacherId();
+        if (teacherId != null && teacherMapper.selectById(teacherId) == null) {
+            return ResponseResult.fail("老师ID " + teacherId + " 不存在");
+        }
+
+        // 2. 校验班级是否存在
+        ClassEntity existingClass = classMapper.selectById(classDTO.getId());
+        if (existingClass == null) {
+            return ResponseResult.fail("班级ID " + classDTO.getId() + " 不存在");
+        }
+
+        // 3. 校验班级名称是否重复（排除当前班级自身）
+        ClassEntity sameNameClass = classMapper.selectByClassName(classDTO.getName());
+        if (sameNameClass != null && !sameNameClass.getId().equals(classDTO.getId())) {
+            return ResponseResult.fail("班级名称 " + classDTO.getName() + " 已存在");
+        }
+
+        // 4. 转换并更新
+        ClassEntity updated = ClassConverter.toEntity(classDTO);
+        int result = classMapper.updateById(updated);
+
+        return result > 0
+                ? ResponseResult.success("更新成功", true)
+                : ResponseResult.fail("更新失败");
     }
 }

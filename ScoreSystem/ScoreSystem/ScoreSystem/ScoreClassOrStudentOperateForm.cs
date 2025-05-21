@@ -72,7 +72,8 @@ namespace ScoreSystem
                     headerRow.CreateCell(7).SetCellValue("分科");
                     headerRow.CreateCell(8).SetCellValue("选科一");
                     headerRow.CreateCell(9).SetCellValue("选科二");
-                    for (int i = 0; i <= 9; i++)
+                    headerRow.CreateCell(10).SetCellValue("学年");
+                    for (int i = 0; i <= 10; i++)
                     {
                         sheet.AutoSizeColumn(i);
                     }
@@ -94,23 +95,23 @@ namespace ScoreSystem
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Excel文件(*.xlsx)|*.xlsx";
-            if(openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     List<StudentDTO> students = new List<StudentDTO>();
                     List<StudentFormVO> showStudents = new List<StudentFormVO>();
-                    using(FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                    using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
                     {
                         IWorkbook workbook = new XSSFWorkbook(fs);
                         ISheet sheet = workbook.GetSheetAt(0);
 
-                        //从第2行开始读取(索引从0开始)
-                        for(int i = 2; i <= sheet.LastRowNum; i++)
+                        for (int i = 2; i <= sheet.LastRowNum; i++)
                         {
                             int displayRow = i + 1;
                             IRow row = sheet.GetRow(i);
                             if (row == null || row.Cells.All(c => c.CellType == CellType.Blank)) continue;
+
                             string studentNumber = row.GetCell(0)?.ToString().Trim();
                             string name = row.GetCell(1)?.ToString().Trim();
                             string username = row.GetCell(2)?.ToString().Trim();
@@ -119,44 +120,45 @@ namespace ScoreSystem
                             string stateName = row.GetCell(5)?.ToString().Trim();
                             DateTime enrollmentDate = DataUtil.ParseDateCell(row.GetCell(6));
                             string subjectGroupName = row.GetCell(7)?.ToString().Trim();
-                            string electiveCourse1Id = row.GetCell(8)?.ToString().Trim();
-                            string electiveCourse2Id = row.GetCell(9)?.ToString().Trim();
+                            string electiveCourse1Name = row.GetCell(8)?.ToString().Trim();
+                            string electiveCourse2Name = row.GetCell(9)?.ToString().Trim();
+                            string yearStr = row.GetCell(10)?.ToString().Trim();
 
-                            //状态检查
+                            // 状态校验
                             if (!DataUtil.TryParseStudentState(stateName, out StudentStateEnum state))
                             {
                                 MessageBox.Show($"第{displayRow}行，第6列“状态”字段无效，只能是：正常、已毕业、劝退、休学。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            //日期检查
+
+                            // 入学时间校验
                             if (enrollmentDate == DateTime.MinValue || enrollmentDate.Date > DateTime.Today)
                             {
                                 MessageBox.Show($"第{displayRow}行，第7列“入学时间”字段无效，必须是有效且不晚于今天的日期。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            //分科检查
+
+                            // 分科校验
                             if (!DataUtil.TryParseSubjectGroup(subjectGroupName, out SubjectGroupEnum subjectGroup))
                             {
                                 MessageBox.Show($"第{displayRow}行，第8列“分科”字段无效，只能是：理科、文科。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            // 选科一和选科二示例：这里假设用CourseEnum枚举转换
-                            string electiveCourse1Name = row.GetCell(8)?.ToString().Trim();
-                            string electiveCourse2Name = row.GetCell(9)?.ToString().Trim();
 
-                            // 分科1检查
+                            // 选科一校验
                             int course1 = DataUtil.ParseCouseNameToId(electiveCourse1Name);
                             if (electiveCourse1Name != "" && course1 == -1)
                             {
                                 MessageBox.Show($"第{displayRow}行，第9列“选科一”字段无效。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            if(course1 >= 0 && course1 <= 4)
+                            if (course1 >= 0 && course1 <= 4)
                             {
                                 MessageBox.Show($"第{displayRow}行，第9列“选科一”只能为 化学,政治,地理,生物。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            //分科2检查
+
+                            // 选科二校验
                             int course2 = DataUtil.ParseCouseNameToId(electiveCourse2Name);
                             if (electiveCourse2Name != "" && course2 == -1)
                             {
@@ -165,21 +167,32 @@ namespace ScoreSystem
                             }
                             if (course2 >= 0 && course2 <= 4)
                             {
-                                MessageBox.Show($"第{displayRow}行，第10列“选科一”只能为 化学,政治,地理,生物。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show($"第{displayRow}行，第10列“选科二”只能为 化学,政治,地理,生物。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            if(course1 == course2)
+
+                            if (course1 == course2)
                             {
                                 MessageBox.Show($"第{displayRow}行，两个选科不能重复。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
 
+                            // 班级校验
                             int classId = classService.GetClassId(className);
-                            if(classId == -1)
+                            if (classId == -1)
                             {
                                 MessageBox.Show($"第{displayRow}行，第5列 班级格式错误或者班级不存在", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
+
+                            // 学年校验
+                            if (!int.TryParse(yearStr, out int year) || year > DateTime.Now.Year || year < 1900)
+                            {
+                                MessageBox.Show($"第{displayRow}行，第11列“学年”字段无效，必须是1900-今年之间的整数。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            // 添加学生对象
                             StudentDTO student = new StudentDTO
                             {
                                 StudentNumber = studentNumber,
@@ -188,12 +201,16 @@ namespace ScoreSystem
                                 Password = password,
                                 ClassId = classId,
                                 State = (int)state,
-                                EnrollmentDate = enrollmentDate.Date,  // 只保留日期
+                                EnrollmentDate = enrollmentDate.Date,
                                 SubjectGroupId = (int)subjectGroup,
                                 ElectiveCourse1Id = course1,
-                                ElectiveCourse2Id = course2
+                                ElectiveCourse2Id = course2,
+                                Year = year
                             };
+
                             students.Add(student);
+
+                            // 展示对象
                             StudentFormVO studentForm = new StudentFormVO
                             {
                                 StudentNumber = studentNumber,
@@ -202,19 +219,21 @@ namespace ScoreSystem
                                 Password = password,
                                 ClassName = className,
                                 State = stateName,
-                                EnrollmentDate = enrollmentDate.Date,  // 只保留日期
+                                EnrollmentDate = enrollmentDate.Date,
                                 SubjectGroupName = subjectGroupName,
                                 ElectiveCourse1Name = electiveCourse1Name,
-                                ElectiveCourse2Name = electiveCourse2Name
+                                ElectiveCourse2Name = electiveCourse2Name,
+                                Year = year
                             };
                             showStudents.Add(studentForm);
                         }
                     }
+
                     this.students = students;
                     this.displayStudents = showStudents;
                     DataLoad();
-                    
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show("导入失败，请确认文件格式正确。\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -236,6 +255,7 @@ namespace ScoreSystem
             dataGridView_preview.Columns["SubjectGroupName"].HeaderText = "分科";
             dataGridView_preview.Columns["ElectiveCourse1Name"].HeaderText = "选科一";
             dataGridView_preview.Columns["ElectiveCourse2Name"].HeaderText = "选科二";
+            dataGridView_preview.Columns["Year"].HeaderText = "学年";
         }
 
         private void button_cancel_Click(object sender, EventArgs e)

@@ -34,6 +34,10 @@ namespace ScoreSystem
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 班级导入";
             this.dataGridView_class.ReadOnly = true;
             this.dataGridView_preview.ReadOnly = true;
+            this.comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.comboBox_subject_group.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.comboBox_teacher.DropDownStyle = ComboBoxStyle.DropDownList;
+            dataGridView_preview.CellContentClick += dataGridView_preview_CellContentClick;
             ControlsDataLoad();
             LoadClass();
         }
@@ -78,7 +82,7 @@ namespace ScoreSystem
             // 提示信息
             IRow tipRow = sheet.CreateRow(0);
             tipRow.HeightInPoints = 60;
-            tipRow.CreateCell(0).SetCellValue("请填写班级信息，教师工号请从下拉列表中获取");
+            tipRow.CreateCell(0).SetCellValue("请填写班级信息，教师工号请从下拉列表中获取。此行禁止删除！！！");
 
             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 4));
             IFont tipFont = workbook.CreateFont();
@@ -181,7 +185,7 @@ namespace ScoreSystem
                             Name = className,
                             Grade = (int)gradeEnum,
                             SubjectGroupId = (int)groupEnum,
-                            HeadTeacherId = (int)teacher.UserId,
+                            HeadTeacherId = (int)teacher.Id,
                             TeacherName = teacher.Name
                         });
                     }
@@ -199,22 +203,64 @@ namespace ScoreSystem
         private void LoadClassPreview()
         {
             dataGridView_preview.DataSource = null;
-            dataGridView_preview.DataSource = previewClass.Select(c => new
+
+            var displayData = previewClass.Select((c, index) => new
             {
+                序号 = index + 1,
                 班级名称 = c.Name,
                 年级 = ((GradeEnum)c.Grade).ToString(),
                 学科组 = ((SubjectGroupEnum)c.SubjectGroupId).ToString(),
                 班主任 = c.TeacherName
             }).ToList();
 
+            dataGridView_preview.DataSource = displayData;
+
+            // 设置列自适应
             dataGridView_preview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // 确保先清除旧的“操作”列，避免重复添加
+            if (dataGridView_preview.Columns.Contains("操作"))
+                dataGridView_preview.Columns.Remove("操作");
+
+            // 添加操作列
+            DataGridViewLinkColumn deleteColumn = new DataGridViewLinkColumn();
+            deleteColumn.Name = "操作";
+            deleteColumn.HeaderText = "操作";
+            deleteColumn.Text = "删除";
+            deleteColumn.UseColumnTextForLinkValue = true;
+
+            dataGridView_preview.Columns.Add(deleteColumn);
+
+            // 设置行为：只读、整行选中、不可多选
+            dataGridView_preview.ReadOnly = true;
+            dataGridView_preview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView_preview.MultiSelect = false;
+        }
+
+        private void dataGridView_preview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var grid = sender as DataGridView;
+
+            if (grid.Columns[e.ColumnIndex].Name == "操作")
+            {
+                if (e.RowIndex >= previewClass.Count) return;
+
+                var result = MessageBox.Show("确定要删除这条班级信息吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    previewClass.RemoveAt(e.RowIndex);
+                    LoadClassPreview();
+                }
+            }
         }
 
         private async void LoadClass()
-        {
+        { 
             dataGridView_class.DataSource = null;
             displayClass = await classService.GetAllClasses();
-            dataGridView_class.DataSource = previewClass.Select(c => new
+            dataGridView_class.DataSource = displayClass.Select(c => new
             {
                 班级名称 = c.Name,
                 年级 = ((GradeEnum)c.Grade).ToString(),
@@ -238,11 +284,12 @@ namespace ScoreSystem
                         MessageBox.Show("未导入班级数据 无法添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    bool isSuccess = await classService.AddExams(previewClass);
+                    bool isSuccess = await classService.AddClass(previewClass);
                     if (isSuccess)
                     {
                         MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ClearData();
+                        LoadClass();
                     }
                 }
                 catch (Exception ex)
@@ -259,6 +306,8 @@ namespace ScoreSystem
         private void ClearData()
         {
             this.textBox_name.Text = "";
+            this.previewClass = null;
+            this.dataGridView_preview.DataSource = null;
         }
     }
 }

@@ -35,6 +35,7 @@
             this.button_login = new System.Windows.Forms.Button();
             this.linkLabel_forget_password = new System.Windows.Forms.LinkLabel();
             this.button_register = new System.Windows.Forms.Button();
+            this.linkLabel_server = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -106,11 +107,23 @@
             this.button_register.UseVisualStyleBackColor = true;
             this.button_register.Click += new System.EventHandler(this.button_register_Click);
             // 
+            // linkLabel_server
+            // 
+            this.linkLabel_server.AutoSize = true;
+            this.linkLabel_server.Location = new System.Drawing.Point(143, 265);
+            this.linkLabel_server.Name = "linkLabel_server";
+            this.linkLabel_server.Size = new System.Drawing.Size(65, 12);
+            this.linkLabel_server.TabIndex = 8;
+            this.linkLabel_server.TabStop = true;
+            this.linkLabel_server.Text = "设置服务器";
+            this.linkLabel_server.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_server_LinkClicked);
+            // 
             // ScoreLoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 476);
+            this.Controls.Add(this.linkLabel_server);
             this.Controls.Add(this.button_register);
             this.Controls.Add(this.linkLabel_forget_password);
             this.Controls.Add(this.button_login);
@@ -119,7 +132,6 @@
             this.Controls.Add(this.textBox_username);
             this.Controls.Add(this.label1);
             this.Name = "ScoreLoginForm";
-            this.Text = "成绩管理系统";
             this.Load += new System.EventHandler(this.ScoreLoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -135,5 +147,6 @@
         private System.Windows.Forms.Button button_login;
         private System.Windows.Forms.LinkLabel linkLabel_forget_password;
         private System.Windows.Forms.Button button_register;
+        private System.Windows.Forms.LinkLabel linkLabel_server;
     }
 }

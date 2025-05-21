@@ -45,5 +45,10 @@ namespace ScoreSystem
             }
             this.button_login.Enabled = true;
         }
+
+        private void linkLabel_server_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new ScoreSetServcer().ShowDialog();
+        }
     }
 }

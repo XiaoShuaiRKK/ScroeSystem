@@ -62,8 +62,10 @@ namespace ScoreSystem
                 .ToList();
             comboBox_mode.DisplayMember = "Name";
             comboBox_mode.ValueMember = "Value";
-
-            isLoaded = true;
+            if (exams.Any())
+            {
+                isLoaded = true;
+            }
             RankInit();
         }
 

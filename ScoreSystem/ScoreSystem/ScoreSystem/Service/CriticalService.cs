@@ -45,5 +45,21 @@ namespace ScoreSystem.Service
                 return false;
             }
         }
+
+        public async Task<List<CriticalStudentLog>> GetCriticalByGrade(int grade,int year)
+        {
+            string url = HttpUtil.GetUrl($"/critical/get?grade={grade}&year={year}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<CriticalStudentLog>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<CriticalStudentLog>();
+            }
+        }
     }
 }

@@ -38,12 +38,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_name = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBox_check_password = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button_register
             // 
             this.button_register.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_register.Location = new System.Drawing.Point(303, 261);
+            this.button_register.Location = new System.Drawing.Point(305, 310);
             this.button_register.Name = "button_register";
             this.button_register.Size = new System.Drawing.Size(82, 32);
             this.button_register.TabIndex = 14;
@@ -54,7 +56,7 @@
             // button_login
             // 
             this.button_login.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_login.Location = new System.Drawing.Point(178, 261);
+            this.button_login.Location = new System.Drawing.Point(175, 310);
             this.button_login.Name = "button_login";
             this.button_login.Size = new System.Drawing.Size(75, 32);
             this.button_login.TabIndex = 12;
@@ -102,7 +104,7 @@
             // 
             this.comboBox_role.Font = new System.Drawing.Font("宋体", 12F);
             this.comboBox_role.FormattingEnabled = true;
-            this.comboBox_role.Location = new System.Drawing.Point(119, 197);
+            this.comboBox_role.Location = new System.Drawing.Point(119, 245);
             this.comboBox_role.Name = "comboBox_role";
             this.comboBox_role.Size = new System.Drawing.Size(373, 24);
             this.comboBox_role.TabIndex = 17;
@@ -111,7 +113,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F);
-            this.label3.Location = new System.Drawing.Point(50, 200);
+            this.label3.Location = new System.Drawing.Point(50, 245);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 16);
             this.label3.TabIndex = 18;
@@ -135,11 +137,31 @@
             this.label4.TabIndex = 19;
             this.label4.Text = "姓名:";
             // 
+            // textBox_check_password
+            // 
+            this.textBox_check_password.Font = new System.Drawing.Font("宋体", 10F);
+            this.textBox_check_password.Location = new System.Drawing.Point(135, 189);
+            this.textBox_check_password.Name = "textBox_check_password";
+            this.textBox_check_password.Size = new System.Drawing.Size(357, 23);
+            this.textBox_check_password.TabIndex = 22;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 12F);
+            this.label5.Location = new System.Drawing.Point(50, 196);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(79, 16);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "确认密码:";
+            // 
             // ScoreRegistionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(699, 450);
+            this.Controls.Add(this.textBox_check_password);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox_name);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -170,5 +192,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_name;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox_check_password;
+        private System.Windows.Forms.Label label5;
     }
 }

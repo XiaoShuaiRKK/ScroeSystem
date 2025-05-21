@@ -147,7 +147,7 @@ namespace ScoreSystem
 
             IRow tipRow = sheet.CreateRow(0);
             tipRow.HeightInPoints = 60;
-            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，删除或修改列顺序将导致导入失败。年级如“高一上学期”，大学等级如“双一流”，组合如“理科”");
+            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，删除或修改列顺序将导致导入失败。年级如“高一上学期”，大学等级如“双一流”，组合如“理科”。此行禁止删除！！！");
 
             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 5));
             IFont tipFont = workbook.CreateFont();

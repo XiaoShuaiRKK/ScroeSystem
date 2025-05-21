@@ -4,10 +4,10 @@
 
 <mapper namespace="com.score.system.mapper.ExamMapper">
     <insert id="batchInsertExams">
-        INSERT INTO exams (name, grade, start_date, end_date, created_at, updated_at)
+        INSERT INTO exams (name, grade, year, start_date, end_date, created_at, updated_at)
         VALUES
         <foreach collection="exams" item="exam" separator=",">
-            (#{exam.name}, #{exam.grade}, #{exam.startDate}, #{exam.endDate}, #{exam.createdAt}, #{exam.updatedAt})
+            (#{exam.name}, #{exam.grade}, #{exam.year},#{exam.startDate}, #{exam.endDate}, #{exam.createdAt}, #{exam.updatedAt})
         </foreach>
     </insert>
 </mapper>

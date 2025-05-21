@@ -173,6 +173,7 @@
             this.menu_class.Name = "menu_class";
             this.menu_class.Size = new System.Drawing.Size(68, 21);
             this.menu_class.Text = "班级管理";
+            this.menu_class.Click += new System.EventHandler(this.menu_class_Click);
             // 
             // ScoreMainForm
             // 

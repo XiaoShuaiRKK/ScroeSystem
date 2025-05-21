@@ -83,3 +83,12 @@ F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSy
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreTrendForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreCriticalConfigForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreCriticalForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreClassEditForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreClassForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreClassImportForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreTeacherForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreSetServcer.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\bin\Debug\ScoreSystem.exe.manifest
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\bin\Debug\ScoreSystem.application
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.exe.manifest
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.application

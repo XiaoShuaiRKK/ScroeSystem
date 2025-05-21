@@ -66,7 +66,10 @@ namespace ScoreSystem
             comboBox_exam.DisplayMember = "Name";
             comboBox_exam.ValueMember = "Id";
 
-            isLoaded = true;
+            if (exams.Any())
+            {
+                isLoaded = true;
+            }
 
             LoadThreshold();
         }

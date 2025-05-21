@@ -70,7 +70,10 @@ namespace ScoreSystem
             comboBox_class.DataSource = classEntities;
             comboBox_class.DisplayMember = "Name";
             comboBox_class.ValueMember = "Id";
-            isLoaded = true;
+            if (exams.Any())
+            {
+                isLoaded = true;
+            }
             ScoreInit();
         }
 

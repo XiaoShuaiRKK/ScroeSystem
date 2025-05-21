@@ -38,7 +38,8 @@ namespace ScoreSystem.Service
                 enrollmentDate = s.EnrollmentDate.ToString("yyyy-MM-dd"), // 关键格式化
                 subjectGroupId = s.SubjectGroupId,
                 electiveCourse1Id = s.ElectiveCourse1Id,
-                electiveCourse2Id = s.ElectiveCourse2Id
+                electiveCourse2Id = s.ElectiveCourse2Id,
+                year = s.Year
             }).ToList();
 
             // 序列化为 JSON

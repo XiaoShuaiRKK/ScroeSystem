@@ -152,4 +152,29 @@ public class CriticalStudentServiceImpl implements CriticalStudentService {
 
         return ResponseResult.success("生成完成");
     }
+
+    @Override
+    public ResponseResult<List<CriticalStudentLog>> getAllCriticalStudentLog(int grade, int year) {
+        // 1. 获取指定年级和年份的所有考试
+        List<Exam> exams = examMapper.selectList(new LambdaQueryWrapper<Exam>()
+                .eq(Exam::getGrade, grade)
+                .eq(Exam::getYear, year));
+
+        if (exams.isEmpty()) {
+            return ResponseResult.fail("当前年级学年下没有考试数据");
+        }
+
+        // 2. 获取考试ID列表
+        List<Long> examIds = exams.stream()
+                .map(Exam::getId)
+                .collect(Collectors.toList());
+
+        // 3. 查询临界学生日志
+        List<CriticalStudentLog> logs = criticalStudentLogMapper.selectList(
+                new LambdaQueryWrapper<CriticalStudentLog>()
+                        .in(CriticalStudentLog::getExamId, examIds)
+        );
+
+        return ResponseResult.success(logs);
+    }
 }

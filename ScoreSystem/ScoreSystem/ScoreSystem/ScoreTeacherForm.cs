@@ -112,7 +112,7 @@ namespace ScoreSystem
             // 提示信息
             IRow tipRow = sheet.CreateRow(0);
             tipRow.HeightInPoints = 60;
-            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，用户名不可重复，状态如“启用/禁用”");
+            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，用户名不可重复，状态如“正常,辞退,休假,权限限制”。此行不用删除");
 
             sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 4));
             IFont tipFont = workbook.CreateFont();

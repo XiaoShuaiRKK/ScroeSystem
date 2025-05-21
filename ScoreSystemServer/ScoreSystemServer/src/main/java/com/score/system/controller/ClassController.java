@@ -31,6 +31,11 @@ public class ClassController {
         return classService.batchAddClass(classDTOList);
     }
 
+    @PostMapping("/update")
+    public ResponseResult<Boolean> updateClass(@RequestBody @Valid ClassDTO classDTO) {
+        return classService.updateClass(classDTO);
+    }
+
     @GetMapping("/getAll")
     public ResponseResult<List<ClassDTO>> getAllClasses(){
         return classService.getAllClasses();

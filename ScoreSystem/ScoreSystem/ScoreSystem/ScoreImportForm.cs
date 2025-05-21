@@ -50,7 +50,7 @@ namespace ScoreSystem
                     //提示
                     IRow tipRow = sheet.CreateRow(0);
                     tipRow.HeightInPoints = 60;
-                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写分数信息，严禁修改表头顺序。考试名称必须要已经发布(存在)的，评论可以不填。此行不用删除！！！");
+                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写分数信息，严禁修改表头顺序。考试名称必须要已经发布(存在)的，评论可以不填。此行禁止删除！！！");
                     //合并单元格
                     sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 9));
                     // 设置提示样式

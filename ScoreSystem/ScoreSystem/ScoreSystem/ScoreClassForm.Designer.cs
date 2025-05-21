@@ -69,6 +69,7 @@
             this.menu_class_edit.Name = "menu_class_edit";
             this.menu_class_edit.Size = new System.Drawing.Size(68, 21);
             this.menu_class_edit.Text = "设置班级";
+            this.menu_class_edit.Click += new System.EventHandler(this.menu_class_edit_Click);
             // 
             // button_back
             // 

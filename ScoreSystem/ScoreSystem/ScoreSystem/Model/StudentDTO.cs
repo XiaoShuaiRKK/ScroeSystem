@@ -19,6 +19,7 @@ namespace ScoreSystem.Model
         private int subjectGroupId;
         private int electiveCourse1Id;
         private int electiveCourse2Id;
+        private int year;
 
         public string Name { get => name; set => name = value; }
         public string UserName { get => userName; set => userName = value; }
@@ -30,5 +31,6 @@ namespace ScoreSystem.Model
         public int SubjectGroupId { get => subjectGroupId; set => subjectGroupId = value; }
         public int ElectiveCourse1Id { get => electiveCourse1Id; set => electiveCourse1Id = value; }
         public int ElectiveCourse2Id { get => electiveCourse2Id; set => electiveCourse2Id = value; }
+        public int Year { get => year; set => year = value; }
     }
 }

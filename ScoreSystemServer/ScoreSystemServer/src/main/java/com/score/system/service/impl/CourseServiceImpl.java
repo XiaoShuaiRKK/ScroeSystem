@@ -132,6 +132,7 @@ public class CourseServiceImpl implements CourseService {
         }
 
         Exam exam = ExamConverter.toEntity(examDTO);
+        exam.setYear(exam.getStartDate().getYear());
         int result = examMapper.insert(exam);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("添加考试失败");
     }
@@ -169,6 +170,7 @@ public class CourseServiceImpl implements CourseService {
             }
 
             Exam entity = ExamConverter.toEntity(exam);
+            entity.setYear(entity.getStartDate().getYear());
             entity.setCreatedAt(LocalDateTime.now());
             entity.setUpdatedAt(LocalDateTime.now());
             examList.add(entity);

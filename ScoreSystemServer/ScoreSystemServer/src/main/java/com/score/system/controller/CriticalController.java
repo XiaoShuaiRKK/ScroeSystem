@@ -2,6 +2,7 @@ package com.score.system.controller;
 
 import com.score.system.entity.ResponseResult;
 import com.score.system.entity.school.CriticalConfig;
+import com.score.system.entity.school.CriticalStudentLog;
 import com.score.system.service.CriticalStudentService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,4 +38,10 @@ public class CriticalController {
                                                            @RequestParam("year") int year){
         return criticalStudentService.generateCriticalStudents(grade, year);
     }
+
+    @GetMapping("/get")
+    public ResponseResult<List<CriticalStudentLog>> getCriticalByGrade(@RequestParam("grade") int grade,@RequestParam("year") int year){
+        return criticalStudentService.getAllCriticalStudentLog(grade,year);
+    }
+
 }

@@ -75,7 +75,10 @@ namespace ScoreSystem
             comboBox_class.DataSource = classEntities;
             comboBox_class.DisplayMember = "Name";
             comboBox_class.ValueMember = "Id";
-            isLoadClass = true;
+            if (classEntities.Any())
+            {
+                isLoadClass = true;
+            }
             StudentDataInit();
         }
 
@@ -89,8 +92,10 @@ namespace ScoreSystem
 
         private async void StudentDataInit()
         {
+            if (!isLoadClass) return;
             int selectedId = (int)comboBox_class.SelectedValue;
             students = await teacherService.GetStudentByClassId(selectedId);
+            if (students == null || !students.Any()) return;
             dataGridView_students.Columns.Clear();
             var displayStudents = students.Select(s => new
             {
@@ -179,6 +184,10 @@ namespace ScoreSystem
             new ScoreTeacherForm().ShowDialog();
         }
 
-
+        private void menu_class_Click(object sender, EventArgs e)
+        {
+            new ScoreClassForm(this).Show();
+            this.Hide();
+        }
     }
 }

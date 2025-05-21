@@ -150,7 +150,7 @@ namespace ScoreSystem
                 ISheet sheet = workbook.CreateSheet("大学信息");
 
                 IRow tipRow = sheet.CreateRow(0);
-                tipRow.CreateCell(0).SetCellValue("请按照模板填写大学信息，层次如 九八五 双一流(不能填写数字985和211) 优投 本科；年份仅填写年份（如2024）；此行不用删除！");
+                tipRow.CreateCell(0).SetCellValue("请按照模板填写大学信息，层次如 九八五 双一流(不能填写数字985和211) 优投 本科；年份仅填写年份（如2024）；此行禁止删除！");
                 sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 4));
 
                 IRow header = sheet.CreateRow(1);

@@ -11,7 +11,7 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 12/05/2025 08:43:54
+ Date: 21/05/2025 14:44:42
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,6 @@ CREATE TABLE `classes`  (
 -- ----------------------------
 -- Records of classes
 -- ----------------------------
-INSERT INTO `classes` VALUES (1, '高一2班', 1, 2, 1, '2025-05-11 00:40:33', '2025-05-11 00:40:33');
 
 -- ----------------------------
 -- Table structure for courses
@@ -46,7 +45,7 @@ CREATE TABLE `courses`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of courses
@@ -60,6 +59,52 @@ INSERT INTO `courses` VALUES (6, '化学');
 INSERT INTO `courses` VALUES (7, '政治');
 INSERT INTO `courses` VALUES (8, '地理');
 INSERT INTO `courses` VALUES (9, '生物');
+
+-- ----------------------------
+-- Table structure for critical_config
+-- ----------------------------
+DROP TABLE IF EXISTS `critical_config`;
+CREATE TABLE `critical_config`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `grade` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `university_level` int(11) NOT NULL,
+  `target_count` int(11) NOT NULL,
+  `critical_ratio` double NOT NULL,
+  `subject_group_id` bigint(20) NOT NULL,
+  `deleted` tinyint(4) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of critical_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for critical_student_log
+-- ----------------------------
+DROP TABLE IF EXISTS `critical_student_log`;
+CREATE TABLE `critical_student_log`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `exam_id` bigint(20) NOT NULL,
+  `student_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `student_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `university_level` int(11) NOT NULL,
+  `score_rank` int(11) NOT NULL,
+  `target_rank` int(11) NOT NULL,
+  `gap` int(11) NOT NULL,
+  `score` double NOT NULL,
+  `subject_group_id` bigint(20) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of critical_student_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for evaluation
@@ -83,6 +128,24 @@ CREATE TABLE `evaluation`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for exam_subject_threshold
+-- ----------------------------
+DROP TABLE IF EXISTS `exam_subject_threshold`;
+CREATE TABLE `exam_subject_threshold`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `exam_id` bigint(20) NOT NULL,
+  `course_id` bigint(20) NOT NULL,
+  `threshold_score` double NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of exam_subject_threshold
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for exams
 -- ----------------------------
 DROP TABLE IF EXISTS `exams`;
@@ -92,18 +155,15 @@ CREATE TABLE `exams`  (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `grade` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of exams
 -- ----------------------------
-INSERT INTO `exams` VALUES (1, '第一次期末考试', '2025-05-12', '2025-05-12', 1, '2025-05-12 07:42:56', '2025-05-12 07:42:56');
-INSERT INTO `exams` VALUES (2, '第三次集中考试', '2025-05-12', '2025-05-13', 2, '2025-05-12 07:42:56', '2025-05-12 07:42:56');
-INSERT INTO `exams` VALUES (3, '第一次期末考试', '2025-05-12', '2025-05-12', 2, '2025-05-12 07:55:05', '2025-05-12 07:55:05');
-INSERT INTO `exams` VALUES (4, '第三次集中考试', '2025-05-12', '2025-05-12', 3, '2025-05-12 07:55:05', '2025-05-12 07:55:05');
 
 -- ----------------------------
 -- Table structure for role
@@ -128,19 +188,16 @@ INSERT INTO `role` VALUES (4, '管理员');
 -- ----------------------------
 DROP TABLE IF EXISTS `scores`;
 CREATE TABLE `scores`  (
-  `id` bigint(20) NOT NULL,
-  `student_id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `student_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `course_id` bigint(20) NOT NULL,
   `exam_id` bigint(20) NOT NULL,
-  `score` int(11) NOT NULL,
-  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `score` double NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `scores_student_id_fk`(`student_id`) USING BTREE,
-  INDEX `scores_course_id_fk`(`course_id`) USING BTREE,
-  INDEX `scores_exam_id`(`exam_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of scores
@@ -156,18 +213,33 @@ CREATE TABLE `student`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `student_number` bigint(20) NOT NULL,
   `class_id` int(11) NOT NULL,
-  `enrollment_date` datetime NOT NULL,
+  `enrollment_date` date NOT NULL,
   `state` bigint(20) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = FIXED;
+) ENGINE = MyISAM AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (1, 9, '胡旻旻', 20250012, 1, '2025-05-10 12:49:42', 1, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
-INSERT INTO `student` VALUES (2, 10, '陈颖影', 20250013, 1, '2025-05-10 12:49:42', 1, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
+
+-- ----------------------------
+-- Table structure for student_class_history
+-- ----------------------------
+DROP TABLE IF EXISTS `student_class_history`;
+CREATE TABLE `student_class_history`  (
+  `student_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class_id` bigint(20) NOT NULL,
+  `grade` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of student_class_history
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for student_state
@@ -192,15 +264,15 @@ INSERT INTO `student_state` VALUES (4, '休学');
 -- ----------------------------
 DROP TABLE IF EXISTS `student_subject_selection`;
 CREATE TABLE `student_subject_selection`  (
-  `student_id` bigint(20) NOT NULL,
+  `student_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_group_id` bigint(20) NOT NULL,
-  `elective_coures1_id` bigint(20) NOT NULL,
-  `elective_coures2_id` bigint(20) NOT NULL,
+  `elective_course1_id` bigint(20) NOT NULL,
+  `elective_course2_id` bigint(20) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`student_id`) USING BTREE,
-  INDEX `student_subject_elective_course1_id_fk`(`elective_coures1_id`) USING BTREE,
-  INDEX `student_subject_elective_coures2_fk`(`elective_coures2_id`) USING BTREE
+  PRIMARY KEY (`student_number`) USING BTREE,
+  INDEX `student_subject_elective_course1_id_fk`(`elective_course1_id`) USING BTREE,
+  INDEX `student_subject_elective_coures2_fk`(`elective_course2_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -244,8 +316,6 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
-INSERT INTO `teacher` VALUES (1, 4, '王媛媛', 1, '20250001', '2025-05-10 13:09:07', '2025-05-10 13:09:07');
-INSERT INTO `teacher` VALUES (2, 6, '黄云华', 1, '20250002', '2025-05-10 13:27:09', '2025-05-10 13:27:09');
 
 -- ----------------------------
 -- Table structure for teacher_course
@@ -254,10 +324,8 @@ DROP TABLE IF EXISTS `teacher_course`;
 CREATE TABLE `teacher_course`  (
   `teacher_id` bigint(20) NOT NULL,
   `course_id` bigint(20) NOT NULL,
-  `class_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`teacher_id`) USING BTREE,
-  INDEX `teacher_course_course_id_fk`(`course_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = FIXED;
+  `class_id` bigint(20) NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher_course
@@ -289,14 +357,14 @@ CREATE TABLE `university`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `university_level` bigint(20) NOT NULL,
-  `science_score_line` int(11) NOT NULL,
-  `art_score_line` int(11) NOT NULL,
-  `year` date NOT NULL,
+  `science_score_line` double NOT NULL,
+  `art_score_line` double NOT NULL,
+  `year` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `university_level_id_fk`(`university_level`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of university
@@ -310,11 +378,15 @@ CREATE TABLE `university_level`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of university_level
 -- ----------------------------
+INSERT INTO `university_level` VALUES (1, '九八五');
+INSERT INTO `university_level` VALUES (2, '双一流');
+INSERT INTO `university_level` VALUES (3, '优投');
+INSERT INTO `university_level` VALUES (4, '本科');
 
 -- ----------------------------
 -- Table structure for user
@@ -332,20 +404,11 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_level_fk`(`level`) USING BTREE,
   INDEX `user_role_fk`(`role`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '小衰', 'xiaoshuai', '$2a$10$UfhD5MBhGoU4HTlT6wd5yO/48bkN2CooK8Qg.TIriln2iGZDsd85C', 1, 4, '2025-05-10 13:03:29', '2025-05-10 13:03:29');
-INSERT INTO `user` VALUES (2, '王媛媛', 'wangyuanyuan', '$2a$10$BY6AaIzgwLnCyUADnB74M.TKfnhZsOzvXGx31.bjXnH44tCRkCkUC', 2, 2, '2025-05-10 13:05:58', '2025-05-10 13:05:58');
-INSERT INTO `user` VALUES (3, '王媛媛', 'wangyuanyuan', '$2a$10$FI29AIIff0I786n0tXageOVqEW7UFWuRrMinGODgsyQGIdHm1t44.', 2, 2, '2025-05-10 13:08:31', '2025-05-10 13:08:31');
-INSERT INTO `user` VALUES (4, '王媛媛', 'wangyuanyuan', '$2a$10$Wx7YWuZ2gxLlKXzalwRnyO0dHGWGbLzvUuw0n.tITzopbdvTDC5Ee', 2, 2, '2025-05-10 13:09:07', '2025-05-10 13:09:07');
-INSERT INTO `user` VALUES (6, '黄云华', 'huayunhua', '$2a$10$YClr9zw1GJZRVrJy9XlLQOOZrtWhG2UxiuBz7yjGMTSYaicxzuFau', 2, 2, '2025-05-10 13:27:09', '2025-05-10 13:27:09');
-INSERT INTO `user` VALUES (7, '胡旻旻', 'huminmin', '$2a$10$Mj6EhQC91vi2ZGHmgq2Maug6c80qfRF47jsGFlclD7Gy6/rKWx/hW', 3, 3, '2025-05-12 08:14:00', '2025-05-12 08:14:00');
-INSERT INTO `user` VALUES (8, '胡旻旻', 'huminmin', '$2a$10$0uByLDdtWy4Bqu.ymb/Mx..slpzDmDwTgd36fk3JfAZmHpTxa.M7i', 3, 3, '2025-05-12 08:15:20', '2025-05-12 08:15:20');
-INSERT INTO `user` VALUES (9, '胡旻旻', 'huminmin', '$2a$10$wKQjGL1.ILcXj4xLqghFLOcLe5zANxwD/.ZjQOtUdMW3aDPiVcWp2', 3, 3, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
-INSERT INTO `user` VALUES (10, '陈颖影', 'chenyinyin', '$2a$10$YbgBya7xjko5dnQhhFzgbOXSbW3jRIPVlxlxEwnoiqTWPWluLODIi', 3, 3, '2025-05-12 08:18:06', '2025-05-12 08:18:06');
 
 -- ----------------------------
 -- Table structure for user_level
