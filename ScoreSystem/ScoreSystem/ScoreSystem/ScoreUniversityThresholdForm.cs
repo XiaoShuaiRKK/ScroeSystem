@@ -33,7 +33,8 @@ namespace ScoreSystem
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 上线管理";
             this.FormClosed += (s, ex) =>
             {
-                Environment.Exit(0);
+                this.mainForm.Show();
+                this.Dispose();
             };
             comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_exam.DropDownStyle = ComboBoxStyle.DropDownList;

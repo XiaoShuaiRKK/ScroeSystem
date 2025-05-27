@@ -168,17 +168,28 @@ namespace ScoreSystem
 
                         if (string.IsNullOrWhiteSpace(className) || string.IsNullOrWhiteSpace(gradeStr) ||
                             string.IsNullOrWhiteSpace(groupStr) || string.IsNullOrWhiteSpace(teacherNo))
-                            throw new Exception($"第{i + 1}行数据不能为空");
-
+                        {
+                            MessageBox.Show($"第{i + 1}行数据不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
                         if (!Enum.TryParse<GradeEnum>(gradeStr, out var gradeEnum))
-                            throw new Exception($"第{i + 1}行 年级解析失败");
+                        {
+                            MessageBox.Show($"第{i + 1}行 年级解析失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
 
                         if (!Enum.TryParse<SubjectGroupEnum>(groupStr, out var groupEnum))
-                            throw new Exception($"第{i + 1}行 学科组解析失败");
-
+                        {
+                            MessageBox.Show($"第{i + 1}行 学科组解析失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
                         TeacherVO teacher = teachers.FirstOrDefault(t => t.TeacherNumber == teacherNo);
                         if (teacher == null)
-                            throw new Exception($"第{i + 1}行 找不到工号为 {teacherNo} 的教师");
+                        {
+                            MessageBox.Show($"第{i + 1}行 找不到工号为 {teacherNo} 的教师","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            return;
+                        }
+                            
 
                         previewClass.Add(new ClassEntity
                         {
@@ -309,5 +320,7 @@ namespace ScoreSystem
             this.previewClass = null;
             this.dataGridView_preview.DataSource = null;
         }
+
+
     }
 }

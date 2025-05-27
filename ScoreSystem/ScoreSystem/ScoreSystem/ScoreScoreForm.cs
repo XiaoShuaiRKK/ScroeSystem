@@ -48,7 +48,8 @@ namespace ScoreSystem
             dataGridView_score.ReadOnly = true;
             this.FormClosed += (s, ev) =>
             {
-                Environment.Exit(0);
+                scoreMainForm.Show();
+                this.Dispose();
             };
             ComboxDataInit();
         }

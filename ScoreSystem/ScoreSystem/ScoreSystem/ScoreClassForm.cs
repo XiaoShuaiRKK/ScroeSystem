@@ -29,7 +29,8 @@ namespace ScoreSystem
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 班级管理";
             this.FormClosed += (s, ex) =>
             {
-                Environment.Exit(0);
+                this.mainForm.Show();
+                this.Dispose();
             };
             // 设置 DataGridView 属性
             dataGridView_class.ReadOnly = true;
@@ -54,6 +55,7 @@ namespace ScoreSystem
         private void menu_class_import_Click(object sender, EventArgs e)
         {
             new ScoreClassImportForm().ShowDialog();
+            LoadData();
         }
 
         private void button_back_Click(object sender, EventArgs e)

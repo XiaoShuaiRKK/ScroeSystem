@@ -45,6 +45,7 @@
             this.menu_critical = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_teacher = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_class = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_edit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +94,7 @@
             this.dataGridView_students.RowTemplate.Height = 23;
             this.dataGridView_students.Size = new System.Drawing.Size(725, 324);
             this.dataGridView_students.TabIndex = 4;
+            this.dataGridView_students.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_students_CellContentClick);
             // 
             // menuStrip1
             // 
@@ -175,11 +177,22 @@
             this.menu_class.Text = "班级管理";
             this.menu_class.Click += new System.EventHandler(this.menu_class_Click);
             // 
+            // button_edit
+            // 
+            this.button_edit.Location = new System.Drawing.Point(650, 79);
+            this.button_edit.Name = "button_edit";
+            this.button_edit.Size = new System.Drawing.Size(75, 23);
+            this.button_edit.TabIndex = 6;
+            this.button_edit.Text = "修改";
+            this.button_edit.UseVisualStyleBackColor = true;
+            this.button_edit.Click += new System.EventHandler(this.button_edit_Click);
+            // 
             // ScoreMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_edit);
             this.Controls.Add(this.dataGridView_students);
             this.Controls.Add(this.label_class);
             this.Controls.Add(this.comboBox_class);
@@ -216,5 +229,6 @@
         private System.Windows.Forms.ToolStripMenuItem menu_critical;
         private System.Windows.Forms.ToolStripMenuItem menu_teacher;
         private System.Windows.Forms.ToolStripMenuItem menu_class;
+        private System.Windows.Forms.Button button_edit;
     }
 }

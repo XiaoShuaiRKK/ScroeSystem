@@ -204,6 +204,7 @@
     <Compile Include="Model\StudentStateEnum.cs" />
     <Compile Include="Model\SubjectGroupEnum.cs" />
     <Compile Include="Model\Teacher.cs" />
+    <Compile Include="Model\TeacherPreviewVO.cs" />
     <Compile Include="Model\TeacherStateEnum.cs" />
     <Compile Include="Model\TeacherVO.cs" />
     <Compile Include="Model\ThresholdPredictionResult.cs" />

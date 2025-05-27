@@ -31,8 +31,6 @@ namespace ScoreSystem
         {
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 老师管理";
             this.comboBox_state.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.dataGridView_preview.ReadOnly = true;
-            this.dataGridView_exams.ReadOnly = true;
             ControlsLoad();
             DataLoad();
         }
@@ -214,16 +212,58 @@ namespace ScoreSystem
         {
             dataGridView_preview.DataSource = null;
             dataGridView_preview.DataSource = teachersPreview
-                .Select(t => new
+                .Select(t => new TeacherPreviewVO
                 {
                     姓名 = t.Name,
                     用户名 = t.Username,
+                    密码 = t.Password,
                     工号 = t.TeacherNumber,
                     状态 = ((TeacherStateEnum)t.State).ToString()
                 })
                 .ToList();
 
+            // 设置列自适应
             dataGridView_preview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // 确保先清除旧的“操作”列，避免重复添加
+            if (dataGridView_preview.Columns.Contains("操作"))
+                dataGridView_preview.Columns.Remove("操作");
+
+            // 添加操作列
+            DataGridViewLinkColumn deleteColumn = new DataGridViewLinkColumn();
+            deleteColumn.Name = "操作";
+            deleteColumn.HeaderText = "操作";
+            deleteColumn.Text = "删除";
+            deleteColumn.UseColumnTextForLinkValue = true;
+
+            dataGridView_preview.Columns.Add(deleteColumn);
+
+            // 设置行为：只读、整行选中、不可多选
+            dataGridView_preview.ReadOnly = false;
+            dataGridView_preview.MultiSelect = false;
+            dataGridView_preview.Columns["操作"].ReadOnly = true;
+
+            // 替换“状态”列为 ComboBox 列
+            ReplaceStateColumnWithComboBox();
+        }
+
+        private void ReplaceStateColumnWithComboBox()
+        {
+            int columnIndex = dataGridView_preview.Columns["状态"].Index;
+            // 先删除旧列
+            dataGridView_preview.Columns.RemoveAt(columnIndex);
+
+            // 添加新 ComboBox 列
+            DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+            comboBoxColumn.Name = "状态";
+            comboBoxColumn.HeaderText = "状态";
+            comboBoxColumn.DataPropertyName = "状态"; // 必须匹配 DataSource 中的属性名
+            comboBoxColumn.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
+
+            // 设置枚举值作为下拉项
+            comboBoxColumn.Items.AddRange(Enum.GetNames(typeof(TeacherStateEnum)));
+
+            dataGridView_preview.Columns.Insert(columnIndex, comboBoxColumn);
         }
 
         private async void DataLoad()
@@ -240,6 +280,109 @@ namespace ScoreSystem
                 .ToList();
 
             dataGridView_exams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // 确保先清除旧的“操作”列，避免重复添加
+            if (dataGridView_exams.Columns.Contains("操作"))
+                dataGridView_exams.Columns.Remove("操作");
+
+            // 添加操作列
+            DataGridViewLinkColumn deleteColumn = new DataGridViewLinkColumn();
+            deleteColumn.Name = "操作";
+            deleteColumn.HeaderText = "操作";
+            deleteColumn.Text = "删除";
+            deleteColumn.UseColumnTextForLinkValue = true;
+
+            dataGridView_exams.Columns.Add(deleteColumn);
+        }
+
+        private void dataGridView_preview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var grid = sender as DataGridView;
+
+            if (grid.Columns[e.ColumnIndex].Name == "操作")
+            {
+                if (e.RowIndex >= teachersPreview.Count) return;
+                teachersPreview.RemoveAt(e.RowIndex);
+                LoadPreview();
+            }
+        }
+
+        private void dataGridView_preview_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            var row = dataGridView_preview.Rows[e.RowIndex];
+            string name = row.Cells["姓名"].Value?.ToString()?.Trim();
+            string username = row.Cells["用户名"].Value?.ToString()?.Trim();
+            string teacherNumber = row.Cells["工号"].Value?.ToString()?.Trim();
+            string stateStr = row.Cells["状态"].Value?.ToString()?.Trim();
+            // 基本验证
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(username))
+            {
+                MessageBox.Show($"第{e.RowIndex + 1}行：姓名和用户名不能为空", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RevertRow(e.RowIndex);
+                return;
+            }
+
+            if (!Enum.TryParse<TeacherStateEnum>(stateStr, out var stateEnum))
+            {
+                MessageBox.Show($"第{e.RowIndex + 1}行 状态无效", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RevertRow(e.RowIndex);
+                return;
+            }
+            if (teachersPreview.Where((_, idx) => idx != e.RowIndex).Any(t => t.Username == username))
+            {
+                MessageBox.Show($"第{e.RowIndex + 1}行：用户名已存在于列表中", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RevertRow(e.RowIndex);
+                return;
+            }
+            // 所有验证通过后再赋值
+            var teacher = teachersPreview[e.RowIndex];
+            teacher.Name = name;
+            teacher.Username = username;
+            teacher.TeacherNumber = teacherNumber;
+            teacher.State = (int)stateEnum;
+        }
+
+        private void RevertRow(int rowIndex)
+        {
+            if (rowIndex < 0 || rowIndex >= teachersPreview.Count) return;
+            var teacher = teachersPreview[rowIndex];
+            var row = dataGridView_preview.Rows[rowIndex];
+            row.Cells["姓名"].Value = teacher.Name;
+            row.Cells["用户名"].Value = teacher.Username;
+            row.Cells["工号"].Value = teacher.TeacherNumber;
+            row.Cells["状态"].Value = ((TeacherStateEnum)teacher.State).ToString();
+        }
+
+        private async void dataGridView_exams_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var grid = sender as DataGridView;
+
+            if (grid.Columns[e.ColumnIndex].Name == "操作")
+            {
+                if (e.RowIndex >= teacherDisplay.Count) return;
+                var result = MessageBox.Show("确定要删除这条教师信息吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var teacher = teacherDisplay[e.RowIndex];
+                    var t = new Teacher
+                    {
+                        TeacherNumber = teacher.TeacherNumber,
+                        Name = teacher.Name,
+                        State = teacher.State
+                    };
+                    bool isSuccess = await service.DeleteTeacher(t);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show("删除成功","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    }
+                    DataLoad();
+                }
+            }
         }
     }
 }

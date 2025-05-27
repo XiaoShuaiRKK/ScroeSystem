@@ -106,6 +106,8 @@
             this.dataGridView_preview.RowTemplate.Height = 23;
             this.dataGridView_preview.Size = new System.Drawing.Size(729, 180);
             this.dataGridView_preview.TabIndex = 47;
+            this.dataGridView_preview.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_preview_CellContentClick);
+            this.dataGridView_preview.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_preview_CellValueChanged);
             // 
             // button_add
             // 
@@ -134,6 +136,7 @@
             this.dataGridView_exams.RowTemplate.Height = 23;
             this.dataGridView_exams.Size = new System.Drawing.Size(729, 225);
             this.dataGridView_exams.TabIndex = 42;
+            this.dataGridView_exams.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_exams_CellContentClick);
             // 
             // textBox_name
             // 

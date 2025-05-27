@@ -186,14 +186,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScoreSystem.exe" size="261608">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScoreSystem.exe" size="275944">
       <assemblyIdentity name="ScoreSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>jLks+BI3sp/Bvw/qkXDgHv071bjtsjTRJXhs4y0AmMI=</dsig:DigestValue>
+        <dsig:DigestValue>GJayJSirKts9k6aoR8UpjVqCY67JX/UVhK4tF4RuEH0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

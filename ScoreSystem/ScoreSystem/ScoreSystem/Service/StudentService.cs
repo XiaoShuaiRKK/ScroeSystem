@@ -1,4 +1,5 @@
-﻿using ScoreSystem.Data;
+﻿using MathNet.Numerics.Distributions;
+using ScoreSystem.Data;
 using ScoreSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,64 @@ namespace ScoreSystem.Service
             string jsonResult = await HttpUtil.PostAsync(url, jsonBody) ;
             var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult,JsonUtil.GetOptions());
             if(response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteStudent(Student s)
+        {
+            string url = HttpUtil.GetUrl("/user/delete/student");
+            var studentDTO = new
+            {
+                name = s.Name,
+                studentNumber = s.StudentNumber,
+                classId = s.ClassId,
+                state = s.State,
+                enrollmentDate = s.EnrollmentDate.ToString("yyyy-MM-dd"), // 关键格式化
+                subjectGroupId = s.SubjectGroupId,
+                electiveCourse1Id = s.ElectiveCourse1Id,
+                electiveCourse2Id = s.ElectiveCourse2Id,
+            };
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(studentDTO, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateStudent(Student s)
+        {
+            string url = HttpUtil.GetUrl("/user/update/student");
+            var studentDTO = new
+            {
+                name = s.Name,
+                studentNumber = s.StudentNumber,
+                classId = s.ClassId,
+                state = s.State,
+                enrollmentDate = s.EnrollmentDate.ToString("yyyy-MM-dd"), // 关键格式化
+                subjectGroupId = s.SubjectGroupId,
+                electiveCourse1Id = s.ElectiveCourse1Id,
+                electiveCourse2Id = s.ElectiveCourse2Id,
+            };
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(studentDTO, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
             {
                 return true;
             }

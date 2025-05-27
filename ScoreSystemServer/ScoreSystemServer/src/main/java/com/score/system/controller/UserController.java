@@ -72,4 +72,24 @@ public class UserController {
     public ResponseResult<List<Teacher>> getTeachers() {
         return staffService.getAllTeachers();
     }
+
+    @PostMapping("/delete/teacher")
+    public ResponseResult<Boolean> deletedTeacher(@RequestBody TeacherDTO teacherDTO){
+        return staffService.deleteTeacher(teacherDTO);
+    }
+
+    @PostMapping("/delete/student")
+    public ResponseResult<Boolean> deleteStudent(@RequestBody StudentDTO studentDTO){
+        return staffService.deleteStudent(studentDTO);
+    }
+
+    @PostMapping("/update/student")
+    public ResponseResult<Boolean> updateStudent(@Valid @RequestBody StudentDTO studentDTO){
+        return staffService.updateStudent(studentDTO);
+    }
+
+    @PostMapping("/update/teacher")
+    public ResponseResult<Boolean> updateTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
+        return staffService.updateTeacher(teacherDTO);
+    }
 }

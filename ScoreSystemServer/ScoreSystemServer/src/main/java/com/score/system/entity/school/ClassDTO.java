@@ -8,7 +8,7 @@ public class ClassDTO {
     private Long id;
     @NotBlank(message = "班级名称不能为空")
     @Pattern(
-            regexp = "^高[一二三]([1-9]|1[0-9])班$",
+            regexp = "^高[一二三]\\d{1,2}班$",
             message = "班级名称格式错误，应为例如：高一12班"
     )
     private String name;
