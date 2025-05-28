@@ -41,6 +41,11 @@ public class ExamController {
         return courseService.batchAddExam(examDTOList);
     }
 
+    @PostMapping("/delete")
+    public ResponseResult<Boolean> deleteExam(@RequestBody @Valid ExamDTO examDTO) {
+        return courseService.deleteExam(examDTO);
+    }
+
     /**
      * 添加一条达标线
      */

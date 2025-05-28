@@ -98,31 +98,53 @@ namespace ScoreSystem
             int selectedId = (int)comboBox_class.SelectedValue;
             students = await teacherService.GetStudentByClassId(selectedId);
             if (students == null || !students.Any()) return;
-            dataGridView_students.Columns.Clear();
-            var displayStudents = students.Select(s => new
-            {
-                学号 = s.StudentNumber,
-                姓名 = s.Name,
-                选科一 = Enum.GetName(typeof(CourseEnum), s.ElectiveCourse1Id - 1),
-                选科二 = Enum.GetName(typeof(CourseEnum), s.ElectiveCourse2Id - 1),
-                入学时间 = s.EnrollmentDate
-            }).ToList();
-            dataGridView_students.DataSource = displayStudents;
-            dataGridView_students.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // 清除旧的“删除”列，避免重复添加
-            if (dataGridView_students.Columns.Contains("操作"))
+            dataGridView_students.DataSource = null;
+            dataGridView_students.Columns.Clear();
+            dataGridView_students.DataSource = students;
+
+            // 设置列头名
+            dataGridView_students.Columns["StudentNumber"].HeaderText = "学号";
+            dataGridView_students.Columns["Name"].HeaderText = "姓名";
+            dataGridView_students.Columns["ElectiveCourse1Id"].HeaderText = "选科一";
+            dataGridView_students.Columns["ElectiveCourse2Id"].HeaderText = "选科二";
+            dataGridView_students.Columns["EnrollmentDate"].HeaderText = "入学时间";
+
+            // 隐藏不需要显示的列（如主键等）
+            foreach (DataGridViewColumn col in dataGridView_students.Columns)
             {
-                dataGridView_students.Columns.Remove("操作");
+                if (col.Name != "StudentNumber" && col.Name != "Name" &&
+                    col.Name != "ElectiveCourse1Id" && col.Name != "ElectiveCourse2Id" &&
+                    col.Name != "EnrollmentDate")
+                {
+                    col.Visible = false;
+                }
             }
 
-            // 添加“操作”列（删除按钮）
-            DataGridViewLinkColumn deleteColumn = new DataGridViewLinkColumn();
-            deleteColumn.Name = "操作";
-            deleteColumn.HeaderText = "操作";
-            deleteColumn.Text = "删除";
-            deleteColumn.UseColumnTextForLinkValue = true;
-            dataGridView_students.Columns.Add(deleteColumn);
+            // 格式化课程 ID 为名称
+            dataGridView_students.CellFormatting += (s, e) =>
+            {
+                string colName = dataGridView_students.Columns[e.ColumnIndex].Name;
+                if ((colName == "ElectiveCourse1Id" || colName == "ElectiveCourse2Id") &&
+                    e.Value is int courseId)
+                {
+                    e.Value = CourseHelper.GetCourseNameById(courseId);
+                    e.FormattingApplied = true;
+                }
+            };
+
+            // 添加删除按钮列
+            if (!dataGridView_students.Columns.Contains("操作"))
+            {
+                DataGridViewLinkColumn deleteColumn = new DataGridViewLinkColumn
+                {
+                    Name = "操作",
+                    HeaderText = "操作",
+                    Text = "删除",
+                    UseColumnTextForLinkValue = true
+                };
+                dataGridView_students.Columns.Add(deleteColumn);
+            }
         }
 
         private void menu_class_or_student_Click(object sender, EventArgs e)
@@ -215,48 +237,44 @@ namespace ScoreSystem
                 dataGridView_students.SelectionMode = DataGridViewSelectionMode.CellSelect;
                 button_edit.Text = "保存";
 
-                // 替换为 ComboBox 列：选科一
-                var comboBoxColumn1 = new DataGridViewComboBoxColumn
-                {
-                    Name = "选科一",
-                    HeaderText = "选科一",
-                    DataSource = Enum.GetNames(typeof(CourseEnum)).ToList(),
-                    DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
-                };
-                ReplaceColumn(dataGridView_students, "选科一", comboBoxColumn1);
+                var courseNames = CourseHelper.GetAllCourseNames();
 
-                // 替换为 ComboBox 列：选科二
-                var comboBoxColumn2 = new DataGridViewComboBoxColumn
+                ReplaceColumn(dataGridView_students, "ElectiveCourse1Id", new DataGridViewComboBoxColumn
                 {
-                    Name = "选科二",
-                    HeaderText = "选科二",
-                    DataSource = Enum.GetNames(typeof(CourseEnum)).ToList(),
+                    Name = "ElectiveCourse1Id",
+                    HeaderText = "选科一",
+                    DataSource = courseNames,
                     DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
-                };
-                ReplaceColumn(dataGridView_students, "选科二", comboBoxColumn2);
+                });
+
+                ReplaceColumn(dataGridView_students, "ElectiveCourse2Id", new DataGridViewComboBoxColumn
+                {
+                    Name = "ElectiveCourse2Id",
+                    HeaderText = "选科二",
+                    DataSource = courseNames,
+                    DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
+                });
             }
             else
             {
-                // 保存编辑内容
+                // 保存逻辑
                 var updatedStudents = new List<Student>();
                 for (int i = 0; i < dataGridView_students.Rows.Count; i++)
                 {
                     var row = dataGridView_students.Rows[i];
 
-                    string studentNumber = row.Cells["学号"].Value?.ToString();
+                    string studentNumber = row.Cells["StudentNumber"].Value?.ToString();
                     var originalStudent = students.FirstOrDefault(s => s.StudentNumber == studentNumber);
                     if (originalStudent == null) continue;
 
-                    string name = row.Cells["姓名"].Value?.ToString();
-                    string electiveCourse1Name = row.Cells["选科一"].Value?.ToString();
-                    string electiveCourse2Name = row.Cells["选科二"].Value?.ToString();
-                    DateTime.TryParse(row.Cells["入学时间"].Value?.ToString(), out DateTime enrollmentDate);
+                    string name = row.Cells["Name"].Value?.ToString();
+                    string electiveCourse1Name = row.Cells["ElectiveCourse1Id"].Value?.ToString();
+                    string electiveCourse2Name = row.Cells["ElectiveCourse2Id"].Value?.ToString();
+                    DateTime.TryParse(row.Cells["EnrollmentDate"].Value?.ToString(), out DateTime enrollmentDate);
 
-                    // 转换课程名为 ID（这里假设课程 enum 从 0 开始）
-                    int electiveCourse1Id = (int)Enum.Parse(typeof(CourseEnum), electiveCourse1Name) + 1;
-                    int electiveCourse2Id = (int)Enum.Parse(typeof(CourseEnum), electiveCourse2Name) + 1;
+                    int electiveCourse1Id = CourseHelper.GetCourseIdByName(electiveCourse1Name);
+                    int electiveCourse2Id = CourseHelper.GetCourseIdByName(electiveCourse2Name);
 
-                    // 检查是否真的有改动
                     if (originalStudent.Name != name ||
                         originalStudent.ElectiveCourse1Id != electiveCourse1Id ||
                         originalStudent.ElectiveCourse2Id != electiveCourse2Id ||
@@ -270,16 +288,16 @@ namespace ScoreSystem
                     }
                 }
 
-                // 调用服务更新
                 if (updatedStudents.Any())
                 {
-                    using(var loading = new LoadForm())
+                    bool success = false;
+                    using (var loading = new LoadForm())
                     {
                         loading.Show();
                         await Task.Delay(100);
                         foreach (var stu in updatedStudents)
                         {
-                            bool success = await studentService.UpdateStudent(stu);
+                            success = await studentService.UpdateStudent(stu);
                             if (!success)
                             {
                                 MessageBox.Show($"学生 {stu.Name} 更新失败。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -287,9 +305,12 @@ namespace ScoreSystem
                         }
                         loading.Close();
                     }
-                    MessageBox.Show("更新完成", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (success)
+                    {
+                        MessageBox.Show("更新完成", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                // 还原为只读
+
                 dataGridView_students.ReadOnly = true;
                 dataGridView_students.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 button_edit.Text = "修改";
@@ -344,20 +365,18 @@ namespace ScoreSystem
             int index = dgv.Columns[columnName].Index;
             newColumn.Width = dgv.Columns[columnName].Width;
 
-            // 先将旧值保存并删除旧列
-            List<string> cellValues = new List<string>();
+            List<object> oldValues = new List<object>();
             for (int i = 0; i < dgv.Rows.Count; i++)
             {
-                cellValues.Add(dgv.Rows[i].Cells[columnName].Value?.ToString());
+                oldValues.Add(dgv.Rows[i].Cells[columnName].Value);
             }
 
             dgv.Columns.RemoveAt(index);
             dgv.Columns.Insert(index, newColumn);
 
-            // 重新设置值
             for (int i = 0; i < dgv.Rows.Count; i++)
             {
-                dgv.Rows[i].Cells[index].Value = cellValues[i];
+                dgv.Rows[i].Cells[index].Value = CourseHelper.GetCourseNameById(Convert.ToInt32(oldValues[i]));
             }
         }
 

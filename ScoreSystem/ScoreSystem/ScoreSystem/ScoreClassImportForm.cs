@@ -321,6 +321,9 @@ namespace ScoreSystem
             this.dataGridView_preview.DataSource = null;
         }
 
+        private void dataGridView_class_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }

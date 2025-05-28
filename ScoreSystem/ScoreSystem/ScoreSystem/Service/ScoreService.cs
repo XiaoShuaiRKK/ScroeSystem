@@ -53,11 +53,31 @@ namespace ScoreSystem.Service
                 name = e.Name,
                 grade = e.Grade,
                 startDate = e.StartDate.ToString("yyyy-MM-dd"),
-                endDate = e.EndDate.ToString("yyyy-MM-dd")
+                endDate = e.EndDate.ToString("yyyy-MM-dd"),
+                year = e.Year
+                
             }).ToList();
 
             // 序列化为 JSON
             string jsonBody = JsonSerializer.Serialize(examList, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteExam(Exam exam)
+        {
+            string url = HttpUtil.GetUrl("/exam/delete");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(exam, JsonUtil.GetRequestOptions());
             string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
             var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200 && response.Data == true)

@@ -44,7 +44,7 @@ namespace ScoreSystem.Data
         {
             if (Enum.TryParse<CourseEnum>(name.Trim(), out var result))
             {
-                return (int)result;
+                return (int)result + 1;
             }
             else
             {

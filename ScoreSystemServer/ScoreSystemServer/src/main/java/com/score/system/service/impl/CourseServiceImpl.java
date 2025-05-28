@@ -23,14 +23,16 @@ public class CourseServiceImpl implements CourseService {
     private final ClassMapper classMapper;
     private final ExamMapper examMapper;
     private final ExamSubjectThresholdMapper examSubjectThresholdMapper;
+    private final ExamClassSubjectStatMapper examClassSubjectStatMapper;
 
-    public CourseServiceImpl(CourseMapper courseMapper, TeacherMapper teacherMapper, TeacherCourseMapper teacherCourseMapper, ClassMapper classMapper, ExamMapper examMapper, ExamSubjectThresholdMapper examSubjectThresholdMapper) {
+    public CourseServiceImpl(CourseMapper courseMapper, TeacherMapper teacherMapper, TeacherCourseMapper teacherCourseMapper, ClassMapper classMapper, ExamMapper examMapper, ExamSubjectThresholdMapper examSubjectThresholdMapper, ExamClassSubjectStatMapper examClassSubjectStatMapper) {
         this.courseMapper = courseMapper;
         this.teacherMapper = teacherMapper;
         this.teacherCourseMapper = teacherCourseMapper;
         this.classMapper = classMapper;
         this.examMapper = examMapper;
         this.examSubjectThresholdMapper = examSubjectThresholdMapper;
+        this.examClassSubjectStatMapper = examClassSubjectStatMapper;
     }
 
     @Override
@@ -143,7 +145,6 @@ public class CourseServiceImpl implements CourseService {
     public ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList) {
         List<Exam> examList = new ArrayList<>();
         Set<String> examKeys = new HashSet<>();
-        LocalDate today = LocalDate.now();
 
         for (ExamDTO exam : examDTOList) {
             String key = exam.getName() + "-" + exam.getGrade() + "-" + exam.getYear();
@@ -156,9 +157,6 @@ public class CourseServiceImpl implements CourseService {
             // 时间合法性校验
             if (exam.getStartDate() == null || exam.getEndDate() == null) {
                 return ResponseResult.fail("考试 " + exam.getName() + " 的时间不能为空");
-            }
-            if (exam.getStartDate().isBefore(today)) {
-                return ResponseResult.fail("考试 " + exam.getName() + " 的开始时间不能早于今天");
             }
             if (exam.getEndDate().isBefore(exam.getStartDate())) {
                 return ResponseResult.fail("考试 " + exam.getName() + " 的结束时间不能早于开始时间");
@@ -178,6 +176,76 @@ public class CourseServiceImpl implements CourseService {
 
         int result = examMapper.batchInsertExams(examList);
         return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("批量添加考试失败");
+    }
+
+    @Override
+    @Transactional
+    public ResponseResult<Boolean> deleteExam(ExamDTO examDTO) {
+        // 参数校验
+        if (examDTO.getName() == null || examDTO.getGrade() == 0 || examDTO.getYear() == 0) {
+            return ResponseResult.fail("缺少必要的删除条件（考试名称、年级、学年）");
+        }
+
+        // 查找考试
+        Exam existing = examMapper.selectByExamNameAndGradeAndYear(examDTO.getName(), examDTO.getGrade(), examDTO.getYear());
+        if (existing == null) {
+            return ResponseResult.fail("未找到对应的考试记录，删除失败");
+        }
+
+        Long examId = existing.getId();
+
+        // 先删除相关统计记录（顺序不能错）
+        examClassSubjectStatMapper.delete(
+                new LambdaQueryWrapper<ExamClassSubjectStat>().eq(ExamClassSubjectStat::getExamId, examId)
+        );
+        examSubjectThresholdMapper.delete(
+                new LambdaQueryWrapper<ExamSubjectThreshold>().eq(ExamSubjectThreshold::getExamId, examId)
+        );
+
+        // 可以根据需要删除考试成绩、学生关联等其它依赖数据（如果有）
+
+        // 删除主记录
+        int result = examMapper.deleteById(examId);
+        return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("考试删除失败");
+    }
+
+    @Override
+    @Transactional
+    public ResponseResult<Boolean> updateExam(ExamDTO examDTO) {
+        if (examDTO.getId() == null) {
+            return ResponseResult.fail("更新失败：考试 ID 不能为空");
+        }
+
+        Exam existing = examMapper.selectById(examDTO.getId());
+        if (existing == null) {
+            return ResponseResult.fail("更新失败：未找到对应的考试记录");
+        }
+
+        if (examDTO.getStartDate() == null || examDTO.getEndDate() == null) {
+            return ResponseResult.fail("考试时间不能为空");
+        }
+        if (examDTO.getEndDate().isBefore(examDTO.getStartDate())) {
+            return ResponseResult.fail("考试结束时间不能早于开始时间");
+        }
+
+        // 判断是否更改了名称/年级/学年，若更改则校验唯一性
+        if (!examDTO.getName().equals(existing.getName())
+                || examDTO.getGrade() != existing.getGrade()
+                || examDTO.getYear() != existing.getYear()) {
+
+            Exam duplicate = examMapper.selectByExamNameAndGradeAndYear(
+                    examDTO.getName(), examDTO.getGrade(), examDTO.getYear()
+            );
+            if (duplicate != null && !duplicate.getId().equals(examDTO.getId())) {
+                return ResponseResult.fail("更新失败：该考试已存在，不能重复");
+            }
+        }
+
+        Exam updated = ExamConverter.toEntity(examDTO);
+        updated.setUpdatedAt(LocalDateTime.now());
+
+        int result = examMapper.updateById(updated);
+        return result > 0 ? ResponseResult.success(true) : ResponseResult.fail("考试更新失败");
     }
 
 

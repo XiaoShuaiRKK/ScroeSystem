@@ -23,6 +23,8 @@ public interface CourseService {
     ResponseResult<Boolean> addExam(ExamDTO examDTO);
     ResponseResult<List<ExamDTO>> getExams();
     ResponseResult<Boolean> batchAddExam(List<ExamDTO> examDTOList);
+    ResponseResult<Boolean> deleteExam(ExamDTO examDTO);
+    ResponseResult<Boolean> updateExam(ExamDTO examDTO);
     ResponseResult<Boolean> addExamSubjectThreshold(ExamSubjectThreshold examSubjectThreshold);
     ResponseResult<Boolean> batchAddExamSubjectThreshold(List<ExamSubjectThreshold> examSubjectThresholds);
     ResponseResult<List<ExamSubjectThreshold>> getExamSubjectThresholds(int examId);

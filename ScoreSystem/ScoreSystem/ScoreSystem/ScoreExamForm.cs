@@ -33,28 +33,12 @@ namespace ScoreSystem
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 考试管理";
             this.dataGridView_exams.ReadOnly = true;
             this.dataGridView_exams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView_preview.ReadOnly = true;
+            this.dataGridView_preview.ReadOnly = false;
+            this.dataGridView_preview.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            this.dataGridView_preview.EditMode = DataGridViewEditMode.EditOnEnter;
             this.dataGridView_preview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dateTimePicker_start.MinDate = DateTime.Today;
-            this.dateTimePicker_end.MinDate = DateTime.Today;
             ExamsLoad();
-            ComboxInit();
-        }
-
-        private void ComboxInit()
-        {
-            var grades = Enum.GetValues(typeof(GradeEnum))
-                .Cast<GradeEnum>()
-                .Select(g => new
-                {
-                    Text = g.ToString(),
-                    Value = (int)g
-                }).ToList();
-            comboBox_grade.DisplayMember = "Text";   // 显示内容
-            comboBox_grade.ValueMember = "Value";    // 实际值
-            comboBox_grade.DataSource = grades;
-
-            comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList; // 不可编辑
+            PreExamsLoad();
         }
 
         private async void ExamsLoad()
@@ -63,78 +47,81 @@ namespace ScoreSystem
             dataGridView_exams.DataSource = null;
             var examViewList = exams.Select(exam => new
             {
+                考试号 = exam.Id,
                 名称 = exam.Name,
                 年级 = Enum.IsDefined(typeof(GradeEnum), exam.Grade) ? ((GradeEnum)exam.Grade).ToString() : "未知",
                 开始时间 = exam.StartDate.ToString("yyyy-MM-dd"),
                 结束时间 = exam.EndDate.ToString("yyyy-MM-dd")
             }).ToList();
             dataGridView_exams.DataSource = examViewList;
+            EnsureExamDeleteColumn();
         }
 
         private void PreExamsLoad()
         {
-            if (isTemplateImport)
-            {
-                button_add.Enabled = false;
-            }
             dataGridView_preview.DataSource = null;
-            var examViewList = previewExams.Select(exam => new
+            var bindingList = new BindingList<Exam>(previewExams)
             {
-                名称 = exam.Name,
-                年级 = Enum.IsDefined(typeof(GradeEnum), exam.Grade) ? ((GradeEnum)exam.Grade).ToString() : "未知",
-                开始时间 = exam.StartDate.ToString("yyyy-MM-dd"),
-                结束时间 = exam.EndDate.ToString("yyyy-MM-dd")
-            }).ToList();
-            dataGridView_preview.DataSource = examViewList;
-        }
-
-        private void button_add_Click(object sender, EventArgs e)
-        {
-            string examName = textBox_exam_name.Text.Trim();
-            DateTime startTime = dateTimePicker_start.Value;
-            DateTime endTime = dateTimePicker_end.Value;
-            int grade = (int)comboBox_grade.SelectedValue;
-            // 1. 验证长度
-            if (examName.Length == 0)
-            {
-                MessageBox.Show("考试名称不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (examName.Length > 50)
-            {
-                MessageBox.Show("考试名称不能超过50个字符", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // 2. 验证不能包含特殊字符（允许汉字、英文字母、数字、空格和常见符号）
-            if (System.Text.RegularExpressions.Regex.IsMatch(examName, @"[^a-zA-Z0-9\u4e00-\u9fa5\s\-_()（）【】]"))
-            {
-                MessageBox.Show("考试名称不能包含特殊字符", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // 3. 检查是否已存在相同考试名称和年级
-            if (previewExams.Any(ex => ex.Name == examName && ex.Grade == grade))
-            {
-                MessageBox.Show("已存在相同名称和年级的考试，不能重复添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            Exam exam = new Exam
-            {
-                Name = examName,
-                StartDate = startTime,
-                EndDate = endTime,
-                Grade = grade
+                AllowNew = true,
+                AllowEdit = true,
+                AllowRemove = true
             };
-            previewExams.Add(exam);
-            PreExamsLoad();
-        }
+            dataGridView_preview.DataSource = bindingList;
 
-        private void dateTimePicker_start_ValueChanged(object sender, EventArgs e)
-        {
-            dateTimePicker_end.MinDate = dateTimePicker_start.Value;
-            if(dateTimePicker_end.Value < dateTimePicker_start.Value)
+            // 隐藏原始 Grade 列
+            dataGridView_preview.Columns["Grade"].Visible = false;
+
+            // 添加下拉框列（年级）
+            if (!dataGridView_preview.Columns.Contains("GradeCombo"))
             {
-                dateTimePicker_end.Value = dateTimePicker_start.Value;
+                var gradeCombo = new DataGridViewComboBoxColumn
+                {
+                    Name = "GradeCombo",
+                    HeaderText = "年级",
+                    DataPropertyName = "Grade", // 绑定到 Exam 的 Grade 属性
+                    DisplayMember = "Text",
+                    ValueMember = "Value",
+                    DataSource = Enum.GetValues(typeof(GradeEnum))
+                                     .Cast<GradeEnum>()
+                                     .Select(g => new { Text = g.ToString(), Value = (int)g })
+                                     .ToList(),
+                    FlatStyle = FlatStyle.Flat,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+                dataGridView_preview.Columns.Insert(1, gradeCombo); // 插入到第二列
+            }
+
+            EnsureDeleteButtonColumn();
+
+            // 设置其他列标题
+            dataGridView_preview.Columns["Name"].HeaderText = "考试名称";
+            dataGridView_preview.Columns["StartDate"].HeaderText = "开始时间";
+            dataGridView_preview.Columns["EndDate"].HeaderText = "结束时间";
+            dataGridView_preview.Columns["Year"].HeaderText = "学年";
+            dataGridView_preview.Columns["Id"].Visible = false;
+
+            dataGridView_preview.Columns["StartDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
+            dataGridView_preview.Columns["EndDate"].DefaultCellStyle.Format = "yyyy-MM-dd";
+
+            dataGridView_preview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView_preview.AllowUserToAddRows = true;
+            dataGridView_preview.AllowUserToDeleteRows = true;
+            dataGridView_preview.ReadOnly = false;
+
+            foreach (DataGridViewColumn col in dataGridView_preview.Columns)
+            {
+                col.ReadOnly = false;
+            }
+
+            // **确保“操作”列总是在最后**
+            if (dataGridView_preview.Columns.Contains("DeleteLink"))
+            {
+                var deleteCol = dataGridView_preview.Columns["DeleteLink"];
+                int lastIndex = dataGridView_preview.Columns.Count - 1;
+                if (deleteCol.DisplayIndex != lastIndex)
+                {
+                    deleteCol.DisplayIndex = lastIndex;
+                }
             }
         }
 
@@ -256,6 +243,12 @@ namespace ScoreSystem
                             MessageBox.Show($"第{displayRow}行，已存在考试记录 请再次检查名称和年级。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+                        // 再判断是否和数据库中已存在考试重复
+                        if (exams.Any(ex => ex.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && ex.Grade == grade))
+                        {
+                            MessageBox.Show($"第{displayRow}行，系统中已存在相同考试名称和年级。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
 
                         // 添加
                         previewExams.Add(new Exam
@@ -279,6 +272,7 @@ namespace ScoreSystem
 
         private async void button_save_Click(object sender, EventArgs e)
         {
+            button_save.Enabled = false; // 禁用按钮
             using (var loading = new LoadForm())
             {
                 loading.Show();
@@ -303,6 +297,7 @@ namespace ScoreSystem
                 }
                 finally
                 {
+                    button_save.Enabled = true;
                     loading.Close();
                 }
             }
@@ -310,15 +305,237 @@ namespace ScoreSystem
 
         private void ClearData()
         {
-            this.previewExams = null;
-            this.dataGridView_preview.DataSource = null;
-            this.button_add.Enabled = true;
+            this.previewExams = new List<Exam>();
+            PreExamsLoad();
             ExamsLoad();
         }
 
         private void menu_threshold_Click(object sender, EventArgs e)
         {
             new ScoreThresholdForm().ShowDialog();
+        }
+
+        private void dataGridView_preview_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void RevertPreviewRow(int rowIndex)
+        {
+            dataGridView_preview.CancelEdit();
+            dataGridView_preview.Refresh();
+        }
+
+        private void dataGridView_preview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView_preview.Columns[e.ColumnIndex].Name == "DeleteLink")
+            {
+                var exam = dataGridView_preview.Rows[e.RowIndex].DataBoundItem as Exam;
+                if (exam != null)
+                {
+                    previewExams.Remove(exam);
+                    PreExamsLoad(); // 重新加载显示
+                }
+            }
+        }
+
+        private void EnsureDeleteButtonColumn()
+        {
+            if (!dataGridView_preview.Columns.Contains("DeleteLink"))
+            {
+                var deleteLinkColumn = new DataGridViewLinkColumn
+                {
+                    Name = "DeleteLink",
+                    HeaderText = "操作",
+                    Text = "删除",
+                    UseColumnTextForLinkValue = true,
+                    LinkColor = Color.Red,
+                    TrackVisitedState = false,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                };
+
+                dataGridView_preview.Columns.Add(deleteLinkColumn);
+            }
+        }
+
+        private void EnsureExamDeleteColumn()
+        {
+            if (!dataGridView_exams.Columns.Contains("DeleteLink"))
+            {
+                var deleteColumn = new DataGridViewLinkColumn
+                {
+                    Name = "DeleteLink",
+                    HeaderText = "操作",
+                    Text = "删除",
+                    UseColumnTextForLinkValue = true,
+                    LinkColor = Color.Red,
+                    TrackVisitedState = false,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                };
+
+                dataGridView_exams.Columns.Add(deleteColumn);
+            }
+
+            // 确保删除列始终在最后
+            var col = dataGridView_exams.Columns["DeleteLink"];
+            if (col != null && col.DisplayIndex != dataGridView_exams.Columns.Count - 1)
+            {
+                col.DisplayIndex = dataGridView_exams.Columns.Count - 1;
+            }
+        }
+
+
+        private void dataGridView_preview_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells["StartDate"].Value = DateTime.Today;
+            e.Row.Cells["EndDate"].Value = DateTime.Today;
+            e.Row.Cells["Grade"].Value = (int)GradeEnum.高一上学期;
+            e.Row.Cells["Year"].Value = DateTime.Today.Year;
+        }
+
+        private void dataGridView_preview_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            try
+            {
+                var dgv = sender as DataGridView;
+
+                if (e.RowIndex < 0 || e.RowIndex >= dgv.Rows.Count)
+                    return;
+
+                // 越界保护
+                if (e.RowIndex >= dgv.Rows.Count) return;
+
+                var row = dgv.Rows[e.RowIndex];
+
+                // 如果是新行或 DataBoundItem 为 null，跳过验证
+                if (row.IsNewRow || row.DataBoundItem == null)
+                    return;
+
+                // 如果是 DataRowView 并且被标记为 Deleted，跳过
+                if (row.DataBoundItem is DataRowView drv && drv.Row.RowState == DataRowState.Deleted)
+                    return;
+
+                // 如果不是 Exam 类型，也跳过
+                if (!(row.DataBoundItem is Exam exam))
+                    return;
+
+                // 检查需要的列是否存在，防止列被动态移除导致访问异常
+                if (!dgv.Columns.Contains("GradeCombo") ||
+                    !dgv.Columns.Contains("Name") ||
+                    !dgv.Columns.Contains("Year"))
+                    return;
+
+                // 安全访问单元格值
+                string name = row.Cells["Name"]?.Value?.ToString()?.Trim();
+                object gradeObj = row.Cells["GradeCombo"]?.Value;
+                string yearStr = row.Cells["Year"]?.Value?.ToString()?.Trim();
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show($"第{e.RowIndex + 1}行：考试名称不能为空", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                if (gradeObj == null || !int.TryParse(gradeObj.ToString(), out int grade))
+                {
+                    MessageBox.Show($"第{e.RowIndex + 1}行：年级格式无效，应为下拉选择", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(yearStr) || !int.TryParse(yearStr, out int year))
+                {
+                    MessageBox.Show($"第{e.RowIndex + 1}行：学年格式无效，应为数字", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                int maxYear = DateTime.Today.Year + 10;
+                if (year <= 2000 || year >= maxYear)
+                {
+                    MessageBox.Show($"第{e.RowIndex + 1}行：学年范围必须在 2000 - {maxYear}", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                // 检查重复（排除当前行）
+                var duplicate = previewExams
+                    .Where((ex, index) => index != e.RowIndex)
+                    .Any(ex => ex.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && ex.Grade == grade);
+
+                if (duplicate)
+                {
+                    MessageBox.Show($"第{e.RowIndex + 1}行：预览中已存在相同的考试名称和年级。", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                // 最后更新 exam 对象
+                exam.Name = name;
+                exam.Grade = grade;
+                exam.Year = year;
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+            
+        }
+
+        private void dataGridView_preview_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            string columnName = dataGridView_preview.Columns[e.ColumnIndex].HeaderText;
+            if (dataGridView_preview.Columns[e.ColumnIndex].ValueType == typeof(DateTime))
+            {
+                MessageBox.Show($"第{e.RowIndex + 1}行，{columnName} 格式无效，请输入完整的日期（例如：2025-05-01）", "数据输入错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show($"第{e.RowIndex + 1}行，{columnName} 数据输入错误", "数据输入错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            e.ThrowException = false; // 防止异常冒泡
+        }
+
+        private async void dataGridView_exams_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView_exams.Columns[e.ColumnIndex].Name == "DeleteLink")
+            {
+                var selectedExam = exams.ElementAtOrDefault(e.RowIndex);
+                if (selectedExam == null)
+                    return;
+
+                var result = MessageBox.Show($"确定要删除考试 “{selectedExam.Name}”？", "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        bool deleted = false;
+                        using (var loading = new LoadForm())
+                        {
+                            loading.Show();
+                            await Task.Delay(100); // 确保加载窗显示
+                            deleted = await scoreService.DeleteExam(selectedExam); // 假设你有此服务方法
+                            loading.Close();
+                        }
+
+                        if (deleted)
+                        {
+                            MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ExamsLoad(); // 重新加载考试列表
+                        }
+                        else
+                        {
+                            MessageBox.Show("删除失败，请重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"删除过程中出现错误：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }

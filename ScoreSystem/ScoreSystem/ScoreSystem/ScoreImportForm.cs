@@ -43,17 +43,14 @@ namespace ScoreSystem
                 saveFileDialog.FileName = "分数信息模板.xlsx";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //创建一个Excel工程
                     IWorkbook workbook = new XSSFWorkbook();
                     ISheet sheet = workbook.CreateSheet("分数信息");
 
-                    //提示
+                    // 提示行
                     IRow tipRow = sheet.CreateRow(0);
                     tipRow.HeightInPoints = 60;
-                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写分数信息，严禁修改表头顺序。考试名称必须要已经发布(存在)的，评论可以不填。此行禁止删除！！！");
-                    //合并单元格
-                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 9));
-                    // 设置提示样式
+                    tipRow.CreateCell(0).SetCellValue("请按照本模板格式填写成绩，一行对应一个学生的全部科目成绩，考试号必须是已发布考试。此行禁止删除！");
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 10));
                     ICellStyle tipStyle = workbook.CreateCellStyle();
                     IFont tipFont = workbook.CreateFont();
                     tipFont.Color = IndexedColors.Grey40Percent.Index;
@@ -62,21 +59,24 @@ namespace ScoreSystem
                     tipStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Left;
                     tipStyle.WrapText = true;
                     tipRow.Cells[0].CellStyle = tipStyle;
-                    //创建表头
+
+                    // 表头行
                     IRow headerRow = sheet.CreateRow(1);
-                    headerRow.CreateCell(0).SetCellValue("学号");
-                    headerRow.CreateCell(1).SetCellValue("科目");
-                    headerRow.CreateCell(2).SetCellValue("考试名称");
-                    headerRow.CreateCell(3).SetCellValue("分数");
-                    headerRow.CreateCell(4).SetCellValue("评论");
-                    for (int i = 0; i <= 4; i++)
+                    string[] headers = new string[]
                     {
+                         "学号","考试号", "语文", "数学", "英语", "物理", "历史", "化学", "生物", "政治", "地理"
+                    };
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        headerRow.CreateCell(i).SetCellValue(headers[i]);
                         sheet.AutoSizeColumn(i);
                     }
+
                     using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
                     {
                         workbook.Write(fs);
                     }
+
                     MessageBox.Show("模板已保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -96,7 +96,15 @@ namespace ScoreSystem
                 {
                     List<ScoreEntity> scores = new List<ScoreEntity>();
                     List<ScoreVO> showScores = new List<ScoreVO>();
-                    HashSet<string> uniquenessSet = new HashSet<string>(); // 用于检查重复录入
+                    HashSet<string> uniquenessSet = new HashSet<string>();
+
+                    // 所有科目列名和对应 courseId 映射（你根据项目实际调整 courseId）
+                    var courseMap = new Dictionary<string, int>
+            {
+                {"语文", 0}, {"数学", 1}, {"英语", 2}, {"物理", 3}, {"历史", 4},
+                {"化学", 5}, {"生物", 6}, {"政治", 7}, {"地理", 8}
+            };
+
                     using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
                     {
                         IWorkbook workbook = new XSSFWorkbook(fs);
@@ -109,92 +117,89 @@ namespace ScoreSystem
                             if (row == null || row.Cells.All(c => c.CellType == CellType.Blank)) continue;
 
                             string studentNumber = row.GetCell(0)?.ToString().Trim();
-                            string courseName = row.GetCell(1)?.ToString().Trim();
-                            string examName = row.GetCell(2)?.ToString().Trim();
-                            string scoreStr = row.GetCell(3)?.ToString().Trim();
-                            string comment = row.GetCell(4)?.ToString().Trim();
+                            string examIdStr = row.GetCell(1)?.ToString().Trim();
 
-                            // 校验学号
+                            // 基础校验
                             if (string.IsNullOrEmpty(studentNumber))
                             {
                                 MessageBox.Show($"第{displayRow}行，学号不能为空。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-                            if(teacherService.GetStudent(studentNumber) == null)
+                            if (teacherService.GetStudent(studentNumber) == null)
                             {
                                 MessageBox.Show($"第{displayRow}行，学号不存在(学生不存在)。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
-
-                            // 校验科目
-                            int courseId = DataUtil.ParseCouseNameToId(courseName);
-                            if (courseId == -1)
+                            if (!int.TryParse(examIdStr, out int examId))
                             {
-                                MessageBox.Show($"第{displayRow}行，科目“{courseName}”无效。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show($"第{displayRow}行，考试号无效或考试不存在。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
 
-                            // 校验考试
-                            int examId = scoreService.GetExamId(examName);
-                            if (examId == -1)
+                            // 每门科目处理
+                            foreach (var kvp in courseMap)
                             {
-                                MessageBox.Show($"第{displayRow}行，考试“{examName}”不存在。请先发布考试。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
+                                string courseName = kvp.Key;
+                                int courseId = kvp.Value;
+                                ICell cell = row.GetCell(2 + courseId); // 从第2列开始是科目
 
-                            // 校验分数
-                            if (!double.TryParse(scoreStr, out double scoreVal))
-                            {
-                                MessageBox.Show($"第{displayRow}行，分数字段“{scoreStr}”无效，必须为数字。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
+                                if (cell == null || cell.CellType == CellType.Blank) continue;
+
+                                string scoreStr = cell.ToString().Trim();
+                                if (!double.TryParse(scoreStr, out double scoreVal))
+                                {
+                                    MessageBox.Show($"第{displayRow}行，{courseName} 分数字段“{scoreStr}”无效，必须为数字。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                                if (scoreVal < 0)
+                                {
+                                    MessageBox.Show($"第{displayRow}行，{courseName} 分数不能为负数。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                                if ((courseId <= 2 && scoreVal > 150) || (courseId > 2 && scoreVal > 100))
+                                {
+                                    MessageBox.Show($"第{displayRow}行，{courseName} 分数超出有效范围。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+
+                                string key = $"{studentNumber}_{examId}_{courseId}";
+                                if (uniquenessSet.Contains(key))
+                                {
+                                    MessageBox.Show($"第{displayRow}行，学生“{studentNumber}”的“{courseName}”成绩重复。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                                uniquenessSet.Add(key);
+
+                                var scoreEntity = new ScoreEntity
+                                {
+                                    StudentNumber = studentNumber,
+                                    ExamId = examId,
+                                    CourseId = courseId + 1, // 按你的逻辑是 +1
+                                    Score = scoreVal,
+                                    Comment = null // 可扩展支持每科备注
+                                };
+                                scores.Add(scoreEntity);
+
+                                showScores.Add(new ScoreVO
+                                {
+                                    StudentNumber = studentNumber,
+                                    ExamName = examId.ToString(),
+                                    CourseName = courseName,
+                                    Score = scoreVal,
+                                    Comment = null
+                                });
                             }
-                            if (scoreVal < 0)
-                            {
-                                MessageBox.Show($"第{displayRow}行，分数不能为负数。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            if ((courseId >= 0 && courseId <= 2 && scoreVal > 150) || (courseId > 2 && scoreVal > 100))
-                            {
-                                MessageBox.Show($"第{displayRow}行，科目“{courseName}”的分数超出有效范围。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            // 唯一性检查（同学号 + 考试 + 科目）
-                            string key = $"{studentNumber}_{examId}_{courseId}";
-                            if (uniquenessSet.Contains(key))
-                            {
-                                MessageBox.Show($"第{displayRow}行，学生“{studentNumber}”的“{examName} - {courseName}”成绩重复。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            uniquenessSet.Add(key);
-                            // 构建 ScoreEntity
-                            ScoreEntity scoreEntity = new ScoreEntity
-                            {
-                                StudentNumber = studentNumber,
-                                CourseId = courseId + 1,
-                                ExamId = examId,
-                                Score = scoreVal,
-                                Comment = comment
-                            };
-                            scores.Add(scoreEntity);
-                            ScoreVO scoreVO = new ScoreVO
-                            {
-                                StudentNumber = studentNumber,
-                                CourseName = courseName,
-                                ExamName = examName,
-                                Score = scoreVal,
-                                Comment = comment
-                            };
-                            showScores.Add(scoreVO);
                         }
                     }
+
                     this.scores = scores;
                     this.showScores = showScores;
-                    // 将数据绑定到 DataGridView 预览
+
                     dataGridView_preview.DataSource = showScores.Select(s => new
                     {
                         学号 = s.StudentNumber,
+                        考试号 = s.ExamName,
                         科目 = s.CourseName,
-                        考试 = s.ExamName,
                         分数 = s.Score,
                         备注 = s.Comment
                     }).ToList();

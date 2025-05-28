@@ -162,6 +162,7 @@
     <Compile Include="ClassRankingControlForm.Designer.cs">
       <DependentUpon>ClassRankingControlForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\CourseHelper.cs" />
     <Compile Include="Data\DataUtil.cs" />
     <Compile Include="Data\HttpUtil.cs" />
     <Compile Include="Data\JsonUtil.cs" />
