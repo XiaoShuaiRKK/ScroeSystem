@@ -61,6 +61,7 @@ namespace ScoreSystem
 
         private void menu_logout_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             this.loginForm.Show();
             this.Dispose();
         }
@@ -88,6 +89,7 @@ namespace ScoreSystem
         {
             if (isLoadClass)
             {
+                ExitEditModeIfNeeded();
                 StudentDataInit();
             }
         }
@@ -149,23 +151,27 @@ namespace ScoreSystem
 
         private void menu_class_or_student_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreClassOrStudentOperateForm().ShowDialog();
             StudentDataInit();
         }
 
         private void menu_score_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreScoreForm(this).Show();
             this.Hide();
         }
 
         private void menu_exam_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreExamForm().ShowDialog();
         }
 
         private void menu_university_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             this.Hide();
             new ScoreUniversityThresholdForm(this).Show();
         }
@@ -177,7 +183,7 @@ namespace ScoreSystem
                 MessageBox.Show("请选择一名学生进行走势分析。");
                 return;
             }
-
+            ExitEditModeIfNeeded();
             var selectedRow = dataGridView_students.SelectedRows[0];
             string studentNumber = selectedRow.Cells["学号"].Value.ToString();
 
@@ -215,16 +221,19 @@ namespace ScoreSystem
 
         private void menu_critical_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreCriticalForm().ShowDialog();
         }
 
         private void menu_teacher_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreTeacherForm().ShowDialog();
         }
 
         private void menu_class_Click(object sender, EventArgs e)
         {
+            ExitEditModeIfNeeded();
             new ScoreClassForm(this).Show();
             this.Hide();
         }
@@ -257,6 +266,7 @@ namespace ScoreSystem
             }
             else
             {
+                button_edit.Enabled = false;
                 // 保存逻辑
                 var updatedStudents = new List<Student>();
                 for (int i = 0; i < dataGridView_students.Rows.Count; i++)
@@ -295,14 +305,7 @@ namespace ScoreSystem
                     {
                         loading.Show();
                         await Task.Delay(100);
-                        foreach (var stu in updatedStudents)
-                        {
-                            success = await studentService.UpdateStudent(stu);
-                            if (!success)
-                            {
-                                MessageBox.Show($"学生 {stu.Name} 更新失败。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
+                        success = await studentService.BatchUpdateStudent(students);
                         loading.Close();
                     }
                     if (success)
@@ -314,6 +317,7 @@ namespace ScoreSystem
                 dataGridView_students.ReadOnly = true;
                 dataGridView_students.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 button_edit.Text = "修改";
+                button_edit.Enabled = true;
                 StudentDataInit(); // 刷新数据
             }
 
@@ -380,5 +384,17 @@ namespace ScoreSystem
             }
         }
 
+        private void ExitEditModeIfNeeded()
+        {
+            if (isEdit)
+            {
+                dataGridView_students.ReadOnly = true;
+                dataGridView_students.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                button_edit.Text = "修改";
+                button_edit.Enabled = true;
+                isEdit = false;
+                StudentDataInit(); // 刷新数据回到正常状态
+            }
+        }
     }
 }

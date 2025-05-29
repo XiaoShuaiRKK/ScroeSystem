@@ -13,4 +13,11 @@
         </foreach>
     </insert>
 
+    <select id="selectBatchByStudentNumbers" resultType="com.score.system.entity.user.Student">
+        SELECT * FROM student WHERE student_number IN
+        <foreach item="item" collection="numbers" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

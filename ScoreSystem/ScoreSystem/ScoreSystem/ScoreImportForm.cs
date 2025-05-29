@@ -98,7 +98,6 @@ namespace ScoreSystem
                     List<ScoreVO> showScores = new List<ScoreVO>();
                     HashSet<string> uniquenessSet = new HashSet<string>();
 
-                    // 所有科目列名和对应 courseId 映射（你根据项目实际调整 courseId）
                     var courseMap = new Dictionary<string, int>
             {
                 {"语文", 0}, {"数学", 1}, {"英语", 2}, {"物理", 3}, {"历史", 4},
@@ -119,7 +118,6 @@ namespace ScoreSystem
                             string studentNumber = row.GetCell(0)?.ToString().Trim();
                             string examIdStr = row.GetCell(1)?.ToString().Trim();
 
-                            // 基础校验
                             if (string.IsNullOrEmpty(studentNumber))
                             {
                                 MessageBox.Show($"第{displayRow}行，学号不能为空。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -136,14 +134,24 @@ namespace ScoreSystem
                                 return;
                             }
 
-                            // 每门科目处理
                             foreach (var kvp in courseMap)
                             {
                                 string courseName = kvp.Key;
                                 int courseId = kvp.Value;
-                                ICell cell = row.GetCell(2 + courseId); // 从第2列开始是科目
+                                ICell cell = row.GetCell(2 + courseId); // 科目列从第2列开始
 
-                                if (cell == null || cell.CellType == CellType.Blank) continue;
+                                if (cell == null || cell.CellType == CellType.Blank)
+                                {
+                                    showScores.Add(new ScoreVO
+                                    {
+                                        StudentNumber = studentNumber,
+                                        ExamName = examId.ToString(),
+                                        CourseName = courseName,
+                                        Score = 0.0,
+                                        Comment = "空白"
+                                    });
+                                    continue;
+                                }
 
                                 string scoreStr = cell.ToString().Trim();
                                 if (!double.TryParse(scoreStr, out double scoreVal))
@@ -151,15 +159,31 @@ namespace ScoreSystem
                                     MessageBox.Show($"第{displayRow}行，{courseName} 分数字段“{scoreStr}”无效，必须为数字。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
                                 }
+
                                 if (scoreVal < 0)
                                 {
                                     MessageBox.Show($"第{displayRow}行，{courseName} 分数不能为负数。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
                                 }
+
                                 if ((courseId <= 2 && scoreVal > 150) || (courseId > 2 && scoreVal > 100))
                                 {
                                     MessageBox.Show($"第{displayRow}行，{courseName} 分数超出有效范围。", "格式错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
+                                }
+
+                                showScores.Add(new ScoreVO
+                                {
+                                    StudentNumber = studentNumber,
+                                    ExamName = examId.ToString(),
+                                    CourseName = courseName,
+                                    Score = scoreVal,
+                                    Comment = scoreVal == 0 ? "跳过（0分）" : null
+                                });
+
+                                if (scoreVal == 0)
+                                {
+                                    continue; // 不加入scores
                                 }
 
                                 string key = $"{studentNumber}_{examId}_{courseId}";
@@ -174,20 +198,11 @@ namespace ScoreSystem
                                 {
                                     StudentNumber = studentNumber,
                                     ExamId = examId,
-                                    CourseId = courseId + 1, // 按你的逻辑是 +1
-                                    Score = scoreVal,
-                                    Comment = null // 可扩展支持每科备注
-                                };
-                                scores.Add(scoreEntity);
-
-                                showScores.Add(new ScoreVO
-                                {
-                                    StudentNumber = studentNumber,
-                                    ExamName = examId.ToString(),
-                                    CourseName = courseName,
+                                    CourseId = courseId + 1,
                                     Score = scoreVal,
                                     Comment = null
-                                });
+                                };
+                                scores.Add(scoreEntity);
                             }
                         }
                     }
@@ -195,14 +210,42 @@ namespace ScoreSystem
                     this.scores = scores;
                     this.showScores = showScores;
 
-                    dataGridView_preview.DataSource = showScores.Select(s => new
+                    // ---- 组装显示表格（每行一位学生，列为各科） ----
+                    DataTable pivotedTable = new DataTable();
+                    pivotedTable.Columns.Add("学号");
+                    pivotedTable.Columns.Add("考试号");
+
+                    string[] subjects = new string[]
                     {
-                        学号 = s.StudentNumber,
-                        考试号 = s.ExamName,
-                        科目 = s.CourseName,
-                        分数 = s.Score,
-                        备注 = s.Comment
-                    }).ToList();
+                        "语文", "数学", "英语", "物理", "历史", "化学", "生物", "政治", "地理"
+                    };
+                    foreach (var subject in subjects)
+                    {
+                        pivotedTable.Columns.Add(subject);
+                    }
+
+                    var grouped = showScores
+                        .GroupBy(s => new { s.StudentNumber, s.ExamName })
+                        .Select(g =>
+                        {
+                            var row = pivotedTable.NewRow();
+                            row["学号"] = g.Key.StudentNumber;
+                            row["考试号"] = g.Key.ExamName;
+
+                            foreach (var score in g)
+                            {
+                                row[score.CourseName] = score.Score.ToString() ?? "";
+                            }
+
+                            return row;
+                        });
+
+                    foreach (var row in grouped)
+                    {
+                        pivotedTable.Rows.Add(row);
+                    }
+
+                    dataGridView_preview.DataSource = pivotedTable;
 
                     MessageBox.Show("成绩数据预览成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

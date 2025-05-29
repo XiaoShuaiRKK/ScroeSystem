@@ -12,6 +12,7 @@ public interface StaffService {
     ResponseResult<Boolean> batchAddStudent(List<StudentDTO> studentDTOList);
     ResponseResult<Boolean> deleteStudent(StudentDTO studentDTO);
     ResponseResult<Boolean> updateStudent(StudentDTO studentDTO);
+    ResponseResult<Boolean> batchUpdateStudent(List<StudentDTO> studentDTOList);
     ResponseResult<Boolean> addTeacher(TeacherDTO teacherDTO);
     ResponseResult<Boolean> batchAddTeacher(List<TeacherDTO> teacherDTOList);
     ResponseResult<List<Teacher>> getAllTeachers();

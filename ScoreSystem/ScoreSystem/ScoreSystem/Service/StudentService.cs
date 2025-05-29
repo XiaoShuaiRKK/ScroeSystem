@@ -116,5 +116,34 @@ namespace ScoreSystem.Service
             }
         }
 
+        public async Task<bool> BatchUpdateStudent(List<Student> students)
+        {
+            string url = HttpUtil.GetUrl("/user/update/batch/student");
+            var studentDTO = students.Select(s => new
+            {
+                name = s.Name,
+                studentNumber = s.StudentNumber,
+                classId = s.ClassId,
+                state = s.State,
+                enrollmentDate = s.EnrollmentDate.ToString("yyyy-MM-dd"), // 关键格式化
+                subjectGroupId = s.SubjectGroupId,
+                electiveCourse1Id = s.ElectiveCourse1Id,
+                electiveCourse2Id = s.ElectiveCourse2Id,
+            }).ToList();
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(studentDTO, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 }

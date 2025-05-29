@@ -116,7 +116,7 @@ namespace ScoreSystem
                     // 填充已有成绩
                     foreach (var score in student.Scores)
                     {
-                        string courseName = ((CourseEnum)score.CourseId).ToString();
+                        string courseName = ((CourseEnum)score.CourseId - 1).ToString();
                         if (dt.Columns.Contains(courseName))
                         {
                             row[courseName] = score.Score;

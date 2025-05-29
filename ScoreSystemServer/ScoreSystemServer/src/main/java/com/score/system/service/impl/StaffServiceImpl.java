@@ -331,6 +331,38 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public ResponseResult<Boolean> batchUpdateStudent(List<StudentDTO> studentDTOList) {
+        if(studentDTOList == null || studentDTOList.isEmpty()){
+            return ResponseResult.fail("学生列表不能为空",false);
+        }
+        int successCount = 0;
+        List<String> failedDetails = new ArrayList<>();
+        for(StudentDTO studentDTO : studentDTOList){
+            try {
+                ResponseResult<Boolean> result = this.updateStudent(studentDTO);
+                if(result.getCode() == 200){
+                    successCount++;
+                }else {
+                    failedDetails.add(studentDTO.getStudentNumber() + ": " + result.getMessage());
+                }
+            }catch (Exception e){
+                failedDetails.add(studentDTO.getStudentNumber());
+            }
+        }
+        int failedCount = failedDetails.size();
+        StringBuilder msg = new StringBuilder();
+        msg.append("批量更新完成：成功 ").append(successCount)
+                .append(" 条，失败 ").append(failedCount).append(" 条。");
+
+        if (failedCount > 0) {
+            msg.append("\n失败明细：\n").append(String.join("\n", failedDetails));
+            return ResponseResult.fail(msg.toString(), false);
+        }
+
+        return ResponseResult.success(msg.toString(), true);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult<Boolean> addTeacher(TeacherDTO teacherDTO) {
         User user = new User();

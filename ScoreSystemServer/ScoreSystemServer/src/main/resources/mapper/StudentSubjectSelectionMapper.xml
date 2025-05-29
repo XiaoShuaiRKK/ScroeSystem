@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.score.system.mapper.StudentSubjectSelectionMapper">
+    <!-- StudentSubjectSelectionMapper.xml -->
+    <select id="selectBatchByStudentNumbers" resultType="com.score.system.entity.user.StudentSubjectSelection">
+        SELECT * FROM student_subject_selection WHERE student_number IN
+        <foreach item="item" collection="numbers" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

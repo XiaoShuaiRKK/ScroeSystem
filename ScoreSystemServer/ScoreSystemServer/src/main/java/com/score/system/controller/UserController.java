@@ -88,6 +88,11 @@ public class UserController {
         return staffService.updateStudent(studentDTO);
     }
 
+    @PostMapping("/update/batch/student")
+    public ResponseResult<Boolean> batchUpdateStudent(@Valid @RequestBody List<StudentDTO> studentDTOList){
+        return staffService.batchUpdateStudent(studentDTOList);
+    }
+
     @PostMapping("/update/teacher")
     public ResponseResult<Boolean> updateTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
         return staffService.updateTeacher(teacherDTO);

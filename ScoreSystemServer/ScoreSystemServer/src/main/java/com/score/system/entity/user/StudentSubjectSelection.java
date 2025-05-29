@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @TableName("student_subject_selection")
 public class StudentSubjectSelection extends BaseEntity {
-    @TableField("student_number")
+    @TableId(value = "student_number",type = IdType.INPUT)
     private String studentNumber;
     @TableField("subject_group_id")
     private Long subjectGroupId;
