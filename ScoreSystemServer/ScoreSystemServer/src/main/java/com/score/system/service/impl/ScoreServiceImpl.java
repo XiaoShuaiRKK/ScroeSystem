@@ -2005,10 +2005,10 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             extendedScores.put(sn, extendedCourseIds.stream().mapToDouble(cid -> studentScores.getOrDefault(cid, 0.0)).sum());
         }
 
+        // 年级排名
         Map<String, Integer> gradeTotalRanks = calculateRank(totalScores);
         Map<String, Integer> gradeThreeRanks = calculateRank(threeScores);
         Map<String, Integer> gradeExtendedRanks = calculateRank(extendedScores);
-
         Map<Long, Map<String, Integer>> courseGradeRanks = new HashMap<>();
         for (Long cid : allCourseIds) {
             Map<String, Double> perCourseScoreMap = new HashMap<>();
@@ -2018,24 +2018,29 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             courseGradeRanks.put(cid, calculateRank(perCourseScoreMap));
         }
 
-        Map<String, Integer> classTotalRanks = gradeTotalRanks.entrySet().stream()
+        // 班级排名：使用班级学生成绩重新计算排名
+        Map<String, Double> classTotalScoreMap = totalScores.entrySet().stream()
                 .filter(e -> classStudentNumbers.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Integer> classTotalRanks = calculateRank(classTotalScoreMap);
 
-        Map<String, Integer> classThreeRanks = gradeThreeRanks.entrySet().stream()
+        Map<String, Double> classThreeScoreMap = threeScores.entrySet().stream()
                 .filter(e -> classStudentNumbers.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Integer> classThreeRanks = calculateRank(classThreeScoreMap);
 
-        Map<String, Integer> classExtendedRanks = gradeExtendedRanks.entrySet().stream()
+        Map<String, Double> classExtendedScoreMap = extendedScores.entrySet().stream()
                 .filter(e -> classStudentNumbers.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Integer> classExtendedRanks = calculateRank(classExtendedScoreMap);
 
         Map<Long, Map<String, Integer>> courseClassRanks = new HashMap<>();
         for (Long cid : allCourseIds) {
-            Map<String, Integer> filtered = courseGradeRanks.get(cid).entrySet().stream()
-                    .filter(e -> classStudentNumbers.contains(e.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            courseClassRanks.put(cid, filtered);
+            Map<String, Double> perCourseScoreMap = new HashMap<>();
+            for (String sn : classStudentNumbers) {
+                perCourseScoreMap.put(sn, scoreMap.get(sn).getOrDefault(cid, 0.0));
+            }
+            courseClassRanks.put(cid, calculateRank(perCourseScoreMap));
         }
 
         List<StudentRanking> result = classStudentNumbers.stream().map(sn -> {

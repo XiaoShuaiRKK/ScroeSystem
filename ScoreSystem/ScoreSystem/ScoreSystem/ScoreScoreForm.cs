@@ -20,9 +20,10 @@ namespace ScoreSystem
         private List<Exam> exams;
         private List<ExamSubjectThreshold> thresholds;
         private List<ClassEntity> classEntities;
-        private List<StudentScore> studentScores;
+        private List<StudentRanking> studentRankings;
         private ScoreService scoreService = ScoreService.GetIntance();
         private ClassService classService = ClassService.GetIntance();
+        private RankingService rankingService = RankingService.GetIntance();
         private bool isLoaded = false;
         //print
         private PrintDocument printDocument = new PrintDocument();
@@ -66,67 +67,126 @@ namespace ScoreSystem
             comboBox_exam.DataSource = examDisplayList;
             comboBox_exam.DisplayMember = "Name";
             comboBox_exam.ValueMember = "Id";
+
             comboBox_class.DataSource = null;
             classEntities = await classService.GetAllClasses();
             comboBox_class.DataSource = classEntities;
             comboBox_class.DisplayMember = "Name";
             comboBox_class.ValueMember = "Id";
+
             if (exams.Any())
-            {
                 isLoaded = true;
-            }
+
             ScoreInit();
         }
 
         private async void ScoreInit()
         {
-            if (isLoaded)
-            {
-                int examId = (int)comboBox_exam.SelectedValue;
-                int classId = (int)comboBox_class.SelectedValue;
-                studentScores = await scoreService.GetScoresByClass(examId, classId);
-                thresholds = await scoreService.GetThresholds(examId);
-                // 构建达标线提示文本
-                StringBuilder thresholdTextBuilder = new StringBuilder("各科达标线：");
-                foreach (var t in thresholds)
-                {
-                    string courseName = ((CourseEnum)t.CourseId).ToString();
-                    thresholdTextBuilder.Append($"{courseName}: {t.ThresholdScore}  ");
-                }
-                label_threshold.Text = thresholdTextBuilder.ToString();
-                //
-                var allCourseNames = Enum.GetNames(typeof(CourseEnum));
-                //构建DataTable
-                DataTable dt = new DataTable();
-                dt.Columns.Add("姓名");
-                dt.Columns.Add("学号");
-                dt.Columns.Add("班级");
-                foreach (var courseName in allCourseNames)
-                {
-                    dt.Columns.Add(courseName);
-                }
-                // 添加每个学生数据
-                foreach (var student in studentScores)
-                {
-                    DataRow row = dt.NewRow();
-                    row["姓名"] = student.Name;
-                    row["学号"] = student.StudentNumber;
-                    row["班级"] = student.ClassName;
+            if (!isLoaded) return;
 
-                    // 填充已有成绩
-                    foreach (var score in student.Scores)
-                    {
-                        string courseName = ((CourseEnum)score.CourseId - 1).ToString();
-                        if (dt.Columns.Contains(courseName))
-                        {
-                            row[courseName] = score.Score;
-                        }
-                    }
-                    dt.Rows.Add(row);
-                }
-                dataGridView_score.DataSource = null;
-                dataGridView_score.DataSource = dt;
+            int examId = (int)comboBox_exam.SelectedValue;
+            int classId = (int)comboBox_class.SelectedValue;
+
+            studentRankings = await rankingService.GetAllRangkingByClass(examId, classId);
+            thresholds = await scoreService.GetThresholds(examId);
+
+            StringBuilder thresholdTextBuilder = new StringBuilder("各科达标线：");
+            foreach (var t in thresholds)
+            {
+                string courseName = GetCourseName(t.CourseId);
+                thresholdTextBuilder.Append($"{courseName}: {t.ThresholdScore}  ");
             }
+            label_threshold.Text = thresholdTextBuilder.ToString();
+
+            // 自定义科目顺序
+            List<int> customCourseOrder = new List<int>
+            {
+                (int)CourseEnum.语文,
+                (int)CourseEnum.数学,
+                (int)CourseEnum.英语,
+                (int)CourseEnum.物理,
+                (int)CourseEnum.化学,
+                (int)CourseEnum.生物,
+                (int)CourseEnum.政治,
+                (int)CourseEnum.历史,
+                (int)CourseEnum.地理,
+                -2, // 三科总分
+                -1, // 总分
+                -3  // 3+1+2总分
+            };
+
+            var allCourseIds = customCourseOrder
+                .Where(cid => studentRankings.SelectMany(s => s.Ranks.Select(r => r.CourseId)).Contains(cid))
+                .ToList();
+
+            List<string> columnNames = new List<string> { "姓名", "学号" };
+            Dictionary<int, string> courseNameMap = new Dictionary<int, string>();
+
+            foreach (var courseId in allCourseIds)
+            {
+                string name = GetCourseName(courseId);
+                courseNameMap[courseId] = name;
+                columnNames.Add(name);
+                columnNames.Add($"{name}-班排");
+                columnNames.Add($"{name}-年排");
+            }
+
+            DataTable dt = new DataTable();
+            foreach (var col in columnNames)
+            {
+                dt.Columns.Add(col);
+            }
+
+            foreach (var student in studentRankings)
+            {
+                DataRow row = dt.NewRow();
+                row["姓名"] = student.StudentName;
+                row["学号"] = student.StudentNumber;
+
+                foreach (var courseId in allCourseIds)
+                {
+                    string cname = courseNameMap[courseId];
+                    var classRank = student.Ranks.FirstOrDefault(r => r.CourseId == courseId && r.Scope == "班级");
+                    var gradeRank = student.Ranks.FirstOrDefault(r => r.CourseId == courseId && r.Scope == "年级");
+
+                    if (classRank != null)
+                        row[cname] = classRank.Score;
+
+                    if (classRank != null)
+                        row[$"{cname}-班排"] = classRank.Rank;
+
+                    if (gradeRank != null)
+                        row[$"{cname}-年排"] = gradeRank.Rank;
+                }
+
+                dt.Rows.Add(row);
+            }
+
+            dataGridView_score.DataSource = null;
+            dataGridView_score.DataSource = dt;
+        }
+
+        private string GetCourseName(int courseId)
+        {
+            string courseName;
+            switch (courseId)
+            {
+                case -1:
+                    courseName = "总分";
+                    break;
+                case -2:
+                    courseName = "三科总分";
+                    break;
+                case -3:
+                    courseName = "3+1+2总分";
+                    break;
+                default:
+                    courseName = Enum.IsDefined(typeof(CourseEnum), courseId)
+                        ? ((CourseEnum)courseId).ToString()
+                        : $"未知({courseId})";
+                    break;
+            }
+            return courseName;
         }
 
         private void comboBox_exam_SelectedIndexChanged(object sender, EventArgs e)
@@ -211,21 +271,16 @@ namespace ScoreSystem
             Brush brush = Brushes.Black;
             Pen pen = Pens.Black;
 
-            int colCount = dataGridView_score.Columns.Count;
-
-            // 1. 获取原始列宽总宽度（来自DataGridView实际宽度）
             int totalGridWidth = dataGridView_score.Columns.Cast<DataGridViewColumn>().Sum(c => c.Width);
-
-            // 2. 根据打印区域等比例缩放每列宽度
-            Dictionary<int, int> scaledColWidths = new Dictionary<int, int>();
             int printAreaWidth = e.MarginBounds.Width;
+
+            Dictionary<int, int> scaledColWidths = new Dictionary<int, int>();
             foreach (DataGridViewColumn col in dataGridView_score.Columns)
             {
                 float colRatio = (float)col.Width / totalGridWidth;
                 scaledColWidths[col.Index] = (int)(colRatio * printAreaWidth);
             }
 
-            // 打印表头
             int x = leftMargin;
             foreach (DataGridViewColumn col in dataGridView_score.Columns)
             {
@@ -244,7 +299,6 @@ namespace ScoreSystem
 
             y += rowHeightLocal;
 
-            // 打印每一行数据
             while (currentRowIndex < dataGridView_score.Rows.Count)
             {
                 DataGridViewRow row = dataGridView_score.Rows[currentRowIndex];
@@ -271,7 +325,6 @@ namespace ScoreSystem
                 currentRowIndex++;
                 y += rowHeightLocal;
 
-                // 是否分页
                 if (y + rowHeightLocal > e.MarginBounds.Bottom)
                 {
                     e.HasMorePages = true;
