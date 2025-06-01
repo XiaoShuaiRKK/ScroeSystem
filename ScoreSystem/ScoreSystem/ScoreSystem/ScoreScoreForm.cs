@@ -47,6 +47,7 @@ namespace ScoreSystem
             comboBox_class.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_exam.DropDownStyle = ComboBoxStyle.DropDownList;
             dataGridView_score.ReadOnly = true;
+            printDocument.DefaultPageSettings.Landscape = true;
             this.FormClosed += (s, ev) =>
             {
                 scoreMainForm.Show();
@@ -153,10 +154,10 @@ namespace ScoreSystem
                         row[cname] = classRank.Score;
 
                     if (classRank != null)
-                        row[$"{cname}-班排"] = classRank.Rank;
+                        row[$"{cname}-班排"] = $"{classRank.Rank}/{classRank.Total}";
 
                     if (gradeRank != null)
-                        row[$"{cname}-年排"] = gradeRank.Rank;
+                        row[$"{cname}-年排"] = $"{gradeRank.Rank}/{gradeRank.Total}";
                 }
 
                 dt.Rows.Add(row);
@@ -181,8 +182,8 @@ namespace ScoreSystem
                     courseName = "3+1+2总分";
                     break;
                 default:
-                    courseName = Enum.IsDefined(typeof(CourseEnum), courseId)
-                        ? ((CourseEnum)courseId).ToString()
+                    courseName = Enum.IsDefined(typeof(CourseEnum), courseId - 1)
+                        ? ((CourseEnum)courseId - 1).ToString()
                         : $"未知({courseId})";
                     break;
             }
@@ -222,7 +223,7 @@ namespace ScoreSystem
             if (Enum.TryParse<CourseEnum>(columnName, out CourseEnum courseEnumObj))
             {
                 var courseEnum = courseEnumObj;
-                int courseId = (int)courseEnum;
+                int courseId = (int)courseEnum + 1;
 
                 // 获取该课程的达标线
                 var threshold = thresholds.FirstOrDefault(t => t.CourseId == courseId);
@@ -264,68 +265,64 @@ namespace ScoreSystem
         {
             int topMargin = e.MarginBounds.Top;
             int leftMargin = e.MarginBounds.Left;
+            int printableWidth = e.MarginBounds.Width;
             int y = topMargin;
-            int rowHeightLocal = 25;
+            int rowHeight = 20;
 
-            Font font = new Font("Arial", 8);
+            Font font = new Font("Arial", 5.5f); // 更小字体
             Brush brush = Brushes.Black;
             Pen pen = Pens.Black;
 
-            int totalGridWidth = dataGridView_score.Columns.Cast<DataGridViewColumn>().Sum(c => c.Width);
-            int printAreaWidth = e.MarginBounds.Width;
+            int columnCount = dataGridView_score.Columns.Count;
+            int columnWidth = printableWidth / columnCount; // 每列平均分配宽度
 
-            Dictionary<int, int> scaledColWidths = new Dictionary<int, int>();
+            // 居中调整（防止除不尽时靠左）
+            int actualTotalWidth = columnWidth * columnCount;
+            int xStart = leftMargin + (printableWidth - actualTotalWidth) / 2;
+
+            // 打印标题行
+            int x = xStart;
             foreach (DataGridViewColumn col in dataGridView_score.Columns)
             {
-                float colRatio = (float)col.Width / totalGridWidth;
-                scaledColWidths[col.Index] = (int)(colRatio * printAreaWidth);
-            }
-
-            int x = leftMargin;
-            foreach (DataGridViewColumn col in dataGridView_score.Columns)
-            {
-                int colWidth = scaledColWidths[col.Index];
-                Rectangle rect = new Rectangle(x, y, colWidth, rowHeightLocal);
+                Rectangle rect = new Rectangle(x, y, columnWidth, rowHeight);
+                e.Graphics.FillRectangle(Brushes.LightGray, rect);
                 e.Graphics.DrawRectangle(pen, rect);
-
-                StringFormat format = new StringFormat
+                e.Graphics.DrawString(col.HeaderText, font, brush, rect, new StringFormat
                 {
                     Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center
-                };
-                e.Graphics.DrawString(col.HeaderText, font, brush, rect, format);
-                x += colWidth;
+                    LineAlignment = StringAlignment.Center,
+                    Trimming = StringTrimming.EllipsisCharacter
+                });
+                x += columnWidth;
             }
 
-            y += rowHeightLocal;
+            y += rowHeight;
 
+            // 打印每一行数据
             while (currentRowIndex < dataGridView_score.Rows.Count)
             {
-                DataGridViewRow row = dataGridView_score.Rows[currentRowIndex];
+                var row = dataGridView_score.Rows[currentRowIndex];
                 if (row.IsNewRow) break;
 
-                x = leftMargin;
+                x = xStart;
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    int colWidth = scaledColWidths[cell.ColumnIndex];
-                    Rectangle rect = new Rectangle(x, y, colWidth, rowHeightLocal);
+                    Rectangle rect = new Rectangle(x, y, columnWidth, rowHeight);
                     e.Graphics.DrawRectangle(pen, rect);
-
-                    string value = cell.Value?.ToString() ?? "";
-                    StringFormat format = new StringFormat
+                    string text = cell.Value?.ToString() ?? "";
+                    e.Graphics.DrawString(text, font, brush, rect, new StringFormat
                     {
                         Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Center
-                    };
-                    e.Graphics.DrawString(value, font, brush, rect, format);
-
-                    x += colWidth;
+                        LineAlignment = StringAlignment.Center,
+                        Trimming = StringTrimming.EllipsisCharacter
+                    });
+                    x += columnWidth;
                 }
 
                 currentRowIndex++;
-                y += rowHeightLocal;
+                y += rowHeight;
 
-                if (y + rowHeightLocal > e.MarginBounds.Bottom)
+                if (y + rowHeight > e.MarginBounds.Bottom)
                 {
                     e.HasMorePages = true;
                     return;
@@ -334,5 +331,10 @@ namespace ScoreSystem
 
             e.HasMorePages = false;
         }
+
+
+
+
+
     }
 }
