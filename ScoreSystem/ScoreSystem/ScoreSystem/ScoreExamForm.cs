@@ -68,6 +68,8 @@ namespace ScoreSystem
             };
             dataGridView_preview.DataSource = bindingList;
 
+
+
             // 隐藏原始 Grade 列
             dataGridView_preview.Columns["Grade"].Visible = false;
 

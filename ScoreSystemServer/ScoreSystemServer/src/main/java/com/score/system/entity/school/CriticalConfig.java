@@ -32,11 +32,13 @@ public class CriticalConfig extends BaseEntity {
     @TableField("target_count")
     private Integer targetCount;
 
-    @NotNull(message = "临界比例不能为空")
-    @DecimalMin(value = "0.01", inclusive = true, message = "临界比例必须大于0")
-    @DecimalMax(value = "1.0", inclusive = true, message = "临界比例不能大于1")
     @TableField("critical_ratio")
     private Double criticalRatio;
+
+    @TableField("float_up_count")
+    private Integer floatUpCount;
+    @TableField("float_down_count")
+    private Integer floatDownCount;
 
     @NotNull(message = "科目分组ID不能为空")
     @Min(value = 1, message = "科目分组ID必须大于0")

@@ -129,4 +129,10 @@ public class ScoreController {
                                                                    @RequestParam("exam_id") Long examId){
         return scoreService.getClassAllRankings(classId, examId);
     }
+
+    @GetMapping("/rankings/grade/critical")
+    public ResponseResult<List<StudentRanking>> GetGradeRankingBySubjectGroup(@RequestParam("exam_id")Long examId,
+                                                                              @RequestParam("subject_group_id")Integer subjectGroupId){
+        return scoreService.getGradeSubjectGroupRankings(examId, subjectGroupId);
+    }
 }

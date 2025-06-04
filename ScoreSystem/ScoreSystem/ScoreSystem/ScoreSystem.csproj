@@ -183,6 +183,7 @@
     <Compile Include="Model\ClassEntity.cs" />
     <Compile Include="Model\CourseEnum.cs" />
     <Compile Include="Model\CriticalConfig.cs" />
+    <Compile Include="Model\CriticalConfigDTO.cs" />
     <Compile Include="Model\CriticalStudentLog.cs" />
     <Compile Include="Model\Exam.cs" />
     <Compile Include="Model\ExamSubjectThreshold.cs" />

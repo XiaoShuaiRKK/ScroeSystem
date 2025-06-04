@@ -98,7 +98,7 @@ namespace ScoreSystem
         private void button_add_Click(object sender, EventArgs e)
         {
             int examId = (int)comboBox_add_exam.SelectedValue;
-            int courseId = (int)comboBox_course.SelectedValue;
+            int courseId = (int)comboBox_course.SelectedValue + 1;
             double threshold = (double)num_threshold.Value;
             // 初始化列表
             if (previewThresholds == null)

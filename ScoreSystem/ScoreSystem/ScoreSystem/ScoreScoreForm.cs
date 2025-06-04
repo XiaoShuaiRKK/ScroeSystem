@@ -26,8 +26,8 @@ namespace ScoreSystem
         private RankingService rankingService = RankingService.GetIntance();
         private bool isLoaded = false;
         //print
-        private PrintDocument printDocument = new PrintDocument();
-        private int currentRowIndex = 0;
+        private int currentRowIndex; // 确保这是类级变量
+        private PrintDocument printDocument = new PrintDocument(); // 确保这是类级变量
         private int rowHeight = 30;
         //private Bitmap dgvBitmap;
 
@@ -248,93 +248,131 @@ namespace ScoreSystem
 
         private void menu_print_Click(object sender, EventArgs e)
         {
-            if (dataGridView_score.DataSource == null)
+            if (dataGridView_score.DataSource == null || dataGridView_score.Rows.Count == 0)
             {
                 MessageBox.Show("暂无数据可打印！");
                 return;
             }
 
-            currentRowIndex = 0; // 重置行索引
+            currentRowIndex = 0;
 
-            PrintPreviewDialog previewDialog = new PrintPreviewDialog();
-            previewDialog.Document = printDocument;
-            previewDialog.ShowDialog();
+            printDocument.PrintPage -= PrintDocument_PrintPage;
+            printDocument.PrintPage += PrintDocument_PrintPage;
+            printDocument.DefaultPageSettings.Landscape = true;
+
+            // 打印预览
+            using (PrintPreviewDialog previewDialog = new PrintPreviewDialog())
+            {
+                previewDialog.Document = printDocument;
+                previewDialog.ShowDialog();
+            }
+
+            // 实际打印
+            using (PrintDialog printDialog = new PrintDialog())
+            {
+                printDialog.Document = printDocument;
+
+                if (printDialog.ShowDialog() == DialogResult.OK)
+                {
+                    currentRowIndex = 0;
+                    printDocument.Print();
+                }
+            }
         }
 
-        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        private void PrintData(PrintPageEventArgs e)
         {
             int topMargin = e.MarginBounds.Top;
             int leftMargin = e.MarginBounds.Left;
             int printableWidth = e.MarginBounds.Width;
             int y = topMargin;
-            int rowHeight = 20;
+            int rowHeight = 30;
 
-            Font font = new Font("Arial", 5.5f); // 更小字体
-            Brush brush = Brushes.Black;
-            Pen pen = Pens.Black;
-
-            int columnCount = dataGridView_score.Columns.Count;
-            int columnWidth = printableWidth / columnCount; // 每列平均分配宽度
-
-            // 居中调整（防止除不尽时靠左）
-            int actualTotalWidth = columnWidth * columnCount;
-            int xStart = leftMargin + (printableWidth - actualTotalWidth) / 2;
-
-            // 打印标题行
-            int x = xStart;
-            foreach (DataGridViewColumn col in dataGridView_score.Columns)
+            using (Font font = new Font("Arial", 6.5f)) // 字体略大一点
+            using (Pen pen = new Pen(Color.Black))
             {
-                Rectangle rect = new Rectangle(x, y, columnWidth, rowHeight);
-                e.Graphics.FillRectangle(Brushes.LightGray, rect);
-                e.Graphics.DrawRectangle(pen, rect);
-                e.Graphics.DrawString(col.HeaderText, font, brush, rect, new StringFormat
+                Brush brush = Brushes.Black;
+
+                int columnCount = dataGridView_score.Columns.Count;
+                int[] columnWidths = new int[columnCount];
+
+                // 计算每列宽度（按内容比例计算，或平均分配）
+                int averageWidth = printableWidth / columnCount;
+                for (int i = 0; i < columnCount; i++)
                 {
-                    Alignment = StringAlignment.Center,
-                    LineAlignment = StringAlignment.Center,
-                    Trimming = StringTrimming.EllipsisCharacter
-                });
-                x += columnWidth;
-            }
+                    columnWidths[i] = averageWidth;
+                }
 
-            y += rowHeight;
+                int xStart = leftMargin;
 
-            // 打印每一行数据
-            while (currentRowIndex < dataGridView_score.Rows.Count)
-            {
-                var row = dataGridView_score.Rows[currentRowIndex];
-                if (row.IsNewRow) break;
-
-                x = xStart;
-                foreach (DataGridViewCell cell in row.Cells)
+                // 打印表头
+                int x = xStart;
+                for (int i = 0; i < columnCount; i++)
                 {
-                    Rectangle rect = new Rectangle(x, y, columnWidth, rowHeight);
+                    Rectangle rect = new Rectangle(x, y, columnWidths[i], rowHeight);
+                    e.Graphics.FillRectangle(Brushes.LightGray, rect);
                     e.Graphics.DrawRectangle(pen, rect);
-                    string text = cell.Value?.ToString() ?? "";
-                    e.Graphics.DrawString(text, font, brush, rect, new StringFormat
+
+                    string headerText = dataGridView_score.Columns[i].HeaderText ?? string.Empty;
+                    e.Graphics.DrawString(headerText, font, brush, rect, new StringFormat
                     {
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center,
                         Trimming = StringTrimming.EllipsisCharacter
                     });
-                    x += columnWidth;
+
+                    x += columnWidths[i];
                 }
 
-                currentRowIndex++;
                 y += rowHeight;
 
-                if (y + rowHeight > e.MarginBounds.Bottom)
+                // 打印数据行
+                while (currentRowIndex < dataGridView_score.Rows.Count)
                 {
-                    e.HasMorePages = true;
-                    return;
-                }
-            }
+                    DataGridViewRow row = dataGridView_score.Rows[currentRowIndex];
 
-            e.HasMorePages = false;
+                    if (dataGridView_score.AllowUserToAddRows && row.IsNewRow)
+                    {
+                        currentRowIndex++;
+                        continue;
+                    }
+
+                    x = xStart;
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        Rectangle rect = new Rectangle(x, y, columnWidths[i], rowHeight);
+                        e.Graphics.DrawRectangle(pen, rect);
+
+                        string text = row.Cells[i].Value?.ToString() ?? string.Empty;
+                        e.Graphics.DrawString(text, font, brush, rect, new StringFormat
+                        {
+                            Alignment = StringAlignment.Center,
+                            LineAlignment = StringAlignment.Center,
+                            Trimming = StringTrimming.EllipsisCharacter
+                        });
+
+                        x += columnWidths[i];
+                    }
+
+                    currentRowIndex++;
+                    y += rowHeight;
+
+                    if (y + rowHeight > e.MarginBounds.Bottom)
+                    {
+                        e.HasMorePages = true;
+                        return;
+                    }
+                }
+
+                e.HasMorePages = false;
+            }
         }
 
 
-
-
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            PrintData(e);
+        }
 
     }
 }

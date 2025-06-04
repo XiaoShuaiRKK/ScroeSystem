@@ -28,9 +28,24 @@ public class CriticalController {
         return criticalStudentService.batchAddCriticalConfig(criticalConfigs);
     }
 
+    @PostMapping("/config/update")
+    public ResponseResult<Boolean> updateCriticalConfig(@Validated @RequestBody CriticalConfig criticalConfig) {
+        return criticalStudentService.updateCriticalConfig(criticalConfig);
+    }
+
+    @PostMapping("/config/batchUpdate")
+    public ResponseResult<Boolean> batchUpdateCriticalConfig(@Validated @RequestBody List<CriticalConfig> criticalConfigs) {
+        return criticalStudentService.batchUpdateCriticalConfig(criticalConfigs);
+    }
+
     @GetMapping("/config/get")
     public ResponseResult<List<CriticalConfig>> getAllCriticalConfig() {
         return criticalStudentService.getAllCriticalConfig();
+    }
+
+    @GetMapping("/config/get/byGrade")
+    private ResponseResult<List<CriticalConfig>> getCriticalConfigByGrade(@RequestParam("exam_id") int examId){
+        return criticalStudentService.getCriticalConfigByGrade(examId);
     }
 
     @GetMapping("/generate")

@@ -32,9 +32,9 @@
             this.menu_critical_config = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView_critical = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox_grade = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.dtp_year = new System.Windows.Forms.DateTimePicker();
+            this.comboBox_exam = new System.Windows.Forms.ComboBox();
+            this.comboBox_subject_group = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_critical)).BeginInit();
             this.SuspendLayout();
@@ -68,47 +68,48 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(314, 67);
+            this.label4.Location = new System.Drawing.Point(193, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.Size = new System.Drawing.Size(35, 12);
             this.label4.TabIndex = 26;
-            this.label4.Text = "年级";
-            // 
-            // comboBox_grade
-            // 
-            this.comboBox_grade.FormattingEnabled = true;
-            this.comboBox_grade.Location = new System.Drawing.Point(349, 62);
-            this.comboBox_grade.Name = "comboBox_grade";
-            this.comboBox_grade.Size = new System.Drawing.Size(173, 20);
-            this.comboBox_grade.TabIndex = 25;
-            this.comboBox_grade.SelectedIndexChanged += new System.EventHandler(this.comboBox_grade_SelectedIndexChanged);
+            this.label4.Text = "考试:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(528, 67);
+            this.label5.Location = new System.Drawing.Point(522, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.Size = new System.Drawing.Size(35, 12);
             this.label5.TabIndex = 28;
-            this.label5.Text = "年份";
+            this.label5.Text = "分科:";
             // 
-            // dtp_year
+            // comboBox_exam
             // 
-            this.dtp_year.Location = new System.Drawing.Point(563, 62);
-            this.dtp_year.Name = "dtp_year";
-            this.dtp_year.Size = new System.Drawing.Size(216, 21);
-            this.dtp_year.TabIndex = 27;
-            this.dtp_year.ValueChanged += new System.EventHandler(this.dtp_year_ValueChanged);
+            this.comboBox_exam.FormattingEnabled = true;
+            this.comboBox_exam.Location = new System.Drawing.Point(234, 64);
+            this.comboBox_exam.Name = "comboBox_exam";
+            this.comboBox_exam.Size = new System.Drawing.Size(282, 20);
+            this.comboBox_exam.TabIndex = 29;
+            this.comboBox_exam.SelectedIndexChanged += new System.EventHandler(this.comboBox_exam_SelectedIndexChanged);
+            // 
+            // comboBox_subject_group
+            // 
+            this.comboBox_subject_group.FormattingEnabled = true;
+            this.comboBox_subject_group.Location = new System.Drawing.Point(554, 64);
+            this.comboBox_subject_group.Name = "comboBox_subject_group";
+            this.comboBox_subject_group.Size = new System.Drawing.Size(234, 20);
+            this.comboBox_subject_group.TabIndex = 30;
+            this.comboBox_subject_group.SelectedIndexChanged += new System.EventHandler(this.comboBox_subject_group_SelectedIndexChanged);
             // 
             // ScoreCriticalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 382);
+            this.Controls.Add(this.comboBox_subject_group);
+            this.Controls.Add(this.comboBox_exam);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.dtp_year);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox_grade);
             this.Controls.Add(this.dataGridView_critical);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -129,8 +130,8 @@
         private System.Windows.Forms.ToolStripMenuItem menu_critical_config;
         private System.Windows.Forms.DataGridView dataGridView_critical;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox_grade;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dtp_year;
+        private System.Windows.Forms.ComboBox comboBox_exam;
+        private System.Windows.Forms.ComboBox comboBox_subject_group;
     }
 }

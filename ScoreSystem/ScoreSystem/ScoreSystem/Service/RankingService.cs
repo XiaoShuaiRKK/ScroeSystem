@@ -200,6 +200,22 @@ namespace ScoreSystem.Service
             }
         }
 
+        public async Task<List<StudentRanking>> GetStudentGradeSubjectGroupRanking(int examId,int subjectGroupId)
+        {
+            string url = HttpUtil.GetUrl($"/score/rankings/grade/critical?exam_id={examId}&subject_group_id={subjectGroupId}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            var response = JsonSerializer.Deserialize<ApiResponse<List<StudentRanking>>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<StudentRanking>();
+            }
+        }
+
         public async Task<List<StudentRanking>> GetClassRanking(int examId,int classId,RankModeEnum mode)
         {
             switch (mode)

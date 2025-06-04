@@ -16,7 +16,11 @@ namespace ScoreSystem
     public partial class ScoreCriticalForm : Form
     {
         private CriticalService criticalService = new CriticalService();
-        private List<CriticalStudentLog> logs;
+        private RankingService rankingService = RankingService.GetIntance();
+        private ScoreService scoreService = ScoreService.GetIntance();
+        private List<StudentRanking> studentRankings;
+        private List<CriticalConfig> criticalConfigs;
+        private List<Exam> exams;
         private bool isLoaded = false;
         public ScoreCriticalForm()
         {
@@ -26,24 +30,27 @@ namespace ScoreSystem
         private void ScoreCriticalForm_Load(object sender, EventArgs e)
         {
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 临界生管理";
-            this.comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList;
-            dtp_year.Format = DateTimePickerFormat.Custom;
-            dtp_year.CustomFormat = "yyyy";
-            dtp_year.ShowUpDown = true;
-            dtp_year.MaxDate = new DateTime(DateTime.Now.Year, 12, 31);
+            this.comboBox_exam.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.comboBox_subject_group.DropDownStyle = ComboBoxStyle.DropDownList;
             ControlsLoad();
         }
 
-        private void ControlsLoad()
+        private async void ControlsLoad()
         {
             // 年级下拉
-            comboBox_grade.DataSource = Enum.GetValues(typeof(GradeEnum))
-                .Cast<GradeEnum>()
+            comboBox_subject_group.DataSource = Enum.GetValues(typeof(SubjectGroupEnum))
+                .Cast<SubjectGroupEnum>()
+                .Where(c => c != SubjectGroupEnum.未分组)
                 .Select(g => new { Name = g.ToString(), Value = (int)g })
                 .ToList();
-            comboBox_grade.DisplayMember = "Name";
-            comboBox_grade.ValueMember = "Value";
+            comboBox_subject_group.DisplayMember = "Name";
+            comboBox_subject_group.ValueMember = "Value";
+            exams = await scoreService.GetExams();
+            comboBox_exam.DataSource = exams;
+            comboBox_exam.DisplayMember = "Name";
+            comboBox_exam.ValueMember = "Id";
             isLoaded = true;
+            LoadData();
         }
 
         private void menu_critical_config_Click(object sender, EventArgs e)
@@ -51,54 +58,39 @@ namespace ScoreSystem
             new ScoreCriticalConfigForm().ShowDialog();
         }
 
-        private void comboBox_grade_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void dtp_year_ValueChanged(object sender, EventArgs e)
-        {
-            LoadData();
-        }
+        
 
         private async void LoadData()
         {
             if (!isLoaded) return;
-            int grade = (int)comboBox_grade.SelectedValue;
-            int year = dtp_year.Value.Year;
-            try
+            int examId = (int)comboBox_exam.SelectedValue;
+            int subjectGroupId = (int)comboBox_subject_group.SelectedValue;
+            studentRankings = await rankingService.GetStudentGradeSubjectGroupRanking(examId,subjectGroupId);
+            criticalConfigs = await criticalService.GetCriticalConfigByGrade();
+            var viewData = studentRankings.Select(s =>
             {
-                logs = await criticalService.GetCriticalByGrade(grade, year);
-
-                if (logs == null || logs.Count == 0)
+                var r = s.Ranks.FirstOrDefault(); // 只取唯一的一项“3+1+2”数据
+                return new
                 {
-                    MessageBox.Show("未找到符合条件的临界生数据。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dataGridView_critical.DataSource = null;
-                    return;
-                }
+                    学号 = s.StudentNumber,
+                    姓名 = s.StudentName,
+                    三加一加二总分 = r?.Score ?? 0,
+                    排名 = r != null ? $"{r.Rank}/{r.Total}" : ""
+                };
+            }).ToList();
 
-                var displayLogs = logs.Select(log => new
-                {
-                    编号 = log.Id,
-                    考试ID = log.ExamId,
-                    学号 = log.StudentNumber,
-                    姓名 = log.StudentName,
-                    大学等级 = log.UniversityLevel,
-                    成绩排名 = log.ScoreRank,
-                    目标排名 = log.TargetRank,
-                    差距 = log.Gap,
-                    分数 = log.Score,
-                    分科ID = log.SubjectGroupId
-                }).ToList();
+            dataGridView_critical.DataSource = viewData;
+            dataGridView_critical.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
 
-                dataGridView_critical.DataSource = displayLogs;
-                dataGridView_critical.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("加载临界生数据失败。\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        private void comboBox_exam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadData();
+        }
 
+        private void comboBox_subject_group_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }

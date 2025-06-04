@@ -1,5 +1,6 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using Org.BouncyCastle.Utilities.Collections;
 using ScoreSystem.Data;
 using ScoreSystem.Model;
 using ScoreSystem.Service;
@@ -18,9 +19,11 @@ namespace ScoreSystem
 {
     public partial class ScoreCriticalConfigForm : Form
     {
-        private List<CriticalConfig> previewConfigs = new List<CriticalConfig>();
+        private List<CriticalConfigDTO> previewConfigs = new List<CriticalConfigDTO>();
         private List<CriticalConfig> criticalConfigs;
+        private List<CriticalConfig> editableConfigs; // 用于编辑模式下的副本
         private CriticalService criticalService = new CriticalService();
+        private bool isEdited = false;
 
         public ScoreCriticalConfigForm()
         {
@@ -30,110 +33,289 @@ namespace ScoreSystem
         private void ScoreCriticalConfigForm_Load(object sender, EventArgs e)
         {
             this.Text = $"{ProjectSystemData.SYSTEM_NAME} - 临界配置";
-            comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox_subject_group.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox_university_level.DropDownStyle = ComboBoxStyle.DropDownList;
             dataGridView_exams.ReadOnly = true;
             dataGridView_preview.ReadOnly = true;
-            ComboBoxLoad();
-            LoadPreView();
+            dataGridView_exams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            InitPreviewGrid();
             CriticalConfigLoad();
         }
 
-        private void ComboBoxLoad()
-        {
-            dtp_year.Format = DateTimePickerFormat.Custom;
-            dtp_year.CustomFormat = "yyyy";
-            dtp_year.ShowUpDown = true;
-            dtp_year.MaxDate = new DateTime(DateTime.Now.Year, 12, 31);
-            // 大学等级下拉
-            comboBox_university_level.DataSource = Enum.GetValues(typeof(UniversityLevelEnum))
-                .Cast<UniversityLevelEnum>()
-                .Where(u => u != UniversityLevelEnum.全部) // 去掉“全部”
-                .Select(u => new { Name = u.ToString(), Value = (int)u })
-                .ToList();
-            comboBox_university_level.DisplayMember = "Name";
-            comboBox_university_level.ValueMember = "Value";
-
-            // 年级下拉
-            comboBox_grade.DataSource = Enum.GetValues(typeof(GradeEnum))
-                .Cast<GradeEnum>()
-                .Select(g => new { Name = g.ToString(), Value = (int)g })
-                .ToList();
-            comboBox_grade.DisplayMember = "Name";
-            comboBox_grade.ValueMember = "Value";
-
-            comboBox_subject_group.DataSource = Enum.GetValues(typeof(SubjectGroupEnum))
-               .Cast<SubjectGroupEnum>()
-               .Where(s => s != SubjectGroupEnum.未分组)
-               .Select(s => new
-               {
-                   Value = (int)s,
-                   Name = s.ToString()
-               }).ToList();
-            comboBox_subject_group.DisplayMember = "Name";
-            comboBox_subject_group.ValueMember = "Value";
-
-            num_target_count.Minimum = 1;
-            num_critical_ratio.Minimum = 0.1M;
-            num_critical_ratio.DecimalPlaces = 1;
-            num_critical_ratio.Increment = 0.5M;
-
-            this.dataGridView_preview.DataSource = null;
-            this.dataGridView_exams.DataSource = null;
-        }
-
-        private void LoadPreView()
+        private void InitPreviewGrid()
         {
             dataGridView_preview.DataSource = null;
 
-            dataGridView_preview.DataSource = previewConfigs
-                .Select(c => new
+            var bindingList = new BindingList<CriticalConfigDTO>(previewConfigs)
+            {
+                AllowNew = true,
+                AllowEdit = true,
+                AllowRemove = true
+            };
+            dataGridView_preview.DataSource = bindingList;
+
+            // 先隐藏自动生成的 Grade、UniversityLevel、SubjectGroupId 等列（如果有）
+            if (dataGridView_preview.Columns.Contains("Grade"))
+                dataGridView_preview.Columns["Grade"].Visible = false;
+            if (dataGridView_preview.Columns.Contains("UniversityLevel"))
+                dataGridView_preview.Columns["UniversityLevel"].Visible = false;
+            if (dataGridView_preview.Columns.Contains("SubjectGroupId"))
+                dataGridView_preview.Columns["SubjectGroupId"].Visible = false;
+            // 隐藏 Id 列
+            if (dataGridView_preview.Columns.Contains("Id"))
+                dataGridView_preview.Columns["Id"].Visible = false;
+
+
+            // 添加年级下拉框列
+            if (!dataGridView_preview.Columns.Contains("GradeCombo"))
+            {
+                var gradeList = Enum.GetValues(typeof(GradeEnum))
+                                    .Cast<GradeEnum>()
+                                    .Select(g => new { Name = g.ToString(), Value = (int)g })
+                                    .ToList();
+                var gradeCombo = new DataGridViewComboBoxColumn
                 {
-                    年级 = ((GradeEnum)c.Grade).ToString(),
-                    年份 = c.Year,
-                    大学等级 = ((UniversityLevelEnum)c.UniversityLevel).ToString(),
-                    目标人数 = c.TargetCount,
-                    临界比例 = c.CriticalRatio,
-                    科目组合 = ((SubjectGroupEnum)c.SubjectGroupId).ToString()
-                })
-                .ToList();
+                    Name = "GradeCombo",
+                    HeaderText = "年级",
+                    DataPropertyName = "Grade",
+                    DataSource = gradeList,
+                    DisplayMember = "Name",
+                    ValueMember = "Value",
+                    FlatStyle = FlatStyle.Flat,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+                dataGridView_preview.Columns.Insert(0, gradeCombo); // 放在最前面
+            }
+
+            // 添加大学等级下拉框列
+            if (!dataGridView_preview.Columns.Contains("UniversityLevelCombo"))
+            {
+                var universityLevelList = Enum.GetValues(typeof(UniversityLevelEnum))
+                                             .Cast<UniversityLevelEnum>()
+                                             .Where(u => u != UniversityLevelEnum.全部)
+                                             .Select(u => new { Name = u.ToString(), Value = (int)u })
+                                             .ToList();
+                var universityLevelCombo = new DataGridViewComboBoxColumn
+                {
+                    Name = "UniversityLevelCombo",
+                    HeaderText = "大学等级",
+                    DataPropertyName = "UniversityLevel",
+                    DataSource = universityLevelList,
+                    DisplayMember = "Name",
+                    ValueMember = "Value",
+                    FlatStyle = FlatStyle.Flat,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+                // 放在年级后面
+                dataGridView_preview.Columns.Insert(1, universityLevelCombo);
+            }
+
+            // 添加科目组合下拉框列
+            if (!dataGridView_preview.Columns.Contains("SubjectGroupCombo"))
+            {
+                var subjectGroupList = Enum.GetValues(typeof(SubjectGroupEnum))
+                                           .Cast<SubjectGroupEnum>()
+                                           .Where(s => s != SubjectGroupEnum.未分组) // 过滤掉“未分组”
+                                           .Select(s => new { Name = s.ToString(), Value = (int)s })
+                                           .ToList();
+                var subjectGroupCombo = new DataGridViewComboBoxColumn
+                {
+                    Name = "SubjectGroupCombo",
+                    HeaderText = "科目组合",
+                    DataPropertyName = "SubjectGroupId",
+                    DataSource = subjectGroupList,
+                    DisplayMember = "Name",
+                    ValueMember = "Value",
+                    FlatStyle = FlatStyle.Flat,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+                // 放在大学等级后面
+                dataGridView_preview.Columns.Insert(2, subjectGroupCombo);
+            }
+
+            // 设置其他列的标题
+            if (dataGridView_preview.Columns.Contains("Year"))
+                dataGridView_preview.Columns["Year"].HeaderText = "年份";
+            if (dataGridView_preview.Columns.Contains("TargetCount"))
+                dataGridView_preview.Columns["TargetCount"].HeaderText = "目标人数";
+            if (dataGridView_preview.Columns.Contains("FloatUpCount"))
+                dataGridView_preview.Columns["FloatUpCount"].HeaderText = "上浮人数";
+            if (dataGridView_preview.Columns.Contains("FloatDownCount"))
+                dataGridView_preview.Columns["FloatDownCount"].HeaderText = "下浮人数";
+
+            EnsureDeleteButtonColumn();
 
             dataGridView_preview.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView_preview.AllowUserToAddRows = false;
-            dataGridView_preview.ReadOnly = true;
+            dataGridView_preview.AllowUserToAddRows = true;
+            dataGridView_preview.AllowUserToDeleteRows = true;
+            dataGridView_preview.ReadOnly = false;
+
+            // 允许所有列可编辑
+            foreach (DataGridViewColumn col in dataGridView_preview.Columns)
+            {
+                col.ReadOnly = false;
+            }
+
+            // 确保“操作”列在最后
+            if (dataGridView_preview.Columns.Contains("DeleteLink"))
+            {
+                var deleteCol = dataGridView_preview.Columns["DeleteLink"];
+                int lastIndex = dataGridView_preview.Columns.Count - 1;
+                if (deleteCol.DisplayIndex != lastIndex)
+                {
+                    deleteCol.DisplayIndex = lastIndex;
+                }
+            }
         }
+
+        private void EnsureDeleteButtonColumn()
+        {
+            if (!dataGridView_preview.Columns.Contains("DeleteLink"))
+            {
+                var deleteCol = new DataGridViewLinkColumn
+                {
+                    Name = "DeleteLink",
+                    HeaderText = "操作",
+                    Text = "删除",
+                    UseColumnTextForLinkValue = true,
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                };
+                dataGridView_preview.Columns.Add(deleteCol);
+            }
+
+            // 保证“操作”列在最后
+            var deleteColumn = dataGridView_preview.Columns["DeleteLink"];
+            if (deleteColumn != null)
+            {
+                deleteColumn.DisplayIndex = dataGridView_preview.Columns.Count - 1;
+            }
+        }
+
+
+        private List<CriticalConfig> DeepClone(List<CriticalConfig> source)
+        {
+            return source.Select(c => new CriticalConfig
+            {
+                Id = c.Id,
+                Grade = c.Grade,
+                Year = c.Year,
+                UniversityLevel = c.UniversityLevel,
+                TargetCount = c.TargetCount,
+                CriticalRatio = c.CriticalRatio,
+                SubjectGroupId = c.SubjectGroupId
+            }).ToList();
+        }
+
 
         private async void CriticalConfigLoad()
         {
             try
             {
                 this.criticalConfigs = await criticalService.GetCriticalConfigs();
+                editableConfigs = DeepClone(criticalConfigs);
 
                 dataGridView_exams.DataSource = null;
+                dataGridView_exams.Columns.Clear();
+                dataGridView_exams.AutoGenerateColumns = true;
+                dataGridView_exams.DataSource = editableConfigs;
 
-                dataGridView_exams.DataSource = criticalConfigs
-                    .Select(c => new
+                dataGridView_exams.Columns["Id"].HeaderText = "ID";
+                dataGridView_exams.Columns["Grade"].HeaderText = "年级";
+                dataGridView_exams.Columns["Year"].HeaderText = "年份";
+                dataGridView_exams.Columns["UniversityLevel"].HeaderText = "大学等级";
+                dataGridView_exams.Columns["TargetCount"].HeaderText = "目标人数";
+                dataGridView_exams.Columns["CriticalRatio"].HeaderText = "临界比例";
+                dataGridView_exams.Columns["SubjectGroupId"].HeaderText = "科目组合";
+
+                foreach (DataGridViewColumn col in dataGridView_exams.Columns)
+                {
+                    if (col.Name != "Id" && col.Name != "Grade" && col.Name != "Year" &&
+                        col.Name != "UniversityLevel" && col.Name != "TargetCount" &&
+                        col.Name != "CriticalRatio" && col.Name != "SubjectGroupId")
                     {
-                        年级 = ((GradeEnum)c.Grade).ToString(),
-                        年份 = c.Year,
-                        大学等级 = ((UniversityLevelEnum)c.UniversityLevel).ToString(),
-                        目标人数 = c.TargetCount,
-                        临界比例 = c.CriticalRatio,
-                        科目组合 = ((SubjectGroupEnum)c.SubjectGroupId).ToString()
-                    })
-                    .ToList();
+                        col.Visible = false;
+                    }
+                }
 
-                dataGridView_exams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dataGridView_exams.AllowUserToAddRows = false;
+                dataGridView_exams.CellFormatting += (s, e) =>
+                {
+                    string colName = dataGridView_exams.Columns[e.ColumnIndex].Name;
+                    if (colName == "Grade" && e.Value is int gradeVal)
+                    {
+                        e.Value = ((GradeEnum)gradeVal).ToString();
+                        e.FormattingApplied = true;
+                    }
+                    else if (colName == "UniversityLevel" && e.Value is int levelVal)
+                    {
+                        e.Value = ((UniversityLevelEnum)levelVal).ToString();
+                        e.FormattingApplied = true;
+                    }
+                    else if (colName == "SubjectGroupId" && e.Value is int groupVal)
+                    {
+                        e.Value = ((SubjectGroupEnum)groupVal).ToString();
+                        e.FormattingApplied = true;
+                    }
+                    else if (colName == "CriticalRatio" && e.Value is double ratio)
+                    {
+                        e.Value = (ratio * 100).ToString("0.##") + "%";
+                        e.FormattingApplied = true;
+                    }
+                };
+
                 dataGridView_exams.ReadOnly = true;
+                dataGridView_exams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridView_exams.AllowUserToAddRows = false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("加载已有配置失败: " + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("加载配置失败: " + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
+
+        private void dataGridView_exams_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            string colName = dataGridView_exams.Columns[e.ColumnIndex].Name;
+            if (colName == "Grade" && e.Value is int gradeVal)
+            {
+                e.Value = ((GradeEnum)gradeVal).ToString();
+                e.FormattingApplied = true;
+            }
+            else if (colName == "UniversityLevel" && e.Value is int levelVal)
+            {
+                e.Value = ((UniversityLevelEnum)levelVal).ToString();
+                e.FormattingApplied = true;
+            }
+            else if (colName == "SubjectGroupId" && e.Value is int groupVal)
+            {
+                e.Value = ((SubjectGroupEnum)groupVal).ToString();
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void ReplaceWithComboBox(string columnName, Type enumType, int? ignoreValue = null)
+        {
+            if (!dataGridView_exams.Columns.Contains(columnName)) return;
+
+            var enumValues = Enum.GetValues(enumType).Cast<object>()
+                .Where(v => ignoreValue == null || Convert.ToInt32(v) != ignoreValue)
+                .Select(v => new { Name = v.ToString(), Value = (int)v })
+                .ToList();
+
+            var comboBoxColumn = new DataGridViewComboBoxColumn
+            {
+                DataPropertyName = columnName,
+                HeaderText = dataGridView_exams.Columns[columnName].HeaderText,
+                Name = columnName,
+                DataSource = enumValues,
+                DisplayMember = "Name",
+                ValueMember = "Value",
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
+            };
+
+            int index = dataGridView_exams.Columns[columnName].DisplayIndex;
+            dataGridView_exams.Columns.Remove(columnName);
+            dataGridView_exams.Columns.Insert(index, comboBoxColumn);
+        }
+
 
         private void button_template_Click(object sender, EventArgs e)
         {
@@ -145,26 +327,37 @@ namespace ScoreSystem
             IWorkbook workbook = new XSSFWorkbook();
             ISheet sheet = workbook.CreateSheet("临界配置");
 
+            // 提示说明行
             IRow tipRow = sheet.CreateRow(0);
             tipRow.HeightInPoints = 60;
-            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，删除或修改列顺序将导致导入失败。年级如“高一上学期”，大学等级如“双一流”，组合如“理科”。此行禁止删除！！！");
+            tipRow.CreateCell(0).SetCellValue("请按照本模板填写，删除或修改列顺序将导致导入失败。年级如“高一上学期”，组合如“理科”。大学等级只能为“九八五、双一流、优投、本科”此行禁止删除！！！");
 
-            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 5));
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 6));
             IFont tipFont = workbook.CreateFont();
             tipFont.IsItalic = true;
             tipFont.Color = IndexedColors.Grey40Percent.Index;
-            
+
             ICellStyle tipStyle = workbook.CreateCellStyle();
             tipStyle.SetFont(tipFont);
+            tipStyle.WrapText = true;
             tipRow.GetCell(0).CellStyle = tipStyle;
 
+            // 表头行
             IRow header = sheet.CreateRow(1);
-            header.CreateCell(0).SetCellValue("年级");
-            header.CreateCell(1).SetCellValue("年份");
-            header.CreateCell(2).SetCellValue("大学等级");
-            header.CreateCell(3).SetCellValue("目标人数");
-            header.CreateCell(4).SetCellValue("临界比例");
-            header.CreateCell(5).SetCellValue("科目组合");
+            string[] headers = { "年级", "年份", "大学等级", "目标人数", "上浮人数", "下浮人数", "科目组合" };
+            for (int i = 0; i < headers.Length; i++)
+            {
+                ICell cell = header.CreateCell(i);
+                cell.SetCellValue(headers[i]);
+
+                IFont boldFont = workbook.CreateFont();
+                boldFont.IsBold = true;
+                ICellStyle style = workbook.CreateCellStyle();
+                style.SetFont(boldFont);
+                cell.CellStyle = style;
+
+                sheet.SetColumnWidth(i, 20 * 256); // 统一列宽
+            }
 
             using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
             {
@@ -174,33 +367,6 @@ namespace ScoreSystem
             MessageBox.Show("模板导出成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void button_add_Click(object sender, EventArgs e)
-        {
-            var config = new CriticalConfig
-            {
-                Grade = (int)comboBox_grade.SelectedValue,
-                Year = dtp_year.Value.Year,
-                UniversityLevel = (int)comboBox_university_level.SelectedValue,
-                TargetCount = (int)num_target_count.Value,
-                CriticalRatio = (double)num_critical_ratio.Value,
-                SubjectGroupId = (int)comboBox_subject_group.SelectedValue
-            };
-
-            // 检查重复
-            if (previewConfigs.Any(c =>
-                c.Grade == config.Grade &&
-                c.Year == config.Year &&
-                c.UniversityLevel == config.UniversityLevel &&
-                c.SubjectGroupId == config.SubjectGroupId))
-            {
-                MessageBox.Show("该配置已存在！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            previewConfigs.Add(config);
-            LoadPreView();
-            MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
         private void button_import_Click(object sender, EventArgs e)
         {
@@ -219,45 +385,52 @@ namespace ScoreSystem
                     for (int i = 2; i <= sheet.LastRowNum; i++)
                     {
                         IRow row = sheet.GetRow(i);
-                        if (row == null) continue;
+                        if (row == null || row.Cells.All(c => string.IsNullOrWhiteSpace(c?.ToString())))
+                            continue;
 
                         string gradeStr = row.GetCell(0)?.ToString()?.Trim();
                         string yearStr = row.GetCell(1)?.ToString()?.Trim();
                         string levelStr = row.GetCell(2)?.ToString()?.Trim();
                         string targetStr = row.GetCell(3)?.ToString()?.Trim();
-                        string ratioStr = row.GetCell(4)?.ToString()?.Trim();
-                        string groupStr = row.GetCell(5)?.ToString()?.Trim();
+                        string floatUpStr = row.GetCell(4)?.ToString()?.Trim();
+                        string floatDownStr = row.GetCell(5)?.ToString()?.Trim();
+                        string groupStr = row.GetCell(6)?.ToString()?.Trim();
 
-                        if (!Enum.TryParse<GradeEnum>(gradeStr, out var grade))
-                            throw new Exception($"第{i + 1}行 年级解析失败");
+                        if (!IsValidEnumName<GradeEnum>(gradeStr, out var grade))
+                            throw new Exception($"第{i + 1}行 年级解析失败或无效（只能输入对应名称,如高一上学期、高三下学期）：{gradeStr}");
 
                         if (!int.TryParse(yearStr, out var year))
-                            throw new Exception($"第{i + 1}行 年份解析失败");
+                            throw new Exception($"第{i + 1}行 年份无效：{yearStr}");
 
-                        if (!Enum.TryParse<UniversityLevelEnum>(levelStr, out var level))
-                            throw new Exception($"第{i + 1}行 大学等级解析失败");
+                        if (!IsValidEnumName<UniversityLevelEnum>(levelStr, out var level))
+                            throw new Exception($"第{i + 1}行 大学等级解析失败或无效（只能输入对应名称,九八五、双一流、优投、本科）：{levelStr}");
 
                         if (!int.TryParse(targetStr, out var targetCount) || targetCount < 1)
-                            throw new Exception($"第{i + 1}行 目标人数无效");
+                            throw new Exception($"第{i + 1}行 目标人数无效：{targetStr}");
 
-                        if (!double.TryParse(ratioStr, out var ratio) || ratio < 0 || ratio > 100)
-                            throw new Exception($"第{i + 1}行 临界比例无效");
+                        if (!int.TryParse(floatUpStr, out var floatUpCount) || floatUpCount < 0)
+                            throw new Exception($"第{i + 1}行 上浮人数无效：{floatUpStr}");
 
-                        if (!Enum.TryParse<SubjectGroupEnum>(groupStr, out var group))
-                            throw new Exception($"第{i + 1}行 科目组合解析失败");
+                        if (!int.TryParse(floatDownStr, out var floatDownCount) || floatDownCount < 0)
+                            throw new Exception($"第{i + 1}行 下浮人数无效：{floatDownStr}");
 
-                        previewConfigs.Add(new CriticalConfig
+                        if (!IsValidEnumName<SubjectGroupEnum>(groupStr, out var group))
+                            throw new Exception($"第{i + 1}行 科目组合解析失败或无效（只能输入对应名称，文科理科）：{groupStr}");
+
+                        previewConfigs.Add(new CriticalConfigDTO
                         {
                             Grade = (int)grade,
                             Year = year,
                             UniversityLevel = (int)level,
                             TargetCount = targetCount,
-                            CriticalRatio = ratio,
+                            FloatUpCount = floatUpCount,
+                            FloatDownCount = floatDownCount,
                             SubjectGroupId = (int)group
                         });
                     }
-                    LoadPreView();
-                    MessageBox.Show("导入成功，共导入 " + previewConfigs.Count + " 条", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    InitPreviewGrid();
+                    MessageBox.Show($"导入成功，共导入 {previewConfigs.Count} 条", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -266,10 +439,34 @@ namespace ScoreSystem
             }
         }
 
+        /// <summary>
+        /// 严格验证字符串对应的枚举值是否有效，返回对应枚举值（out）
+        /// </summary>
+        private bool IsValidEnumName<TEnum>(string value, out TEnum enumValue) where TEnum : struct, Enum
+        {
+            enumValue = default;
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            if (Enum.TryParse<TEnum>(value, ignoreCase: true, out var parsedEnum))
+            {
+                var names = Enum.GetNames(typeof(TEnum));
+                bool nameExists = names.Any(name => string.Equals(name, value, StringComparison.OrdinalIgnoreCase));
+                if (nameExists)
+                {
+                    enumValue = parsedEnum;
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         private async void button_save_Click(object sender, EventArgs e)
         {
-            if (!previewConfigs.Any())
+            dataGridView_preview.EndEdit(); // 提交编辑中的值
+            var list = (BindingList<CriticalConfigDTO>)dataGridView_preview.DataSource;
+            if (!list.Any())
             {
                 MessageBox.Show("没有可保存的数据", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -277,20 +474,18 @@ namespace ScoreSystem
 
             using (var loading = new LoadForm())
             {
+                button_save.Enabled = false;
                 loading.Show();
-                await Task.Delay(100); // 显示窗口
+                await Task.Delay(100);
 
                 try
                 {
-                    bool success = await criticalService.AddScore(previewConfigs); // 你需实现该接口
+                    bool success = await criticalService.AddScore(list.ToList());
                     if (success)
                     {
                         MessageBox.Show("保存成功", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        previewConfigs.Clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("保存失败，请重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        list.Clear();
+                        CriticalConfigLoad(); // 重新加载左侧数据
                     }
                 }
                 catch (Exception ex)
@@ -300,8 +495,280 @@ namespace ScoreSystem
                 finally
                 {
                     loading.Close();
+                    button_save.Enabled = true;
                 }
             }
+        }
+
+        private void dataGridView_preview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView_preview.Columns[e.ColumnIndex].Name == "DeleteLink")
+            {
+                var bindingList = (BindingList<CriticalConfigDTO>)dataGridView_preview.DataSource;
+                var item = dataGridView_preview.Rows[e.RowIndex].DataBoundItem as CriticalConfigDTO;
+                if (item != null)
+                {
+                    bindingList.Remove(item);
+                }
+            }
+        }
+
+        private void dataGridView_preview_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            try
+            {
+                var dgv = sender as DataGridView;
+                if (e.RowIndex < 0 || e.RowIndex >= dgv.Rows.Count)
+                    return;
+
+                var row = dgv.Rows[e.RowIndex];
+
+                if (row.IsNewRow || row.DataBoundItem == null)
+                    return;
+
+                if (!(row.DataBoundItem is CriticalConfigDTO config))
+                    return;
+
+                // 检查列存在，避免运行期异常
+                if (!dgv.Columns.Contains("Grade") ||
+                    !dgv.Columns.Contains("Year") ||
+                    !dgv.Columns.Contains("UniversityLevel") ||
+                    !dgv.Columns.Contains("TargetCount") ||
+                    !dgv.Columns.Contains("SubjectGroupId") ||
+                    !dgv.Columns.Contains("FloatUpCount") ||
+                    !dgv.Columns.Contains("FloatDownCount"))
+                    return;
+
+                string errorMsg = "";
+
+                // 声明并初始化变量，防止编译器报错
+                int grade = 0;
+                int year = 0;
+                int level = 0;
+                int targetCount = 0;
+                long groupId = 0;
+                int upCount = 0;
+                int downCount = 0;
+
+                // 安全访问单元格值
+                object gradeObj = row.Cells["Grade"]?.Value;
+                object yearObj = row.Cells["Year"]?.Value;
+                object levelObj = row.Cells["UniversityLevel"]?.Value;
+                object targetObj = row.Cells["TargetCount"]?.Value;
+                object groupObj = row.Cells["SubjectGroupId"]?.Value;
+                object floatUpObj = row.Cells["FloatUpCount"]?.Value;
+                object floatDownObj = row.Cells["FloatDownCount"]?.Value;
+
+                // 校验
+                if (gradeObj == null || !int.TryParse(gradeObj.ToString(), out grade) || !Enum.IsDefined(typeof(GradeEnum), grade))
+                    errorMsg += "年级无效；";
+
+                if (yearObj == null || !int.TryParse(yearObj.ToString(), out year) || year < 2000 || year > DateTime.Now.Year + 10)
+                    errorMsg += $"年份无效，应在 2000 ~ {DateTime.Now.Year + 10}；";
+
+                if (levelObj == null || !int.TryParse(levelObj.ToString(), out level) || !Enum.IsDefined(typeof(UniversityLevelEnum), level))
+                    errorMsg += "大学等级无效；";
+
+                if (targetObj == null || !int.TryParse(targetObj.ToString(), out targetCount) || targetCount <= 0)
+                    errorMsg += "目标人数应为大于0的整数；";
+
+                if (groupObj == null || !long.TryParse(groupObj.ToString(), out groupId) || !Enum.IsDefined(typeof(SubjectGroupEnum), (SubjectGroupEnum)(int)groupId))
+                    errorMsg += "科目组合无效；";
+
+                if (floatUpObj == null || !int.TryParse(floatUpObj.ToString(), out upCount) || upCount < 0)
+                    errorMsg += "上浮人数应为非负整数；";
+
+                if (floatDownObj == null || !int.TryParse(floatDownObj.ToString(), out downCount) || downCount < 0)
+                    errorMsg += "下浮人数应为非负整数；";
+
+                if (!string.IsNullOrEmpty(errorMsg))
+                {
+                    MessageBox.Show($"第 {e.RowIndex + 1} 行验证失败：\n{errorMsg}", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true;
+                    return;
+                }
+
+                // 验证 Grade + Year + UniversityLevel 的唯一性
+                foreach (DataGridViewRow otherRow in dgv.Rows)
+                {
+                    if (otherRow.Index == e.RowIndex || otherRow.IsNewRow || otherRow.DataBoundItem == null)
+                        continue;
+
+                    if (otherRow.DataBoundItem is CriticalConfigDTO otherConfig)
+                    {
+                        if (otherConfig.Grade == grade &&
+                            otherConfig.Year == year &&
+                            otherConfig.UniversityLevel == level &&
+                            otherConfig.SubjectGroupId == groupId)
+                        {
+                            MessageBox.Show($"第 {e.RowIndex + 1} 行验证失败：已存在相同的 年级+年份+大学等级 配置。", "验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                }
+
+                // 更新对象属性
+                config.Grade = grade;
+                config.Year = year;
+                config.UniversityLevel = level;
+                config.TargetCount = targetCount;
+                config.SubjectGroupId = groupId;
+                config.FloatUpCount = upCount;
+                config.FloatDownCount = downCount;
+            }
+            catch (Exception ex)
+            {
+                // 记录异常（可选）或忽略
+                MessageBox.Show("验证异常：" + ex.Message);
+                return;
+            }
+        }
+
+        private void dataGridView_preview_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            //MessageBox.Show($"数据输入错误：{e.Exception.Message}", "数据错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            e.Cancel = true;
+        }
+
+        private void dataGridView_preview_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells["Grade"].Value = (int)GradeEnum.高一上学期;
+            e.Row.Cells["Year"].Value = DateTime.Now.Year;
+            e.Row.Cells["UniversityLevel"].Value = (int)UniversityLevelEnum.九八五;
+            e.Row.Cells["TargetCount"].Value = 1;
+            e.Row.Cells["FloatUpCount"].Value = 0;
+            e.Row.Cells["FloatDownCount"].Value = 0;
+            e.Row.Cells["SubjectGroupId"].Value = (int)SubjectGroupEnum.理科;
+        }
+
+        private void dataGridView_exams_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private async void button_edit_Click(object sender, EventArgs e)
+        {
+            if (!isEdited)
+            {
+                isEdited = true;
+                button_edit.Text = "保存";
+                dataGridView_exams.ReadOnly = false;
+                dataGridView_exams.AllowUserToAddRows = false;
+                dataGridView_exams.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                dataGridView_exams.Columns.Clear();
+                dataGridView_exams.DataSource = null;
+                dataGridView_exams.AutoGenerateColumns = false;
+
+                // 深拷贝绑定，避免修改原数据
+                editableConfigs = DeepClone(criticalConfigs);
+                dataGridView_exams.DataSource = new BindingList<CriticalConfig>(editableConfigs);
+
+                // 添加列
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "Id",
+                    HeaderText = "ID",
+                    Name = "Id",
+                    ReadOnly = true
+                });
+
+                dataGridView_exams.Columns.Add(CreateEnumComboBoxColumn<GradeEnum>("Grade", "年级"));
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Year", HeaderText = "年份", Name = "Year" });
+                dataGridView_exams.Columns.Add(CreateEnumComboBoxColumn<UniversityLevelEnum>("UniversityLevel", "大学等级", excludeValues: new[] { 0 }));
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "TargetCount", HeaderText = "目标人数", Name = "TargetCount" });
+
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "CriticalRatio",
+                    HeaderText = "临界比例",
+                    Name = "CriticalRatio",
+                    ReadOnly = true
+                });
+
+                dataGridView_exams.Columns.Add(CreateEnumComboBoxColumn<SubjectGroupEnum>("SubjectGroupId", "科目组合", excludeValues: new[] { 1 }));
+            }
+            else
+            {
+                button_edit.Enabled = false;
+
+                var updatedList = new List<CriticalConfig>();
+
+                foreach (DataGridViewRow row in dataGridView_exams.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    long id = Convert.ToInt64(row.Cells["Id"].Value);
+                    var original = criticalConfigs.FirstOrDefault(c => c.Id == id);
+                    var edited = editableConfigs.FirstOrDefault(c => c.Id == id);
+                    if (original == null || edited == null) continue;
+
+                    if (original.Grade != edited.Grade ||
+                        original.Year != edited.Year ||
+                        original.UniversityLevel != edited.UniversityLevel ||
+                        original.TargetCount != edited.TargetCount ||
+                        original.SubjectGroupId != edited.SubjectGroupId)
+                    {
+                        // 更新原始数据
+                        original.Grade = edited.Grade;
+                        original.Year = edited.Year;
+                        original.UniversityLevel = edited.UniversityLevel;
+                        original.TargetCount = edited.TargetCount;
+                        original.SubjectGroupId = edited.SubjectGroupId;
+
+                        updatedList.Add(original);
+                    }
+                }
+
+                if (updatedList.Any())
+                {
+                    bool success = await criticalService.BatchUpdateCriticalConfigs(updatedList);
+                    if (success)
+                    {
+                        MessageBox.Show("更新成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                isEdited = false;
+                button_edit.Text = "修改";
+                button_edit.Enabled = true;
+                CriticalConfigLoad(); // 刷新数据
+            }
+        }
+
+
+        private DataGridViewComboBoxColumn CreateEnumComboBoxColumn<TEnum>(string dataProperty, string headerText, int[] excludeValues = null)
+            where TEnum : Enum
+        {
+            var values = Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
+
+            if (excludeValues != null)
+            {
+                values = values.Where(v => !excludeValues.Contains(Convert.ToInt32(v)));
+            }
+
+            var dataSource = values
+                .Select(e => new { Value = Convert.ToInt32(e), Name = e.ToString() })
+                .ToList();
+
+            return new DataGridViewComboBoxColumn
+            {
+                Name = dataProperty,
+                HeaderText = headerText,
+                DataPropertyName = dataProperty,
+                DataSource = dataSource,
+                ValueMember = "Value",
+                DisplayMember = "Name",
+                ValueType = typeof(int),
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton
+            };
+        }
+
+
+
+        private void dataGridView_exams_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true; // 静默忽略无效值异常
         }
     }
 }

@@ -185,7 +185,7 @@ namespace ScoreSystem
             }
             ExitEditModeIfNeeded();
             var selectedRow = dataGridView_students.SelectedRows[0];
-            string studentNumber = selectedRow.Cells["学号"].Value.ToString();
+            string studentNumber = selectedRow.Cells["StudentNumber"].Value.ToString();
 
             // 找到完整学生对象
             var student = students.FirstOrDefault(s => s.StudentNumber == studentNumber);

@@ -2074,7 +2074,6 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             courseClassRanks.put(cid, calculateRank(classScores, classStudentNumbers));
         }
 
-        // 构建结果
         List<StudentRanking> result = classStudentNumbers.stream().map(sn -> {
             List<Ranking> rankings = new ArrayList<>();
 
@@ -2086,8 +2085,13 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             rankings.add(new Ranking(-2L, threeScores.get(sn), class3Rank.get(sn), classStudentNumbers.size(), "班级"));
             rankings.add(new Ranking(-2L, threeScores.get(sn), grade3Rank.get(sn), gradeStudentNumbers.size(), "年级"));
 
-            rankings.add(new Ranking(-3L, tptScores.get(sn), classTptRank.get(sn), classStudentNumbers.size(), "班级"));
-            rankings.add(new Ranking(-3L, tptScores.get(sn), gradeTptRank.get(sn), gradeStudentNumbers.size(), "年级"));
+            // ✅ 核心修改：根据文理分组分别统计 total
+            boolean isLiberal = selectionMap.get(sn) != null && selectionMap.get(sn).getSubjectGroupId() == 2L;
+            int classTptTotal = isLiberal ? liberalArtsClass.size() : scienceClass.size();
+            int gradeTptTotal = isLiberal ? liberalArtsStudents.size() : scienceStudents.size();
+
+            rankings.add(new Ranking(-3L, tptScores.get(sn), classTptRank.get(sn), classTptTotal, "班级"));
+            rankings.add(new Ranking(-3L, tptScores.get(sn), gradeTptRank.get(sn), gradeTptTotal, "年级"));
 
             rankings.add(new Ranking(-1L, totalScores.get(sn), classTotalRank.get(sn), classStudentNumbers.size(), "班级"));
             rankings.add(new Ranking(-1L, totalScores.get(sn), gradeTotalRank.get(sn), gradeStudentNumbers.size(), "年级"));
@@ -2098,6 +2102,110 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             studentRanking.setRanks(rankings);
             return studentRanking;
         }).toList();
+
+
+        return ResponseResult.success("查询成功", result);
+    }
+
+    @Override
+    public ResponseResult<List<StudentRanking>> getGradeSubjectGroupRankings(Long examId,Integer subjectGroupId) {
+        // 0. 根据 examId 查询考试，获取 gradeId
+        Exam exam = examMapper.selectById(examId);
+        if (exam == null) {
+            return ResponseResult.fail("未找到对应的考试信息");
+        }
+        Integer gradeId = exam.getGrade();
+
+        // 1. 获取年级中 subjectGroupId 相同的班级
+        List<ClassEntity> targetClasses = classMapper.selectList(
+                new LambdaQueryWrapper<ClassEntity>()
+                        .eq(ClassEntity::getGrade, gradeId)
+                        .eq(ClassEntity::getSubjectGroupId, subjectGroupId)
+        );
+        if (targetClasses.isEmpty()) {
+            return ResponseResult.fail("该年级下没有对应分科的班级");
+        }
+
+        List<Integer> classIds = targetClasses.stream().map(c -> c.getId().intValue()).toList();
+
+        // 2. 获取这些班级下的学生
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds)
+        );
+        if (students.isEmpty()) {
+            return ResponseResult.fail("该分科下没有学生");
+        }
+
+        List<String> studentNumbers = students.stream().map(Student::getStudentNumber).toList();
+        Map<String, String> studentNameMap = students.stream()
+                .collect(Collectors.toMap(Student::getStudentNumber, Student::getName));
+
+        // 3. 查询这些学生的成绩
+        List<Score> scores = scoreMapper.selectList(
+                new LambdaQueryWrapper<Score>()
+                        .eq(Score::getExamId, examId)
+                        .in(Score::getStudentNumber, studentNumbers)
+        );
+        if (scores.isEmpty()) {
+            return ResponseResult.fail("该考试下没有学生成绩");
+        }
+
+        // 4. 构建学生-课程成绩 Map
+        Map<String, Map<Long, Double>> scoreMap = new HashMap<>();
+        for (Score score : scores) {
+            scoreMap.computeIfAbsent(score.getStudentNumber(), k -> new HashMap<>())
+                    .put(score.getCourseId(), score.getScore() != null ? score.getScore() : 0.0);
+        }
+
+        // 获取所有出现的课程 id
+        Set<Long> allCourseIds = scores.stream().map(Score::getCourseId).collect(Collectors.toSet());
+
+        // 保证每个学生都有完整的成绩项（如果没有，补0）
+        for (String sn : studentNumbers) {
+            scoreMap.putIfAbsent(sn, new HashMap<>());
+            for (Long cid : allCourseIds) {
+                scoreMap.get(sn).putIfAbsent(cid, 0.0);
+            }
+        }
+
+        // 5. 构建 3+1+2 科目组合
+        List<Long> threeCourseIds = List.of(1L, 2L, 3L); // 语数英
+
+        // 选出选考科目（非语数英）中选前两个分数最高的科目
+        Map<String, Double> totalScoreMap = new HashMap<>();
+
+        for (String sn : studentNumbers) {
+            Map<Long, Double> studentScores = scoreMap.get(sn);
+
+            List<Map.Entry<Long, Double>> optionalSubjects = studentScores.entrySet().stream()
+                    .filter(e -> !threeCourseIds.contains(e.getKey()))
+                    .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
+                    .toList();
+
+            double threeSum = threeCourseIds.stream().mapToDouble(cid -> studentScores.getOrDefault(cid, 0.0)).sum();
+            double one = optionalSubjects.size() >= 1 ? optionalSubjects.get(0).getValue() : 0.0;
+            double two = optionalSubjects.size() >= 2 ? optionalSubjects.get(1).getValue() : 0.0;
+
+            double total = threeSum + one + two;
+            totalScoreMap.put(sn, total);
+        }
+
+        // 6. 计算排名（高分排名靠前）
+        Map<String, Integer> rankMap = calculateRank(totalScoreMap);
+
+        // 7. 构建返回结构
+        List<StudentRanking> result = studentNumbers.stream().map(sn -> {
+            Ranking rank = new Ranking(-100L, totalScoreMap.get(sn), rankMap.get(sn), studentNumbers.size(), "3+1+2");
+
+            StudentRanking studentRanking = new StudentRanking();
+            studentRanking.setStudentNumber(sn);
+            studentRanking.setStudentName(studentNameMap.get(sn));
+            studentRanking.setRanks(List.of(rank));
+            return studentRanking;
+        }).collect(Collectors.toList());
+
+        // 8. 排序：按排名升序
+        result.sort(Comparator.comparingInt(sr -> sr.getRanks().get(0).getRank()));
 
         return ResponseResult.success("查询成功", result);
     }
@@ -2115,6 +2223,24 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
         return result;
     }
 
+    private Map<String, Integer> calculateRank(Map<String, Double> scoreMap) {
+        List<Map.Entry<String, Double>> sorted = scoreMap.entrySet().stream()
+                .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
+                .toList();
+
+        Map<String, Integer> rankMap = new LinkedHashMap<>();
+        int rank = 1;
+        for (int i = 0; i < sorted.size(); i++) {
+            if (i > 0 && sorted.get(i).getValue().equals(sorted.get(i - 1).getValue())) {
+                rankMap.put(sorted.get(i).getKey(), rankMap.get(sorted.get(i - 1).getKey()));
+            } else {
+                rankMap.put(sorted.get(i).getKey(), rank);
+            }
+            rank = i + 2;
+        }
+        return rankMap;
+    }
+
     // 辅助类用于临时存储成绩数据
     private static class ScoreEntry {
         String studentNumber;
@@ -2124,12 +2250,5 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             this.studentNumber = studentNumber;
             this.score = score;
         }
-    }
-
-    private static class ScoreSummary {
-        double courseScore;    // 单科
-        double threeScore;     // 语数英
-        double extendedScore;  // 3+1+2
-        double totalScore;     // 总分
     }
 }
