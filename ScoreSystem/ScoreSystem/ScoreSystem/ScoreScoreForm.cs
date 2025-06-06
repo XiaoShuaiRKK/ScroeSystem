@@ -16,6 +16,7 @@ namespace ScoreSystem
 {
     public partial class ScoreScoreForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ScoreMainForm scoreMainForm;
         private List<Exam> exams;
         private List<ExamSubjectThreshold> thresholds;
@@ -38,6 +39,7 @@ namespace ScoreSystem
         {
             this.scoreMainForm = scoreMainForm;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
 

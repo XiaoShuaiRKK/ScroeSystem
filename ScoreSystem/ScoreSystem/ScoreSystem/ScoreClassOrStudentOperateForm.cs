@@ -15,6 +15,7 @@ namespace ScoreSystem
 {
     public partial class ScoreClassOrStudentOperateForm : Form
     {
+        private FormAutoScaler autoScaler;
         private List<StudentDTO> students;
         private List<StudentFormVO> displayStudents;
         private StudentService studentService = StudentService.GetIntance();
@@ -22,6 +23,7 @@ namespace ScoreSystem
         public ScoreClassOrStudentOperateForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
         private void ScoreClassOrStudentOperateForm_Load(object sender, EventArgs e)
         {

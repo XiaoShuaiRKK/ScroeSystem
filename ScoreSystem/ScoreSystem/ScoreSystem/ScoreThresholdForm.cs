@@ -20,6 +20,7 @@ namespace ScoreSystem
 {
     public partial class ScoreThresholdForm : Form
     {
+        private FormAutoScaler autoScaler;
         private List<Exam> exams;
         private List<ExamSubjectThreshold> examSubjectThresholds;
         private List<ExamSubjectThreshold> previewThresholds;
@@ -28,6 +29,7 @@ namespace ScoreSystem
         public ScoreThresholdForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreThresholdForm_Load(object sender, EventArgs e)

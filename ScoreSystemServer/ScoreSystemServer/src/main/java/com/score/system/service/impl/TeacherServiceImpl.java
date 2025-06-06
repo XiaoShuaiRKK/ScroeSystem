@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -33,18 +35,35 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public ResponseResult<List<StudentVO>> selectStudentsByClass(Long classId) {
         ClassEntity classEntity = classMapper.selectById(classId);
-        LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        studentLambdaQueryWrapper.eq(Student::getClassId, classEntity.getId());
-        List<Student> students = studentMapper.selectList(studentLambdaQueryWrapper);
-        List<StudentVO> studentVOList = new ArrayList<>();
-        for(Student student : students){
-            StudentSubjectSelection selection = studentSubjectSelectionMapper.selectOne(
-                    new LambdaQueryWrapper<StudentSubjectSelection>()
-                            .eq(StudentSubjectSelection::getStudentNumber, student.getStudentNumber())
-            );
-            studentVOList.add(StudentConverter.toVO(student, selection));
+        if (classEntity == null) {
+            return ResponseResult.fail("班级不存在");
         }
-        return ResponseResult.success(studentVOList);
+
+        List<Student> students = studentMapper.selectList(
+                new LambdaQueryWrapper<Student>()
+                        .eq(Student::getClassId, classEntity.getId())
+        );
+        if (students.isEmpty()) {
+            return ResponseResult.success("该班级暂无学生", new ArrayList<>());
+        }
+
+        List<String> studentNumbers = students.stream()
+                .map(Student::getStudentNumber)
+                .collect(Collectors.toList());
+
+        List<StudentSubjectSelection> selections = studentSubjectSelectionMapper.selectList(
+                new LambdaQueryWrapper<StudentSubjectSelection>()
+                        .in(StudentSubjectSelection::getStudentNumber, studentNumbers)
+        );
+
+        Map<String, StudentSubjectSelection> selectionMap = selections.stream()
+                .collect(Collectors.toMap(StudentSubjectSelection::getStudentNumber, s -> s));
+
+        List<StudentVO> studentVOList = students.stream()
+                .map(s -> StudentConverter.toVO(s, selectionMap.get(s.getStudentNumber())))
+                .collect(Collectors.toList());
+
+        return ResponseResult.success("查询成功", studentVOList);
     }
 
     @Override
@@ -102,5 +121,30 @@ public class TeacherServiceImpl implements TeacherService {
         }
         LambdaQueryWrapper<StudentClassHistory> query = new LambdaQueryWrapper<StudentClassHistory>().eq(StudentClassHistory::getStudentNumber, studentNumber);
         return ResponseResult.success(studentClassHistoryMapper.selectList(query));
+    }
+
+    @Override
+    public ResponseResult<List<StudentVO>> selectStudentNumberByName(String studentName) {
+        if(studentName == null || studentName.trim().isEmpty()){
+            return ResponseResult.fail("名字不能为空");
+        }
+        LambdaQueryWrapper<Student> eq = new LambdaQueryWrapper<Student>().eq(Student::getName, studentName);
+        List<Student> students = studentMapper.selectList(eq);
+        if(students.isEmpty()){
+            return ResponseResult.fail("未找到学生");
+        }
+        List<String> studentNumbers = students.stream()
+                .map(Student::getStudentNumber)
+                .toList();
+        List<StudentSubjectSelection> selections = studentSubjectSelectionMapper.selectList(
+                new LambdaQueryWrapper<StudentSubjectSelection>()
+                        .in(StudentSubjectSelection::getStudentNumber, studentNumbers)
+        );
+        Map<String,StudentSubjectSelection> selectionMap = selections.stream()
+                .collect(Collectors.toMap(StudentSubjectSelection::getStudentNumber, s -> s));
+        List<StudentVO> studentVOList = students.stream()
+                .map(s -> StudentConverter.toVO(s,selectionMap.get(s.getStudentNumber())))
+                .toList();
+        return ResponseResult.success(studentVOList);
     }
 }

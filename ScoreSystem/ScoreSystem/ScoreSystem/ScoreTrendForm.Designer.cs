@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart_trend = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label_name = new System.Windows.Forms.Label();
             this.label_student_number = new System.Windows.Forms.Label();
@@ -40,22 +40,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox_mode = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.dataGridView_history = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.chart_trend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_history)).BeginInit();
             this.SuspendLayout();
             // 
             // chart_trend
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart_trend.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart_trend.Legends.Add(legend1);
-            this.chart_trend.Location = new System.Drawing.Point(32, 113);
+            chartArea2.Name = "ChartArea1";
+            this.chart_trend.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart_trend.Legends.Add(legend2);
+            this.chart_trend.Location = new System.Drawing.Point(417, 123);
             this.chart_trend.Name = "chart_trend";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart_trend.Series.Add(series1);
-            this.chart_trend.Size = new System.Drawing.Size(756, 349);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart_trend.Series.Add(series2);
+            this.chart_trend.Size = new System.Drawing.Size(535, 406);
             this.chart_trend.TabIndex = 1;
             this.chart_trend.Text = "chart2";
             // 
@@ -80,7 +82,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(593, 87);
+            this.label1.Location = new System.Drawing.Point(784, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 4;
@@ -89,7 +91,7 @@
             // comboBox_subject
             // 
             this.comboBox_subject.FormattingEnabled = true;
-            this.comboBox_subject.Location = new System.Drawing.Point(640, 84);
+            this.comboBox_subject.Location = new System.Drawing.Point(831, 82);
             this.comboBox_subject.Name = "comboBox_subject";
             this.comboBox_subject.Size = new System.Drawing.Size(121, 20);
             this.comboBox_subject.TabIndex = 5;
@@ -98,7 +100,7 @@
             // comboBox_grade
             // 
             this.comboBox_grade.FormattingEnabled = true;
-            this.comboBox_grade.Location = new System.Drawing.Point(454, 84);
+            this.comboBox_grade.Location = new System.Drawing.Point(645, 82);
             this.comboBox_grade.Name = "comboBox_grade";
             this.comboBox_grade.Size = new System.Drawing.Size(121, 20);
             this.comboBox_grade.TabIndex = 7;
@@ -106,7 +108,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(407, 87);
+            this.label2.Location = new System.Drawing.Point(598, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 6;
@@ -115,7 +117,7 @@
             // comboBox_mode
             // 
             this.comboBox_mode.FormattingEnabled = true;
-            this.comboBox_mode.Location = new System.Drawing.Point(271, 84);
+            this.comboBox_mode.Location = new System.Drawing.Point(462, 82);
             this.comboBox_mode.Name = "comboBox_mode";
             this.comboBox_mode.Size = new System.Drawing.Size(121, 20);
             this.comboBox_mode.TabIndex = 9;
@@ -124,17 +126,27 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(224, 87);
+            this.label3.Location = new System.Drawing.Point(415, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 8;
             this.label3.Text = "模式";
             // 
+            // dataGridView_history
+            // 
+            this.dataGridView_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_history.Location = new System.Drawing.Point(32, 123);
+            this.dataGridView_history.Name = "dataGridView_history";
+            this.dataGridView_history.RowTemplate.Height = 23;
+            this.dataGridView_history.Size = new System.Drawing.Size(356, 406);
+            this.dataGridView_history.TabIndex = 10;
+            // 
             // ScoreTrendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 474);
+            this.ClientSize = new System.Drawing.Size(975, 555);
+            this.Controls.Add(this.dataGridView_history);
             this.Controls.Add(this.comboBox_mode);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox_grade);
@@ -148,6 +160,7 @@
             this.Text = "ScoreTrendForm";
             this.Load += new System.EventHandler(this.ScoreTrendForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart_trend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_history)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,5 +177,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox_mode;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridView dataGridView_history;
     }
 }

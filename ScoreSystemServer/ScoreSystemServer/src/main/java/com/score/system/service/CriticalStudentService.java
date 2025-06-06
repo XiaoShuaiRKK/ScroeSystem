@@ -11,6 +11,7 @@ public interface CriticalStudentService {
     ResponseResult<Boolean> batchAddCriticalConfig(List<CriticalConfig> criticalConfigList);
     ResponseResult<Boolean> updateCriticalConfig(CriticalConfig criticalConfig);
     ResponseResult<Boolean> batchUpdateCriticalConfig(List<CriticalConfig> criticalConfigList);
+    ResponseResult<Boolean> deleteCriticalConfig(CriticalConfig criticalConfig);
     ResponseResult<List<CriticalConfig>> getAllCriticalConfig();
     ResponseResult<List<CriticalConfig>> getCriticalConfigByGrade(int examId);
     ResponseResult<String> generateCriticalStudents(int grade, int year);

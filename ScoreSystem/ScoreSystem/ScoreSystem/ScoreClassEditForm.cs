@@ -15,15 +15,17 @@ namespace ScoreSystem
 {
     public partial class ScoreClassEditForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ClassEntity classEntity;
         private ClassEntity needUpdateClass;
         private List<TeacherVO> teachers;
-        private TeacherService teacherService = new TeacherService();
+        private TeacherService teacherService = TeacherService.GetIntance();
         private ClassService classService = ClassService.GetIntance();
         public ScoreClassEditForm(ClassEntity classEntity)
         {
             this.classEntity = classEntity;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreClassEditForm_Load(object sender, EventArgs e)

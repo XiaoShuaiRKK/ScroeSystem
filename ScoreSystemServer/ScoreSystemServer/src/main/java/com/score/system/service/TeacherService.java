@@ -14,4 +14,5 @@ public interface TeacherService {
     ResponseResult<List<StudentScoreVO>> selectStudentScoreByTeacherId(Long classId,Long examId);
     ResponseResult<StudentScoreVO> selectStudentScoreByStudentId(String studentNumber,Long examId);
     ResponseResult<List<StudentClassHistory>> selectStudentByStudentNumber(String studentNumber);
+    ResponseResult<List<StudentVO>> selectStudentNumberByName(String studentName);
 }

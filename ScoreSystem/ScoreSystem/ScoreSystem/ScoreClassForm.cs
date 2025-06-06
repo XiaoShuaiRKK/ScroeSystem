@@ -15,6 +15,7 @@ namespace ScoreSystem
 {
     public partial class ScoreClassForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ScoreMainForm mainForm;
         private ClassService classService = ClassService.GetIntance();
         private List<ClassEntity> classEntities;
@@ -22,6 +23,7 @@ namespace ScoreSystem
         {
             this.mainForm = mainForm;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreClassForm_Load(object sender, EventArgs e)

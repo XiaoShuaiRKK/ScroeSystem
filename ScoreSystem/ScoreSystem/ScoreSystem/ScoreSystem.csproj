@@ -164,9 +164,11 @@
     </Compile>
     <Compile Include="Data\CourseHelper.cs" />
     <Compile Include="Data\DataUtil.cs" />
+    <Compile Include="Data\FormAutoScaler.cs" />
     <Compile Include="Data\HttpUtil.cs" />
     <Compile Include="Data\JsonUtil.cs" />
     <Compile Include="Data\ProjectSystemData.cs" />
+    <Compile Include="Data\ScoreTrendFormManage.cs" />
     <Compile Include="GradeRankingControlForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -13,12 +13,14 @@ namespace ScoreSystem
 {
     public partial class ScoreRankingForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ClassRankingControlForm classRankingControl;
         private GradeRankingControlForm gradeRankingControl;
 
         public ScoreRankingForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreRankingForm_Load(object sender, EventArgs e)

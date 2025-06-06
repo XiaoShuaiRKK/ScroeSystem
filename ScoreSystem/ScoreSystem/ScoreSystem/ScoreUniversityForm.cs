@@ -21,6 +21,7 @@ namespace ScoreSystem
 {
     public partial class ScoreUniversityForm : Form
     {
+        private FormAutoScaler autoScaler;
         private UniversitySevice universityService = UniversitySevice.GetIntance();
         private List<University> previewUniversities = new List<University>();
         private List<University> universities;
@@ -29,6 +30,7 @@ namespace ScoreSystem
         public ScoreUniversityForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreUniversityForm_Load(object sender, EventArgs e)

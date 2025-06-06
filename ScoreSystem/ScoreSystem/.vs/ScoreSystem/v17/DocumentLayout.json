@@ -3,15 +3,143 @@
   "WorkspaceRootPath": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\data\\scoretrendformmanage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\data\\scoretrendformmanage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\criticalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassimportform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassimportform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclasseditform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclasseditform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\studentscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\studentscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\studentranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\studentranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\criticalconfigdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\criticalconfigdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\criticalconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\criticalconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\subjectgroupenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\subjectgroupenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\criticalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\criticalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,184 +147,172 @@
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorescoreform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoretrendform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoretrendform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\scoretrendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\scoretrendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\criticalstudentlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\criticalstudentlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\gradeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\gradeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\examsubjectthreshold.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\examsubjectthreshold.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\gradethresholdpredictionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\gradethresholdpredictionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\ranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\ranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\loginresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\loginresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\teachervo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\teachervo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\data\\formautoscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\data\\formautoscaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorethresholdform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorethresholdform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorescoreform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorescoreform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreregistionform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreregistionform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreregistionform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreregistionform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorepredictform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreloginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoremainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\universitylevelenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\universitylevelenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclasseditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\classrankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\classrankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\classrankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\graderankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\graderankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\graderankingcontrolform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\studentranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\studentranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\ranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\ranking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorerankingform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorescoreform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorescoreform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassorstudentoperateform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassimportform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreteacherform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoretrendform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoresetservcer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\rankingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\rankingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\loadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\loadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\loadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\universitysevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\universitysevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\universitysevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalconfigform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreexamform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreexamform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreexamform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\criticalconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\criticalconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\scoreentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\model\\scoreentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\scoreentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\scoretrendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\scoretrendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\gradeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\gradeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\subjectgroupenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\subjectgroupenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\universitylevelenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\universitylevelenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreexamform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversitythresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorepredictform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorepredictform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorepredictform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreuniversityform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\model\\criticalconfigdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\model\\criticalconfigdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorecriticalconfigform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scorecriticalconfigform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorecriticalconfigform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scorethresholdform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\scoreservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -218,7 +334,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 59,
           "Children": [
             {
               "$type": "Bookmark",
@@ -230,7 +346,397 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 7,
+              "Title": "ScoreTrendFormManage.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Data\\ScoreTrendFormManage.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Data\\ScoreTrendFormManage.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Data\\ScoreTrendFormManage.cs",
+              "RelativeToolTip": "ScoreSystem\\Data\\ScoreTrendFormManage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T03:12:40.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ScoreClassImportForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassImportForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassImportForm.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T03:00:57.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ScoreClassForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassForm.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T03:00:55.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ScoreClassEditForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassEditForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassEditForm.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T03:00:55.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "StudentScore.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\StudentScore.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\StudentScore.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\StudentScore.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\StudentScore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T02:54:59.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ScoreCriticalForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.Designer.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAhwEEAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T02:53:29.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ScoreTrendForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTrendForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreTrendForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTrendForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreTrendForm.Designer.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAtwGkAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T23:34:36.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "RegisterRequest.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\RegisterRequest.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\RegisterRequest.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\RegisterRequest.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\RegisterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:18.202Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "LoginResult.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\LoginResult.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\LoginResult.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\LoginResult.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\LoginResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:17.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "GradeThresholdPredictionResult.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\GradeThresholdPredictionResult.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\GradeThresholdPredictionResult.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\GradeThresholdPredictionResult.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\GradeThresholdPredictionResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:16.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "ExamSubjectThreshold.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\ExamSubjectThreshold.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\ExamSubjectThreshold.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\ExamSubjectThreshold.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\ExamSubjectThreshold.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:16.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "CriticalStudentLog.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalStudentLog.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\CriticalStudentLog.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalStudentLog.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\CriticalStudentLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:13.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Exam.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\Exam.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\Exam.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\Exam.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\Exam.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T13:07:12.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "TeacherVO.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\TeacherVO.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Model\\TeacherVO.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\TeacherVO.cs",
+              "RelativeToolTip": "ScoreSystem\\Model\\TeacherVO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T10:14:31.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "ScoreUniversityThresholdForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityThresholdForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreUniversityThresholdForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityThresholdForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreUniversityThresholdForm.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB0AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:43:50.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ScoreTrendForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTrendForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreTrendForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTrendForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreTrendForm.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAvwBYAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:43:10.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "ScoreThresholdForm.Designer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreThresholdForm.Designer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreThresholdForm.Designer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreThresholdForm.Designer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreThresholdForm.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:42:48.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ScoreTeacherForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTeacherForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreTeacherForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTeacherForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreTeacherForm.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAvwBgAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:42:30.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "ScoreSetServcer.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreSetServcer.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreSetServcer.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreSetServcer.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreSetServcer.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAASwBYAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:42:11.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "ScoreRegistionForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRegistionForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreRegistionForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRegistionForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreRegistionForm.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAMwBgAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:40:56.762Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "ScoreRankingForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRankingForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreRankingForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRankingForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreRankingForm.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAIAzwBYAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:40:39.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "ScorePredictForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScorePredictForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScorePredictForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScorePredictForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScorePredictForm.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAjwB0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:40:21.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ScoreImportForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreImportForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreImportForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreImportForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreImportForm.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAvwBcAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:39:45.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "ScoreClassOrStudentOperateForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAlwBkAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:38:18.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ScoreClassImportForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassImportForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassImportForm.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAvwBkAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:37:59.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "ScoreClassForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassForm.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAjwBkAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:37:36.768Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ScoreClassEditForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassEditForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreClassEditForm.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAEwBUAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:36:57.699Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "ScoreLoginForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreLoginForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreLoginForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreLoginForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreLoginForm.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAlwBUAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:35:49.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "FormAutoScaler.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Data\\FormAutoScaler.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\Data\\FormAutoScaler.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Data\\FormAutoScaler.cs",
+              "RelativeToolTip": "ScoreSystem\\Data\\FormAutoScaler.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAgwBUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T01:35:24.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ScoreCriticalForm.cs",
+              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs",
+              "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalForm.cs",
+              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs",
+              "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.cs",
+              "ViewState": "AgIAAMEAAAAAAAAAAAAewMwAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T02:14:57.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
               "Title": "Ranking.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\Ranking.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\Ranking.cs",
@@ -243,20 +749,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 27,
               "Title": "StudentService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\StudentService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\StudentService.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\StudentService.cs",
               "RelativeToolTip": "ScoreSystem\\Service\\StudentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T07:20:11.919Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 71,
               "Title": "UniversitySevice.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\UniversitySevice.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\UniversitySevice.cs",
@@ -264,12 +770,11 @@
               "RelativeToolTip": "ScoreSystem\\Service\\UniversitySevice.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T07:20:11.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T07:20:11.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 72,
               "Title": "UserService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\UserService.cs",
@@ -277,12 +782,11 @@
               "RelativeToolTip": "ScoreSystem\\Service\\UserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T07:20:10.306Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T07:20:10.306Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 73,
               "Title": "ScoreExamForm.Designer.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreExamForm.Designer.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreExamForm.Designer.cs",
@@ -295,20 +799,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 66,
               "Title": "UniversityLevelEnum.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\UniversityLevelEnum.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\UniversityLevelEnum.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\UniversityLevelEnum.cs",
               "RelativeToolTip": "ScoreSystem\\Model\\UniversityLevelEnum.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T01:27:38.182Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 33,
               "Title": "SubjectGroupEnum.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\SubjectGroupEnum.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\SubjectGroupEnum.cs",
@@ -321,20 +825,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "ScoreTrendPoint.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\ScoreTrendPoint.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\ScoreTrendPoint.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\ScoreTrendPoint.cs",
               "RelativeToolTip": "ScoreSystem\\Model\\ScoreTrendPoint.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T01:27:13.536Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 74,
               "Title": "ScoreEntity.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\ScoreEntity.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\ScoreEntity.cs",
@@ -342,12 +846,11 @@
               "RelativeToolTip": "ScoreSystem\\Model\\ScoreEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T01:27:12.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T01:27:12.016Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 42,
               "Title": "GradeEnum.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\GradeEnum.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\GradeEnum.cs",
@@ -360,7 +863,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 75,
               "Title": "ScorePredictForm.Designer.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScorePredictForm.Designer.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScorePredictForm.Designer.cs",
@@ -373,46 +876,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 5,
               "Title": "ScoreMainForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreMainForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreMainForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreMainForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreMainForm.cs",
-              "ViewState": "AgIAALAAAAAAAAAAAAAvwLkAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAvwBUAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T02:41:37.612Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ScoreCriticalForm.cs",
-              "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs",
-              "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalForm.cs",
-              "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs",
-              "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAIA+wDsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:14:57.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 54,
               "Title": "ScoreUniversityForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreUniversityForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityForm.cs",
-              "ViewState": "AgIAAPwAAAAAAAAAAAAawAkBAABFAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAMwCAAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T02:14:06.154Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 76,
               "Title": "ScoreCriticalConfigForm.Designer.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalConfigForm.Designer.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalConfigForm.Designer.cs",
@@ -425,43 +915,40 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 70,
               "Title": "LoadForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\LoadForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\LoadForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\LoadForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\LoadForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:44:38.162Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:44:38.162Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 68,
               "Title": "GradeRankingControlForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\GradeRankingControlForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\GradeRankingControlForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\GradeRankingControlForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\GradeRankingControlForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:44:37.503Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:44:37.503Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 67,
               "Title": "ClassRankingControlForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ClassRankingControlForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ClassRankingControlForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ClassRankingControlForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ClassRankingControlForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:44:35.877Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:44:35.877Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 16,
               "Title": "ScoreClassImportForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassImportForm.cs",
@@ -473,7 +960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "ScoreClassEditForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassEditForm.cs",
@@ -485,7 +972,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 13,
               "Title": "ScoreClassOrStudentOperateForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
@@ -497,72 +984,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 34,
               "Title": "CriticalService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\CriticalService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\CriticalService.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\CriticalService.cs",
               "RelativeToolTip": "ScoreSystem\\Service\\CriticalService.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAADwvyYAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAArwEAAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T10:40:26.391Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 31,
               "Title": "CriticalConfigDTO.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalConfigDTO.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\CriticalConfigDTO.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalConfigDTO.cs",
               "RelativeToolTip": "ScoreSystem\\Model\\CriticalConfigDTO.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAUwBMAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAAA4AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T10:36:30.116Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 32,
               "Title": "CriticalConfig.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalConfig.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\CriticalConfig.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CriticalConfig.cs",
               "RelativeToolTip": "ScoreSystem\\Model\\CriticalConfig.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAlwCEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAlwBsAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T09:35:17.011Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 30,
               "Title": "ScoreCriticalConfigForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalConfigForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalConfigForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalConfigForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalConfigForm.cs",
-              "ViewState": "AgIAAMACAAAAAAAAAADgv8kCAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAqwIAAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T09:35:08.873Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 62,
               "Title": "ScoreExamForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreExamForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreExamForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreExamForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreExamForm.cs",
-              "ViewState": "AgIAANMBAAAAAAAAAAAowJ4BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAjwB0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T10:46:59.404Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "ScoreExamForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreExamForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreExamForm.cs",
@@ -574,7 +1061,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "ScoreCriticalConfigForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalConfigForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalConfigForm.cs",
@@ -586,7 +1073,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ScoreCriticalForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreCriticalForm.cs",
@@ -598,7 +1085,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "ScoreImportForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreImportForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreImportForm.cs",
@@ -610,7 +1097,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 20,
               "Title": "ScoreTrendForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTrendForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreTrendForm.cs",
@@ -622,7 +1109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 53,
               "Title": "ScoreUniversityThresholdForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityThresholdForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreUniversityThresholdForm.cs",
@@ -634,7 +1121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 19,
               "Title": "ScoreUniversityForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreUniversityForm.cs",
@@ -646,7 +1133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 36,
               "Title": "ScoreTeacherForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTeacherForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreTeacherForm.cs",
@@ -658,20 +1145,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 37,
               "Title": "ScoreThresholdForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreThresholdForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreThresholdForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreThresholdForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreThresholdForm.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAvwGQAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAApwB8AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T09:21:42.331Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 21,
               "Title": "ScoreThresholdForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreThresholdForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreThresholdForm.cs",
@@ -683,7 +1170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 9,
               "Title": "ScoreSetServcer.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreSetServcer.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreSetServcer.cs",
@@ -695,7 +1182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 48,
               "Title": "ScoreRankingForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRankingForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreRankingForm.cs",
@@ -707,7 +1194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 49,
               "Title": "ScorePredictForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScorePredictForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScorePredictForm.cs",
@@ -719,20 +1206,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 57,
               "Title": "ScoreScoreForm.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreScoreForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreScoreForm.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreScoreForm.cs",
               "RelativeToolTip": "ScoreSystem\\ScoreScoreForm.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAADgv1MAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAcwCkAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T15:26:02.66Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 78,
               "Title": "ScoreService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\ScoreService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\ScoreService.cs",
@@ -740,25 +1227,24 @@
               "RelativeToolTip": "ScoreSystem\\Service\\ScoreService.cs",
               "ViewState": "AgIAAJMAAAAAAAAAAAAawKIAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T16:04:00.933Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-30T16:04:00.933Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 29,
               "Title": "StudentRanking.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\StudentRanking.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\StudentRanking.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\StudentRanking.cs",
               "RelativeToolTip": "ScoreSystem\\Model\\StudentRanking.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T15:26:51.492Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 35,
               "Title": "ScoreScoreForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreScoreForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreScoreForm.cs",
@@ -770,7 +1256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "ScoreClassForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreClassForm.cs",
@@ -782,7 +1268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 80,
               "Title": "Student.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\Student.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\Student.cs",
@@ -794,7 +1280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 79,
               "Title": "CourseEnum.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Model\\CourseEnum.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Model\\CourseEnum.cs",
@@ -806,7 +1292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 69,
               "Title": "RankingService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\RankingService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\RankingService.cs",
@@ -814,25 +1300,24 @@
               "RelativeToolTip": "ScoreSystem\\Service\\RankingService.cs",
               "ViewState": "AgIAAMAAAAAAAAAAAAAvwMsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T16:04:27.327Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-30T16:04:27.327Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 2,
               "Title": "TeacherService.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\TeacherService.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Service\\TeacherService.cs",
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Service\\TeacherService.cs",
               "RelativeToolTip": "ScoreSystem\\Service\\TeacherService.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAvwB8AAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAAC8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-14T11:59:22.071Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "ScoreMainForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreMainForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreMainForm.cs",
@@ -844,7 +1329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 22,
               "Title": "ScoreLoginForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreLoginForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreLoginForm.cs",
@@ -856,7 +1341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 77,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\Program.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\Program.cs",
@@ -864,12 +1349,11 @@
               "RelativeToolTip": "ScoreSystem\\Program.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAowA8AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T15:25:05.388Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T15:25:05.388Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 59,
               "Title": "ScoreRegistionForm.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRegistionForm.cs",
               "RelativeDocumentMoniker": "ScoreSystem\\ScoreRegistionForm.cs",

@@ -1,4 +1,5 @@
-﻿using ScoreSystem.Model;
+﻿using ScoreSystem.Data;
+using ScoreSystem.Model;
 using ScoreSystem.Service;
 using SixLabors.ImageSharp.Formats.Bmp;
 using System;
@@ -16,16 +17,18 @@ namespace ScoreSystem
 {
     public partial class ScoreTrendForm : Form
     {
+        private FormAutoScaler autoScaler;
         private Student student;
         private StudentScoreTrendResult trendResult;
         private List<StudentClassHistory> classHistories;
-        private TeacherService teacherService = new TeacherService();
+        private TeacherService teacherService = TeacherService.GetIntance();
         private TrendService trendService = new TrendService();
 
         public ScoreTrendForm(Student student)
         {
             this.student = student;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private async void ScoreTrendForm_Load(object sender, EventArgs e)
@@ -38,6 +41,75 @@ namespace ScoreSystem
 
             LoadRankModes(); // 👈 加载模式 ComboBox
             await LoadGradesAsync(); // 加载年级列表
+            LoadDataGridView();
+        }
+
+
+        private async void LoadDataGridView()
+        {
+            dataGridView_history.DataSource = null;
+
+            var selectedMode = GetSelectedMode();
+
+            DataTable table = new DataTable();
+            table.Columns.Add("考试名称");
+
+            if (selectedMode == RankModeEnum.各科)
+            {
+                if (trendResult == null || trendResult.Trend == null || trendResult.Trend.Count == 0)
+                    return;
+
+                var subjects = trendResult.Trend.Keys.ToList();
+                int examCount = trendResult.Trend.Values.First().Count;
+
+                foreach (var subject in subjects)
+                {
+                    table.Columns.Add(subject);
+                }
+
+                for (int i = 0; i < examCount; i++)
+                {
+                    var row = table.NewRow();
+                    row["考试名称"] = $"第{i + 1}次考试";
+
+                    foreach (var subject in subjects)
+                    {
+                        var scoreList = trendResult.Trend[subject];
+                        if (i < scoreList.Count)
+                        {
+                            row[subject] = scoreList[i].Score;
+                        }
+                    }
+
+                    table.Rows.Add(row);
+                }
+                dataGridView_history.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            }
+            else if (selectedMode == RankModeEnum.三加一加二总分)
+            {
+                int selectedGrade = (int)comboBox_grade.SelectedValue;
+                var totalTrend = await trendService.GetStudent312ScoreTrend(student.StudentNumber, selectedGrade);
+
+                if (totalTrend == null || totalTrend.Count == 0)
+                    return;
+
+                table.Columns.Add("总分");
+
+                int index = 1;
+                foreach (var kvp in totalTrend.OrderBy(k => k.Key))
+                {
+                    var row = table.NewRow();
+                    row["考试名称"] = $"第{index++}次考试";
+                    row["总分"] = kvp.Value;
+                    table.Rows.Add(row);
+                }
+                dataGridView_history.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+
+            dataGridView_history.DataSource = table;
+            
+            dataGridView_history.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView_history.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         /// <summary>
@@ -46,25 +118,25 @@ namespace ScoreSystem
         private void LoadRankModes()
         {
             var allowedModes = new[]
-            {
+           {
                 RankModeEnum.各科,
                 RankModeEnum.三加一加二总分
             };
 
+            // 使用 KeyValuePair 明确类型
             var modeItems = allowedModes
-                .Select(mode => new
-                {
-                    Text = mode.ToString(),
-                    Value = (int)mode
-                })
+                .Select(mode => new KeyValuePair<string, RankModeEnum>(mode.ToString(), mode))
                 .ToList();
 
+            comboBox_mode.SelectedIndexChanged -= comboBox_mode_SelectedIndexChanged;
+
             comboBox_mode.DataSource = modeItems;
-            comboBox_mode.DisplayMember = "Text";
+            comboBox_mode.DisplayMember = "Key";
             comboBox_mode.ValueMember = "Value";
 
-            // 可选：默认选中第一项
             comboBox_mode.SelectedIndex = 0;
+
+            comboBox_mode.SelectedIndexChanged += comboBox_mode_SelectedIndexChanged;
         }
 
         /// <summary>
@@ -130,7 +202,6 @@ namespace ScoreSystem
 
             if (selectedMode == RankModeEnum.各科)
             {
-                // 获取各科趋势数据
                 trendResult = await trendService.GetStudentCourseScoreTrend(student.StudentNumber, selectedGrade);
 
                 if (trendResult == null || trendResult.Trend == null || trendResult.Trend.Count == 0)
@@ -140,15 +211,13 @@ namespace ScoreSystem
                     return;
                 }
 
-                // 显示科目选择下拉框
                 comboBox_subject.Visible = true;
 
-                LoadSubjects(); // 加载科目下拉框
-                comboBox_subject_SelectedIndexChanged(comboBox_subject, EventArgs.Empty); // 绘图
+                LoadSubjects();
+                comboBox_subject_SelectedIndexChanged(comboBox_subject, EventArgs.Empty);
             }
             else if (selectedMode == RankModeEnum.三加一加二总分)
             {
-                // 获取总分趋势数据
                 var totalTrend = await trendService.GetStudent312ScoreTrend(student.StudentNumber, selectedGrade);
 
                 if (totalTrend == null || totalTrend.Count == 0)
@@ -157,7 +226,6 @@ namespace ScoreSystem
                     return;
                 }
 
-                // 隐藏科目选择下拉框
                 comboBox_subject.Visible = false;
 
                 var series = new Series("总分趋势")
@@ -179,6 +247,9 @@ namespace ScoreSystem
 
                 chart_trend.Series.Add(series);
             }
+
+            // ✅ 添加此行，确保表格也更新
+            LoadDataGridView();
         }
 
         // 加载科目下拉框
@@ -269,6 +340,7 @@ namespace ScoreSystem
 
                 chart_trend.Series.Add(series);
             }
+            LoadDataGridView();
         }
 
         // 绘制所有科目的折线图
@@ -329,6 +401,8 @@ namespace ScoreSystem
         {
             // 模式切换时自动刷新图表
             comboBox_grade_SelectedIndexChanged(comboBox_grade, EventArgs.Empty);
+            LoadDataGridView();
         }
+
     }
 }

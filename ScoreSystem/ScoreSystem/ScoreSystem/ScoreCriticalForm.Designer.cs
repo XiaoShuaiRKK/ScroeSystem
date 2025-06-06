@@ -64,6 +64,7 @@
             this.dataGridView_critical.RowTemplate.Height = 23;
             this.dataGridView_critical.Size = new System.Drawing.Size(776, 262);
             this.dataGridView_critical.TabIndex = 1;
+            this.dataGridView_critical.DoubleClick += new System.EventHandler(this.dataGridView_critical_DoubleClick);
             // 
             // label4
             // 

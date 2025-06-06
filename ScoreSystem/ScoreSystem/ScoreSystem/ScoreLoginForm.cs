@@ -14,10 +14,12 @@ namespace ScoreSystem
 {
     public partial class ScoreLoginForm : Form
     {
+        private FormAutoScaler autoScaler;
         private UserService userService = UserService.GetIntance();
         public ScoreLoginForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreLoginForm_Load(object sender, EventArgs e)

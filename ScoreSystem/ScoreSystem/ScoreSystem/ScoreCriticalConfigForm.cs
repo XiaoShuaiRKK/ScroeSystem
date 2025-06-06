@@ -19,6 +19,7 @@ namespace ScoreSystem
 {
     public partial class ScoreCriticalConfigForm : Form
     {
+        private FormAutoScaler autoScaler;
         private List<CriticalConfigDTO> previewConfigs = new List<CriticalConfigDTO>();
         private List<CriticalConfig> criticalConfigs;
         private List<CriticalConfig> editableConfigs; // 用于编辑模式下的副本
@@ -28,6 +29,7 @@ namespace ScoreSystem
         public ScoreCriticalConfigForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreCriticalConfigForm_Load(object sender, EventArgs e)
@@ -114,7 +116,7 @@ namespace ScoreSystem
                 var subjectGroupList = Enum.GetValues(typeof(SubjectGroupEnum))
                                            .Cast<SubjectGroupEnum>()
                                            .Where(s => s != SubjectGroupEnum.未分组) // 过滤掉“未分组”
-                                           .Select(s => new { Name = s.ToString(), Value = (int)s })
+                                           .Select(s => new { Name = s.ToString(), Value = (long)s })
                                            .ToList();
                 var subjectGroupCombo = new DataGridViewComboBoxColumn
                 {
@@ -124,6 +126,7 @@ namespace ScoreSystem
                     DataSource = subjectGroupList,
                     DisplayMember = "Name",
                     ValueMember = "Value",
+                    ValueType = typeof(long),
                     FlatStyle = FlatStyle.Flat,
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                 };
@@ -200,7 +203,9 @@ namespace ScoreSystem
                 UniversityLevel = c.UniversityLevel,
                 TargetCount = c.TargetCount,
                 CriticalRatio = c.CriticalRatio,
-                SubjectGroupId = c.SubjectGroupId
+                SubjectGroupId = c.SubjectGroupId,
+                FloatUpCount = c.FloatUpCount,
+                FloatDownCount = c.FloatDownCount
             }).ToList();
         }
 
@@ -217,24 +222,19 @@ namespace ScoreSystem
                 dataGridView_exams.AutoGenerateColumns = true;
                 dataGridView_exams.DataSource = editableConfigs;
 
-                dataGridView_exams.Columns["Id"].HeaderText = "ID";
-                dataGridView_exams.Columns["Grade"].HeaderText = "年级";
-                dataGridView_exams.Columns["Year"].HeaderText = "年份";
-                dataGridView_exams.Columns["UniversityLevel"].HeaderText = "大学等级";
-                dataGridView_exams.Columns["TargetCount"].HeaderText = "目标人数";
-                dataGridView_exams.Columns["CriticalRatio"].HeaderText = "临界比例";
-                dataGridView_exams.Columns["SubjectGroupId"].HeaderText = "科目组合";
+                CriticalConfigResetColumns(); // 设置列标题、隐藏无关列等
 
-                foreach (DataGridViewColumn col in dataGridView_exams.Columns)
+                // 添加“删除”操作列
+                var deleteLink = new DataGridViewLinkColumn
                 {
-                    if (col.Name != "Id" && col.Name != "Grade" && col.Name != "Year" &&
-                        col.Name != "UniversityLevel" && col.Name != "TargetCount" &&
-                        col.Name != "CriticalRatio" && col.Name != "SubjectGroupId")
-                    {
-                        col.Visible = false;
-                    }
-                }
+                    HeaderText = "操作",
+                    Text = "删除",
+                    UseColumnTextForLinkValue = true,
+                    Name = "DeleteLink"
+                };
+                dataGridView_exams.Columns.Add(deleteLink);
 
+                // 格式化枚举与比例显示
                 dataGridView_exams.CellFormatting += (s, e) =>
                 {
                     string colName = dataGridView_exams.Columns[e.ColumnIndex].Name;
@@ -248,7 +248,7 @@ namespace ScoreSystem
                         e.Value = ((UniversityLevelEnum)levelVal).ToString();
                         e.FormattingApplied = true;
                     }
-                    else if (colName == "SubjectGroupId" && e.Value is int groupVal)
+                    else if (colName == "SubjectGroupId" && e.Value is long groupVal)
                     {
                         e.Value = ((SubjectGroupEnum)groupVal).ToString();
                         e.FormattingApplied = true;
@@ -260,9 +260,14 @@ namespace ScoreSystem
                     }
                 };
 
+                // 设置只读和选择模式
                 dataGridView_exams.ReadOnly = true;
                 dataGridView_exams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView_exams.AllowUserToAddRows = false;
+
+                // 注册点击事件
+                dataGridView_exams.CellContentClick -= dataGridView_exams_CellContentClick; // 防止重复绑定
+                dataGridView_exams.CellContentClick += dataGridView_exams_CellContentClick;
             }
             catch (Exception ex)
             {
@@ -271,49 +276,28 @@ namespace ScoreSystem
 
         }
 
-        private void dataGridView_exams_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void CriticalConfigResetColumns()
         {
-            string colName = dataGridView_exams.Columns[e.ColumnIndex].Name;
-            if (colName == "Grade" && e.Value is int gradeVal)
+            dataGridView_exams.Columns["Id"].HeaderText = "ID";
+            dataGridView_exams.Columns["Grade"].HeaderText = "年级";
+            dataGridView_exams.Columns["Year"].HeaderText = "年份";
+            dataGridView_exams.Columns["UniversityLevel"].HeaderText = "大学等级";
+            dataGridView_exams.Columns["TargetCount"].HeaderText = "目标人数";
+            dataGridView_exams.Columns["CriticalRatio"].HeaderText = "临界比例";
+            dataGridView_exams.Columns["SubjectGroupId"].HeaderText = "科目组合";
+            dataGridView_exams.Columns["FloatUpCount"].HeaderText = "上浮人数";
+            dataGridView_exams.Columns["FloatDownCount"].HeaderText = "下浮人数";
+
+            foreach (DataGridViewColumn col in dataGridView_exams.Columns)
             {
-                e.Value = ((GradeEnum)gradeVal).ToString();
-                e.FormattingApplied = true;
+                if (col.Name != "Id" && col.Name != "Grade" && col.Name != "Year" &&
+                    col.Name != "UniversityLevel" && col.Name != "TargetCount" &&
+                    col.Name != "CriticalRatio" && col.Name != "SubjectGroupId" &&
+                    col.Name != "FloatUpCount" && col.Name != "FloatDownCount")
+                {
+                    col.Visible = false;
+                }
             }
-            else if (colName == "UniversityLevel" && e.Value is int levelVal)
-            {
-                e.Value = ((UniversityLevelEnum)levelVal).ToString();
-                e.FormattingApplied = true;
-            }
-            else if (colName == "SubjectGroupId" && e.Value is int groupVal)
-            {
-                e.Value = ((SubjectGroupEnum)groupVal).ToString();
-                e.FormattingApplied = true;
-            }
-        }
-
-        private void ReplaceWithComboBox(string columnName, Type enumType, int? ignoreValue = null)
-        {
-            if (!dataGridView_exams.Columns.Contains(columnName)) return;
-
-            var enumValues = Enum.GetValues(enumType).Cast<object>()
-                .Where(v => ignoreValue == null || Convert.ToInt32(v) != ignoreValue)
-                .Select(v => new { Name = v.ToString(), Value = (int)v })
-                .ToList();
-
-            var comboBoxColumn = new DataGridViewComboBoxColumn
-            {
-                DataPropertyName = columnName,
-                HeaderText = dataGridView_exams.Columns[columnName].HeaderText,
-                Name = columnName,
-                DataSource = enumValues,
-                DisplayMember = "Name",
-                ValueMember = "Value",
-                DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox
-            };
-
-            int index = dataGridView_exams.Columns[columnName].DisplayIndex;
-            dataGridView_exams.Columns.Remove(columnName);
-            dataGridView_exams.Columns.Insert(index, comboBoxColumn);
         }
 
 
@@ -642,9 +626,30 @@ namespace ScoreSystem
             e.Row.Cells["SubjectGroupId"].Value = (int)SubjectGroupEnum.理科;
         }
 
-        private void dataGridView_exams_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView_exams_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0 && dataGridView_exams.Columns[e.ColumnIndex].Name == "DeleteLink")
+            {
+                var confirm = MessageBox.Show("确认要删除该配置吗？", "删除确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    var row = dataGridView_exams.Rows[e.RowIndex];
+                    if (row.DataBoundItem is CriticalConfig config)
+                    {
+                        try
+                        {
+                            await criticalService.DeleteCriticalConfig(config); // 调用服务删除
+                            MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                            CriticalConfigLoad(); // 重新加载数据
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("删除失败: " + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
         }
 
         private async void button_edit_Click(object sender, EventArgs e)
@@ -687,6 +692,8 @@ namespace ScoreSystem
                 });
 
                 dataGridView_exams.Columns.Add(CreateEnumComboBoxColumn<SubjectGroupEnum>("SubjectGroupId", "科目组合", excludeValues: new[] { 1 }));
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FloatUpCount", HeaderText = "上浮人数", Name = "FloatUpCount" });
+                dataGridView_exams.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FloatDownCount", HeaderText = "下浮人数", Name = "FloatDownCount" });
             }
             else
             {
@@ -707,7 +714,9 @@ namespace ScoreSystem
                         original.Year != edited.Year ||
                         original.UniversityLevel != edited.UniversityLevel ||
                         original.TargetCount != edited.TargetCount ||
-                        original.SubjectGroupId != edited.SubjectGroupId)
+                        original.SubjectGroupId != edited.SubjectGroupId ||
+                        original.FloatUpCount != edited.FloatUpCount ||
+                        original.FloatDownCount != edited.FloatDownCount)
                     {
                         // 更新原始数据
                         original.Grade = edited.Grade;
@@ -715,6 +724,8 @@ namespace ScoreSystem
                         original.UniversityLevel = edited.UniversityLevel;
                         original.TargetCount = edited.TargetCount;
                         original.SubjectGroupId = edited.SubjectGroupId;
+                        original.FloatUpCount = edited.FloatUpCount;
+                        original.FloatDownCount = edited.FloatDownCount;
 
                         updatedList.Add(original);
                     }

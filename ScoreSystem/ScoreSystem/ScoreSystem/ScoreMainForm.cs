@@ -1,4 +1,5 @@
-﻿using ScoreSystem.Data;
+﻿using MathNet.Numerics.Distributions;
+using ScoreSystem.Data;
 using ScoreSystem.Model;
 using ScoreSystem.Service;
 using System;
@@ -15,9 +16,10 @@ namespace ScoreSystem
 {
     public partial class ScoreMainForm : Form
     {
+        private FormAutoScaler autoScaler;
         private UserService userService = UserService.GetIntance();
         private ClassService classService = ClassService.GetIntance();
-        private TeacherService teacherService = new TeacherService();
+        private TeacherService teacherService = TeacherService.GetIntance();
         private StudentService studentService = StudentService.GetIntance();
         private ScoreLoginForm loginForm;
         private User user;
@@ -26,10 +28,12 @@ namespace ScoreSystem
         private ScoreTrendForm trendForm = null;
         private string trendFormStudentNumber = null;
         private bool isEdit = false;
+        private Dictionary<string, ScoreTrendForm> trandFormsMap = new Dictionary<string, ScoreTrendForm>();
         public ScoreMainForm(ScoreLoginForm loginForm)
         {
             this.loginForm = loginForm;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreMainForm_Load(object sender, EventArgs e)
@@ -195,28 +199,7 @@ namespace ScoreSystem
                 return;
             }
 
-            // 判断是否已有窗口打开，且是同一位学生
-            if (trendForm != null && !trendForm.IsDisposed)
-            {
-                if (trendFormStudentNumber == studentNumber)
-                {
-                    trendForm.BringToFront();  // 已打开，前置
-                    return;
-                }
-                else
-                {
-                    trendForm.Close();  // 不是同一学生，关闭旧窗体
-                }
-            }
-
-            trendForm = new ScoreTrendForm(student);
-            trendFormStudentNumber = studentNumber;
-            trendForm.FormClosed += (s, args) =>
-            {
-                trendForm = null;
-                trendFormStudentNumber = null;
-            };
-            trendForm.Show();
+            ScoreTrendFormManage.ShowTrendForm(student);
         }
 
         private void menu_critical_Click(object sender, EventArgs e)
@@ -394,6 +377,33 @@ namespace ScoreSystem
                 button_edit.Enabled = true;
                 isEdit = false;
                 StudentDataInit(); // 刷新数据回到正常状态
+            }
+        }
+
+        private async void button_search_Click(object sender, EventArgs e)
+        {
+            string name = textBox_search.Text.Trim();
+            if (string.IsNullOrEmpty(name)) return;
+
+            List<Student> matchedStudents = await teacherService.GetStudentByName(name);
+            if (matchedStudents == null || !matchedStudents.Any())
+            {
+                return;
+            }
+
+            foreach (var student in matchedStudents)
+            {
+                ScoreTrendFormManage.ShowTrendForm(student);
+            }
+        }
+
+        private void textBox_search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                button_search_Click(button_search, EventArgs.Empty);
             }
         }
     }

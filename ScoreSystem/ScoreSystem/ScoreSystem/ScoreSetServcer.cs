@@ -15,10 +15,12 @@ namespace ScoreSystem
     public partial class ScoreSetServcer : Form
     {
         private string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.txt");
+        private FormAutoScaler autoScaler;
 
         public ScoreSetServcer()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreSetServcer_Load(object sender, EventArgs e)

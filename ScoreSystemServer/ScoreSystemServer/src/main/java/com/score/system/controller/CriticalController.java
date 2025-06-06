@@ -38,6 +38,11 @@ public class CriticalController {
         return criticalStudentService.batchUpdateCriticalConfig(criticalConfigs);
     }
 
+    @PostMapping("/config/delete")
+    public ResponseResult<Boolean> deleteCriticalConfig(@RequestBody CriticalConfig criticalConfig) {
+        return criticalStudentService.deleteCriticalConfig(criticalConfig);
+    }
+
     @GetMapping("/config/get")
     public ResponseResult<List<CriticalConfig>> getAllCriticalConfig() {
         return criticalStudentService.getAllCriticalConfig();

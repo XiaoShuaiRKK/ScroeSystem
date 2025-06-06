@@ -83,14 +83,6 @@ public class CriticalStudentServiceImpl implements CriticalStudentService {
             return ResponseResult.fail("该年级对应科目组下没有学生，无法计算比例");
         }
 
-        // 4. 处理上浮 / 下浮人数规则
-        if (criticalConfig.getUniversityLevel() == 1) {
-            criticalConfig.setFloatUpCount(0); // 985 不需要上浮人数
-        }
-        if (criticalConfig.getUniversityLevel() == 4) {
-            criticalConfig.setFloatDownCount(0); // 专科不需要下浮人数
-        }
-
         int floatUp = criticalConfig.getFloatUpCount() != null ? criticalConfig.getFloatUpCount() : 0;
         int floatDown = criticalConfig.getFloatDownCount() != null ? criticalConfig.getFloatDownCount() : 0;
         int target = criticalConfig.getTargetCount() != null ? criticalConfig.getTargetCount() : 0;
@@ -175,10 +167,6 @@ public class CriticalStudentServiceImpl implements CriticalStudentService {
         );
         if (groupStudentCount == 0) return ResponseResult.fail("班级中无学生");
 
-        // 4. 校验上下浮限制
-        if (criticalConfig.getUniversityLevel() == 1) criticalConfig.setFloatUpCount(0);
-        if (criticalConfig.getUniversityLevel() == 4) criticalConfig.setFloatDownCount(0);
-
         int floatUp = criticalConfig.getFloatUpCount() != null ? criticalConfig.getFloatUpCount() : 0;
         int floatDown = criticalConfig.getFloatDownCount() != null ? criticalConfig.getFloatDownCount() : 0;
         int target = criticalConfig.getTargetCount() != null ? criticalConfig.getTargetCount() : 0;
@@ -224,15 +212,32 @@ public class CriticalStudentServiceImpl implements CriticalStudentService {
     }
 
     @Override
+    public ResponseResult<Boolean> deleteCriticalConfig(CriticalConfig criticalConfig) {
+        // 1. 校验配置是否存在
+        CriticalConfig existing = configMapper.selectById(criticalConfig.getId());
+        if (existing == null || existing.isDeleted()) {
+            return ResponseResult.fail("配置不存在或已被删除");
+        }
+
+        // 2. 逻辑删除（设置 isDeleted = true）
+        existing.setDeleted(true);
+        int rows = configMapper.updateById(existing);
+
+        if (rows > 0) {
+            return ResponseResult.success("删除成功", true);
+        } else {
+            return ResponseResult.fail("删除失败");
+        }
+    }
+
+    @Override
     public ResponseResult<List<CriticalConfig>> getAllCriticalConfig() {
-        return ResponseResult.success(configMapper.selectList(null));
+        return ResponseResult.success(configMapper.selectList(new LambdaQueryWrapper<CriticalConfig>().eq(CriticalConfig::isDeleted, false)));
     }
 
     @Override
     public ResponseResult<List<CriticalConfig>> getCriticalConfigByGrade(int examId) {
-        Exam exam = examMapper.selectOne(
-                new LambdaQueryWrapper<Exam>().eq(Exam::getGrade, examId)
-        );
+        Exam exam = examMapper.selectById(examId);
         if(exam == null){
             return ResponseResult.fail("未查找到对应信息");
         }

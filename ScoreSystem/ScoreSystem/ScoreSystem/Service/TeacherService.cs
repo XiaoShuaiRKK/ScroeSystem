@@ -13,6 +13,19 @@ namespace ScoreSystem.Service
 {
     public class TeacherService
     {
+        private List<Student> students;
+
+        private static TeacherService intance;
+        private TeacherService() { }
+        public static TeacherService GetIntance()
+        {
+            if(intance == null)
+            {
+                intance = new TeacherService();
+            }
+            return intance;
+        }
+
         public async Task<List<Student>> GetStudentByClassId(int classId)
         {
             string url = HttpUtil.GetUrl($"/teacher/get/student/byClass?class_id={classId}");
@@ -20,7 +33,8 @@ namespace ScoreSystem.Service
             ApiResponse<List<Student>> response = JsonSerializer.Deserialize<ApiResponse<List<Student>>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200)
             {
-                return response.Data;
+                students = response.Data;
+                return students;
             }
             else
             {
@@ -31,9 +45,34 @@ namespace ScoreSystem.Service
 
         public async Task<Student> GetStudent(string studentNumber)
         {
+            Student result = null;
+            if(!string.IsNullOrEmpty(studentNumber) && students != null)
+            {
+                result = students.FirstOrDefault(s => s.StudentNumber.Equals(studentNumber));
+            }
+            if(result != null)
+            {
+                return result;
+            }
             string url = HttpUtil.GetUrl($"/teacher/get/student?student_number={studentNumber}");
             string jsonResult = await HttpUtil.GetAsync(url);
             ApiResponse<Student> response = JsonSerializer.Deserialize<ApiResponse<Student>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200)
+            {
+                return response.Data;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            };
+        }
+
+        public async Task<List<Student>> GetStudentByName(string name)
+        {
+            string url = HttpUtil.GetUrl($"/teacher/number/byName?name={name}");
+            string jsonResult = await HttpUtil.GetAsync(url);
+            ApiResponse<List<Student>> response = JsonSerializer.Deserialize<ApiResponse<List<Student>>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200)
             {
                 return response.Data;

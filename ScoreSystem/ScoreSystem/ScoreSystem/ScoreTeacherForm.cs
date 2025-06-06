@@ -19,12 +19,14 @@ namespace ScoreSystem
 {
     public partial class ScoreTeacherForm : Form
     {
+        private FormAutoScaler autoScaler;
         private List<Teacher> teachersPreview = new List<Teacher>();
         private List<TeacherVO> teacherDisplay;
-        private TeacherService service = new TeacherService();
+        private TeacherService service = TeacherService.GetIntance();
         public ScoreTeacherForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreTeacherForm_Load(object sender, EventArgs e)

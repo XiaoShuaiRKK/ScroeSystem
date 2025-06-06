@@ -16,6 +16,7 @@ namespace ScoreSystem
 {
     public partial class ScorePredictForm : Form
     {
+        private FormAutoScaler autoScaler;
         private bool isLoaded = false;
         private List<GradeThresholdPredictionResult> results;
         private UniversitySevice universitySevice = UniversitySevice.GetIntance();
@@ -26,6 +27,7 @@ namespace ScoreSystem
         public ScorePredictForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
 

@@ -19,13 +19,15 @@ namespace ScoreSystem
 {
     public partial class ScoreImportForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ScoreService scoreService = ScoreService.GetIntance();
-        private TeacherService teacherService = new TeacherService();
+        private TeacherService teacherService = TeacherService.GetIntance();
         private List<ScoreEntity> scores;
         private List<ScoreVO> showScores;
         public ScoreImportForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreImportForm_Load(object sender, EventArgs e)

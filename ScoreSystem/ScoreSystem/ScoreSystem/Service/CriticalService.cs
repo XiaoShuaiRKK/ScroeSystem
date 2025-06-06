@@ -28,9 +28,9 @@ namespace ScoreSystem.Service
             }
         }
 
-        public async Task<List<CriticalConfig>> GetCriticalConfigByGrade(int grade)
+        public async Task<List<CriticalConfig>> GetCriticalConfigByGrade(int examId)
         {
-            string url = HttpUtil.GetUrl($"/critical/config/get/byGrade?grade={grade}");
+            string url = HttpUtil.GetUrl($"/critical/config/get/byGrade?exam_id={examId}");
             string jsonResult = await HttpUtil.GetAsync(url);
             var response = JsonSerializer.Deserialize<ApiResponse<List<CriticalConfig>>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200)
@@ -49,6 +49,24 @@ namespace ScoreSystem.Service
             string url = HttpUtil.GetUrl("/critical/config/batchAdd");
             // 序列化为 JSON
             string jsonBody = JsonSerializer.Serialize(criticalConfigs, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteCriticalConfig(CriticalConfig criticalConfig)
+        {
+            string url = HttpUtil.GetUrl("/critical/config/delete");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(criticalConfig, JsonUtil.GetRequestOptions());
             string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
             var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
             if (response.Code == 200 && response.Data == true)

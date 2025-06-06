@@ -11,7 +11,7 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 29/05/2025 16:26:15
+ Date: 06/06/2025 14:35:43
 */
 
 SET NAMES utf8mb4;
@@ -99,15 +99,26 @@ CREATE TABLE `critical_config`  (
   `target_count` int(11) NOT NULL,
   `critical_ratio` double NOT NULL,
   `subject_group_id` bigint(20) NOT NULL,
+  `float_up_count` int(11) NOT NULL,
+  `float_down_count` int(11) NOT NULL,
   `deleted` tinyint(4) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of critical_config
 -- ----------------------------
+INSERT INTO `critical_config` VALUES (1, 4, 2025, 1, 40, 0.041109969167523124, 3, 5, 10, 0, '2025-06-03 10:00:48', '2025-06-06 10:49:05');
+INSERT INTO `critical_config` VALUES (2, 4, 2025, 1, 35, 0.08997429305912596, 2, 4, 8, 0, '2025-06-03 10:00:48', '2025-06-06 10:49:05');
+INSERT INTO `critical_config` VALUES (3, 4, 2025, 2, 50, 0.051387461459403906, 3, 12, 10, 0, '2025-06-03 10:00:48', '2025-06-05 14:51:58');
+INSERT INTO `critical_config` VALUES (4, 4, 2025, 2, 50, 0.12853470437017994, 2, 11, 11, 0, '2025-06-03 10:00:48', '2025-06-05 14:51:58');
+INSERT INTO `critical_config` VALUES (5, 4, 2025, 4, 30, 0.07712082262210797, 2, 8, 6, 0, '2025-06-05 09:17:57', '2025-06-06 10:49:05');
+INSERT INTO `critical_config` VALUES (6, 4, 2025, 4, 30, 0.030832476875642344, 3, 7, 0, 1, '2025-06-05 09:17:57', '2025-06-05 14:51:58');
+INSERT INTO `critical_config` VALUES (7, 4, 2025, 3, 20, 0.05141388174807198, 2, 6, 5, 0, '2025-06-05 09:17:57', '2025-06-05 14:51:58');
+INSERT INTO `critical_config` VALUES (8, 4, 2025, 3, 20, 0.020554984583761562, 3, 4, 5, 0, '2025-06-05 09:17:57', '2025-06-05 14:52:00');
+INSERT INTO `critical_config` VALUES (9, 4, 2025, 4, 30, 0.030832476875642344, 3, 10, 6, 0, '2025-06-06 10:47:08', '2025-06-06 10:49:05');
 
 -- ----------------------------
 -- Table structure for critical_student_log
@@ -191,7 +202,7 @@ CREATE TABLE `exam_subject_threshold`  (
 -- ----------------------------
 -- Records of exam_subject_threshold
 -- ----------------------------
-INSERT INTO `exam_subject_threshold` VALUES (1, 2, 0, 80, '2025-05-29 15:02:52', '2025-05-29 15:02:52');
+INSERT INTO `exam_subject_threshold` VALUES (1, 2, 1, 80, '2025-05-29 15:02:52', '2025-05-29 15:02:52');
 
 -- ----------------------------
 -- Table structure for exams
@@ -8017,7 +8028,7 @@ CREATE TABLE `student`  (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4087 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = FIXED;
+) ENGINE = MyISAM AUTO_INCREMENT = 5449 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of student
@@ -12316,7 +12327,7 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_level_fk`(`level`) USING BTREE,
   INDEX `user_role_fk`(`role`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15012 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16374 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user

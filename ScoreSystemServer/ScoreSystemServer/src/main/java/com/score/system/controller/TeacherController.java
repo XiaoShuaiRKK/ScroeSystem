@@ -47,4 +47,9 @@ public class TeacherController {
     public ResponseResult<List<StudentClassHistory>> getStudentClassHistoryByStudentNumber(@RequestParam("student_number")String studentNumber){
         return teacherService.selectStudentByStudentNumber(studentNumber);
     }
+
+    @GetMapping("/number/byName")
+    public ResponseResult<List<StudentVO>> selectStudentNumberByName(@RequestParam("name")String name){
+        return teacherService.selectStudentNumberByName(name);
+    }
 }

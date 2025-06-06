@@ -43,9 +43,11 @@
             this.menu_university = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_trend = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_critical = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_teacher = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_class = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_teacher = new System.Windows.Forms.ToolStripMenuItem();
             this.button_edit = new System.Windows.Forms.Button();
+            this.textBox_search = new System.Windows.Forms.TextBox();
+            this.button_search = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_students)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +94,7 @@
             this.dataGridView_students.Location = new System.Drawing.Point(33, 114);
             this.dataGridView_students.Name = "dataGridView_students";
             this.dataGridView_students.RowTemplate.Height = 23;
-            this.dataGridView_students.Size = new System.Drawing.Size(725, 324);
+            this.dataGridView_students.Size = new System.Drawing.Size(725, 328);
             this.dataGridView_students.TabIndex = 4;
             this.dataGridView_students.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_students_CellContentClick);
             // 
@@ -163,13 +165,6 @@
             this.menu_critical.Text = "临界生管理";
             this.menu_critical.Click += new System.EventHandler(this.menu_critical_Click);
             // 
-            // menu_teacher
-            // 
-            this.menu_teacher.Name = "menu_teacher";
-            this.menu_teacher.Size = new System.Drawing.Size(68, 21);
-            this.menu_teacher.Text = "老师管理";
-            this.menu_teacher.Click += new System.EventHandler(this.menu_teacher_Click);
-            // 
             // menu_class
             // 
             this.menu_class.Name = "menu_class";
@@ -177,9 +172,16 @@
             this.menu_class.Text = "班级管理";
             this.menu_class.Click += new System.EventHandler(this.menu_class_Click);
             // 
+            // menu_teacher
+            // 
+            this.menu_teacher.Name = "menu_teacher";
+            this.menu_teacher.Size = new System.Drawing.Size(68, 21);
+            this.menu_teacher.Text = "老师管理";
+            this.menu_teacher.Click += new System.EventHandler(this.menu_teacher_Click);
+            // 
             // button_edit
             // 
-            this.button_edit.Location = new System.Drawing.Point(650, 79);
+            this.button_edit.Location = new System.Drawing.Point(665, 448);
             this.button_edit.Name = "button_edit";
             this.button_edit.Size = new System.Drawing.Size(75, 23);
             this.button_edit.TabIndex = 6;
@@ -187,11 +189,31 @@
             this.button_edit.UseVisualStyleBackColor = true;
             this.button_edit.Click += new System.EventHandler(this.button_edit_Click);
             // 
+            // textBox_search
+            // 
+            this.textBox_search.Location = new System.Drawing.Point(355, 79);
+            this.textBox_search.Name = "textBox_search";
+            this.textBox_search.Size = new System.Drawing.Size(294, 21);
+            this.textBox_search.TabIndex = 7;
+            this.textBox_search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_search_KeyDown);
+            // 
+            // button_search
+            // 
+            this.button_search.Location = new System.Drawing.Point(665, 79);
+            this.button_search.Name = "button_search";
+            this.button_search.Size = new System.Drawing.Size(75, 23);
+            this.button_search.TabIndex = 8;
+            this.button_search.Text = "搜索";
+            this.button_search.UseVisualStyleBackColor = true;
+            this.button_search.Click += new System.EventHandler(this.button_search_Click);
+            // 
             // ScoreMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 483);
+            this.Controls.Add(this.button_search);
+            this.Controls.Add(this.textBox_search);
             this.Controls.Add(this.button_edit);
             this.Controls.Add(this.dataGridView_students);
             this.Controls.Add(this.label_class);
@@ -230,5 +252,7 @@
         private System.Windows.Forms.ToolStripMenuItem menu_teacher;
         private System.Windows.Forms.ToolStripMenuItem menu_class;
         private System.Windows.Forms.Button button_edit;
+        private System.Windows.Forms.TextBox textBox_search;
+        private System.Windows.Forms.Button button_search;
     }
 }

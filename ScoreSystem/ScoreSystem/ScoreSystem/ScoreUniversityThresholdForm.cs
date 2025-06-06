@@ -15,6 +15,7 @@ namespace ScoreSystem
 {
     public partial class ScoreUniversityThresholdForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ScoreMainForm mainForm;
         private UniversitySevice universitySevice = UniversitySevice.GetIntance();
         private ScoreService scoreService = ScoreService.GetIntance();
@@ -26,6 +27,7 @@ namespace ScoreSystem
         {
             this.mainForm = mainForm;
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreUniversityThresholdForm_Load(object sender, EventArgs e)

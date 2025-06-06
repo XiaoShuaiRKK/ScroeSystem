@@ -19,6 +19,7 @@ namespace ScoreSystem
 {
     public partial class ScoreExamForm : Form
     {
+        private FormAutoScaler autoScaler;
         private ScoreService scoreService = ScoreService.GetIntance();
         private List<Exam> exams;
         private List<Exam> previewExams = new List<Exam>();
@@ -26,6 +27,7 @@ namespace ScoreSystem
         public ScoreExamForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreExamForm_Load(object sender, EventArgs e)
