@@ -124,7 +124,7 @@ public class StaffServiceImpl implements StaffService {
         }
 
         // 批量查询班级信息
-        Map<Long, ClassEntity> classMap = classMapper.selectBatchIds(classIds).stream()
+        Map<Integer, ClassEntity> classMap = classMapper.selectBatchIds(classIds).stream()
                 .collect(Collectors.toMap(ClassEntity::getId, c -> c));
         if (classMap.size() < classIds.size()) {
             return ResponseResult.fail("存在无效班级 ID");

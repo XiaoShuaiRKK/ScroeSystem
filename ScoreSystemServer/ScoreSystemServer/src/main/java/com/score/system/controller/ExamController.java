@@ -1,9 +1,11 @@
 package com.score.system.controller;
 
 import com.score.system.entity.ResponseResult;
+import com.score.system.entity.school.ExamClassSubjectStat;
 import com.score.system.entity.school.ExamDTO;
 import com.score.system.entity.school.ExamSubjectThreshold;
 import com.score.system.service.CourseService;
+import com.score.system.service.ExamClassSubjectStatService;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.List;
 @Validated
 public class ExamController {
     private final CourseService courseService;
+    private final ExamClassSubjectStatService examClassSubjectStatService;
 
-    public ExamController(CourseService courseService) {
+    public ExamController(CourseService courseService, ExamClassSubjectStatService examClassSubjectStatService) {
         this.courseService = courseService;
+        this.examClassSubjectStatService = examClassSubjectStatService;
     }
 
     /**
@@ -68,5 +72,16 @@ public class ExamController {
     @GetMapping("/threshold/list")
     public ResponseResult<List<ExamSubjectThreshold>> getThresholds(@RequestParam("exam_id") Long examId) {
         return courseService.getExamSubjectThresholds(examId.intValue());
+    }
+
+    @PostMapping("/stat/generate")
+    public ResponseResult<Boolean> generateExamStat(@RequestParam("exam_id")Integer examId){
+        return examClassSubjectStatService.generateExamStat(examId);
+    }
+
+    @GetMapping("/stat/get")
+    public ResponseResult<List<ExamClassSubjectStat>> getExamClassSubjectStat(@RequestParam("exam_id")Integer examId,
+                                                                              @RequestParam("subject_group_id")Integer subjectGroupId){
+        return examClassSubjectStatService.getExamClassSubjectStat(examId,subjectGroupId);
     }
 }

@@ -25,6 +25,9 @@ namespace ScoreSystem
         private List<Exam> exams;
         private Dictionary<string, Color> studentRowColors = new Dictionary<string, Color>();
         private bool isLoaded = false;
+
+        private ScoreCriticalConfigForm scoreCriticalConfigForm;
+
         public ScoreCriticalForm()
         {
             InitializeComponent();
@@ -61,7 +64,19 @@ namespace ScoreSystem
 
         private void menu_critical_config_Click(object sender, EventArgs e)
         {
-            new ScoreCriticalConfigForm().ShowDialog();
+            if(scoreCriticalConfigForm == null)
+            {
+                scoreCriticalConfigForm = new ScoreCriticalConfigForm();
+                scoreCriticalConfigForm.Show();
+                scoreCriticalConfigForm.FormClosed += (s, ex) =>
+                {
+                    scoreCriticalConfigForm = null;
+                };
+            }
+            else
+            {
+                scoreCriticalConfigForm.BringToFront();
+            }
             LoadData();
         }
 

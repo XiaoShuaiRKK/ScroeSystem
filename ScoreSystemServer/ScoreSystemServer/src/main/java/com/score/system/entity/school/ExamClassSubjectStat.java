@@ -14,12 +14,20 @@ public class ExamClassSubjectStat extends BaseEntity {
     private Long id;
     @TableField("exam_id")
     private Long examId;
-    @TableField("subject_id")
+    @TableField("course_id")
     private Long subjectId;
+    @TableField("class_id")
+    private Integer classId;
+    @TableField("university_level")
+    private Integer universityLevel;
     @TableField("avg_score")
     private Double avgScore;
     @TableField("synergy_rate")
     private Double synergyRate;
+    @TableField("synergy_count")
+    private Integer synergyCount;
     @TableField("contribution_rate")
     private Double contributionRate;
+    @TableField("contribution_count")
+    private Integer contributionCount;
 }

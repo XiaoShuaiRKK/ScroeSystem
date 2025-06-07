@@ -515,7 +515,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             return ResponseResult.fail("该年级没有班级");
         }
 
-        List<Long> classIds = classEntities.stream()
+        List<Integer> classIds = classEntities.stream()
                 .map(ClassEntity::getId)
                 .toList();
 
@@ -749,7 +749,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             return ResponseResult.fail("该年级没有班级");
         }
 
-        List<Long> classIds = classEntities.stream().map(ClassEntity::getId).toList();
+        List<Integer> classIds = classEntities.stream().map(ClassEntity::getId).toList();
 
         // 2. 获取这些班级的所有学生
         List<Student> students = studentMapper.selectList(
@@ -1021,7 +1021,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
         );
         if (classEntities.isEmpty()) return ResponseResult.fail("该科目组合无班级");
 
-        List<Long> classIds = classEntities.stream()
+        List<Integer> classIds = classEntities.stream()
                 .map(ClassEntity::getId)
                 .collect(Collectors.toList());
 
@@ -1751,7 +1751,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             return ResponseResult.fail("该年级没有班级");
         }
 
-        List<Long> classIds = classEntities.stream()
+        List<Integer> classIds = classEntities.stream()
                 .map(ClassEntity::getId)
                 .collect(Collectors.toList());
 
@@ -1909,7 +1909,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
                         .eq(Score::getExamId, examId)
         );
         if(scores.isEmpty()) return;
-        Map<Long, ClassEntity> classMap = classMapper.selectList(null)
+        Map<Integer, ClassEntity> classMap = classMapper.selectList(null)
                 .stream().collect(Collectors.toMap(ClassEntity::getId, c -> c));
         Map<String, Student> studentMap = studentMapper.selectList(null)
                 .stream().collect(Collectors.toMap(Student::getStudentNumber, s -> s));
@@ -1919,7 +1919,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
         for (Score score : scores) {
             Student student = studentMap.get(score.getStudentNumber());
             if (student == null || score.getScore() == null) continue;
-            ClassEntity clazz = classMap.get(Long.valueOf(student.getClassId()));
+            ClassEntity clazz = classMap.get(student.getClassId());
             if (clazz == null) continue;
 
             String redisKey = buildRedisKey(score.getExamId(), score.getCourseId(), clazz.getSubjectGroupId());
@@ -2126,7 +2126,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             return ResponseResult.fail("该年级下没有对应分科的班级");
         }
 
-        List<Integer> classIds = targetClasses.stream().map(c -> c.getId().intValue()).toList();
+        List<Integer> classIds = targetClasses.stream().map(c -> c.getId()).toList();
 
         // 2. 获取这些班级下的学生
         List<Student> students = studentMapper.selectList(

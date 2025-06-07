@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ClassDTO {
-    private Long id;
+    private Integer id;
     @NotBlank(message = "班级名称不能为空")
     @Pattern(
             regexp = "^高[一二三]\\d{1,2}班$",

@@ -11,7 +11,7 @@ import lombok.Data;
 @TableName("classes")
 public class ClassEntity extends BaseEntity {
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Integer id;
     @TableField("name")
     private String name;
     @TableField("grade")
