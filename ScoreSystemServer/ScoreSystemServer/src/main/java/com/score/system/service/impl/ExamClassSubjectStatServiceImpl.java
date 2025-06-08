@@ -6,10 +6,12 @@ import com.score.system.entity.school.*;
 import com.score.system.entity.user.Student;
 import com.score.system.mapper.*;
 import com.score.system.service.ExamClassSubjectStatService;
+import com.score.system.util.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +22,16 @@ public class ExamClassSubjectStatServiceImpl implements ExamClassSubjectStatServ
     private final ClassMapper classMapper;
     private final StudentMapper studentMapper;
     private final CriticalConfigMapper criticalConfigMapper;
+    private final RedisUtil redisUtil;
 
-    public ExamClassSubjectStatServiceImpl(ExamMapper examMapper, ExamClassSubjectStatMapper examClassSubjectStatMapper, ScoreMapper scoreMapper, ClassMapper classMapper, StudentMapper studentMapper, CriticalConfigMapper configMapper) {
+    public ExamClassSubjectStatServiceImpl(ExamMapper examMapper, ExamClassSubjectStatMapper examClassSubjectStatMapper, ScoreMapper scoreMapper, ClassMapper classMapper, StudentMapper studentMapper, CriticalConfigMapper configMapper, RedisUtil redisUtil) {
         this.examMapper = examMapper;
         this.examClassSubjectStatMapper = examClassSubjectStatMapper;
         this.scoreMapper = scoreMapper;
         this.classMapper = classMapper;
         this.studentMapper = studentMapper;
         this.criticalConfigMapper = configMapper;
+        this.redisUtil = redisUtil;
     }
 
     @Override
@@ -171,7 +175,7 @@ public class ExamClassSubjectStatServiceImpl implements ExamClassSubjectStatServ
 
                         ExamClassSubjectStat stat = new ExamClassSubjectStat();
                         stat.setExamId((long) examId);
-                        stat.setSubjectId(courseId);
+                        stat.setCourseId(courseId);
                         stat.setClassId(cls.getId());
                         stat.setUniversityLevel(level);
                         stat.setAvgScore(avgScore);
@@ -191,7 +195,7 @@ public class ExamClassSubjectStatServiceImpl implements ExamClassSubjectStatServ
             LambdaQueryWrapper<ExamClassSubjectStat> wrapper = new LambdaQueryWrapper<ExamClassSubjectStat>()
                     .eq(ExamClassSubjectStat::getExamId, stat.getExamId())
                     .eq(ExamClassSubjectStat::getClassId, stat.getClassId())
-                    .eq(ExamClassSubjectStat::getSubjectId, stat.getSubjectId())
+                    .eq(ExamClassSubjectStat::getCourseId, stat.getCourseId())
                     .eq(ExamClassSubjectStat::getUniversityLevel, stat.getUniversityLevel());
 
             ExamClassSubjectStat existing = examClassSubjectStatMapper.selectOne(wrapper);
@@ -209,27 +213,56 @@ public class ExamClassSubjectStatServiceImpl implements ExamClassSubjectStatServ
 
     @Override
     public ResponseResult<List<ExamClassSubjectStat>> getExamClassSubjectStat(int examId, int subjectGroupId) {
-        if(examId == 0 || subjectGroupId == 0){
+        if (examId == 0 || subjectGroupId == 0) {
             return ResponseResult.fail("请输入正确的考试和分科");
         }
+
+        // 1. 构建 Redis 缓存 Key
+        String cacheKey = "exam:stat:" + examId + ":" + subjectGroupId;
+
+        // 2. 尝试从 Redis 获取
+        if (redisUtil.exists(cacheKey)) {
+            List<ExamClassSubjectStat> cachedList = redisUtil.get(cacheKey, List.class);
+            return ResponseResult.success(cachedList);
+        }
+
+        // 3. 查询数据库
         Exam exam = examMapper.selectById(examId);
-        if(exam == null){
+        if (exam == null) {
             return ResponseResult.fail("未查找到对应考试,请查看是否已被删除");
         }
+
         List<ClassEntity> classEntities = classMapper.selectList(
                 new LambdaQueryWrapper<ClassEntity>()
-                        .eq(ClassEntity::getGrade,exam.getGrade())
-                        .eq(ClassEntity::getSubjectGroupId,subjectGroupId)
+                        .eq(ClassEntity::getGrade, exam.getGrade())
+                        .eq(ClassEntity::getSubjectGroupId, subjectGroupId)
         );
-        if(classEntities.isEmpty()){
+        if (classEntities.isEmpty()) {
             return ResponseResult.fail("未查找到对应班级信息");
         }
-        List<Integer> classIds = classEntities.stream().map(ClassEntity::getId).toList();
+
+        // classId -> className 映射
+        Map<Integer, String> classNameMap = classEntities.stream()
+                .collect(Collectors.toMap(ClassEntity::getId, ClassEntity::getName));
+
+        List<Integer> classIds = classEntities.stream()
+                .map(ClassEntity::getId)
+                .toList();
+
         List<ExamClassSubjectStat> result = examClassSubjectStatMapper.selectList(
                 new LambdaQueryWrapper<ExamClassSubjectStat>()
-                        .eq(ExamClassSubjectStat::getExamId,examId)
-                        .in(ExamClassSubjectStat::getClassId,classIds)
+                        .eq(ExamClassSubjectStat::getExamId, examId)
+                        .in(ExamClassSubjectStat::getClassId, classIds)
         );
+
+        // 设置 className
+        for (ExamClassSubjectStat stat : result) {
+            stat.setClassName(classNameMap.get(stat.getClassId()));
+        }
+
+        // 4. 写入缓存，设置有效时间（例如 10 分钟）
+        redisUtil.set(cacheKey, result, TimeUnit.MINUTES, 10);
+
         return ResponseResult.success(result);
     }
 }

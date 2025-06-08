@@ -24,6 +24,7 @@ namespace ScoreSystem
         private List<CriticalConfig> criticalConfigs;
         private List<Exam> exams;
         private Dictionary<string, Color> studentRowColors = new Dictionary<string, Color>();
+        private ScoreRateForm scoreRateForm;
         private bool isLoaded = false;
 
         private ScoreCriticalConfigForm scoreCriticalConfigForm;
@@ -220,6 +221,23 @@ namespace ScoreSystem
                     ScoreTrendFormManage.ShowTrendForm(student);
                 }
             }
+        }
+
+        private void menu_rate_Click(object sender, EventArgs e)
+        {
+            if(scoreRateForm == null)
+            {
+                scoreRateForm = new ScoreRateForm();
+                scoreRateForm.Show();
+                scoreRateForm.FormClosed += (s, ex) =>
+                {
+                    scoreRateForm = null;
+                };
+            }
+            else
+            {
+                scoreRateForm.BringToFront();
+            }  
         }
     }
 }

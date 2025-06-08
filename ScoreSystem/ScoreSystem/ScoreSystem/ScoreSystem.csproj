@@ -188,6 +188,7 @@
     <Compile Include="Model\CriticalConfigDTO.cs" />
     <Compile Include="Model\CriticalStudentLog.cs" />
     <Compile Include="Model\Exam.cs" />
+    <Compile Include="Model\ExamClassSubjectStat.cs" />
     <Compile Include="Model\ExamSubjectThreshold.cs" />
     <Compile Include="Model\GradeEnum.cs" />
     <Compile Include="Model\GradeThresholdPredictionResult.cs" />
@@ -291,6 +292,12 @@
     <Compile Include="ScoreRankingForm.Designer.cs">
       <DependentUpon>ScoreRankingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreRateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreRateForm.Designer.cs">
+      <DependentUpon>ScoreRateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScoreRegistionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -343,6 +350,7 @@
     <Compile Include="Service\CriticalService.cs" />
     <Compile Include="Service\RankingService.cs" />
     <Compile Include="Service\ScoreService.cs" />
+    <Compile Include="Service\StatService.cs" />
     <Compile Include="Service\StudentService.cs" />
     <Compile Include="Service\TeacherService.cs" />
     <Compile Include="Service\TrendService.cs" />
@@ -401,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreRankingForm.resx">
       <DependentUpon>ScoreRankingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreRateForm.resx">
+      <DependentUpon>ScoreRateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreRegistionForm.resx">
       <DependentUpon>ScoreRegistionForm.cs</DependentUpon>

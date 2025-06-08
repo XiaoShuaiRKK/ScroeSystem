@@ -15,9 +15,11 @@ public class ExamClassSubjectStat extends BaseEntity {
     @TableField("exam_id")
     private Long examId;
     @TableField("course_id")
-    private Long subjectId;
+    private Long courseId;
     @TableField("class_id")
     private Integer classId;
+    @TableField(exist = false)
+    private String className;
     @TableField("university_level")
     private Integer universityLevel;
     @TableField("avg_score")
