@@ -10,4 +10,6 @@ public interface ClassService {
     ResponseResult<Boolean> batchAddClass(List<ClassDTO> classDTOList);
     ResponseResult<List<ClassDTO>> getAllClasses();
     ResponseResult<Boolean> updateClass(ClassDTO classDTO);
+    ResponseResult<Boolean> deleteClass(ClassDTO classDTO);
+    ResponseResult<Boolean> upGrade(int grade);
 }

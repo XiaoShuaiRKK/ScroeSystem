@@ -346,6 +346,12 @@
     <Compile Include="ScoreUniversityThresholdForm.Designer.cs">
       <DependentUpon>ScoreUniversityThresholdForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreUpGradeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreUpGradeForm.Designer.cs">
+      <DependentUpon>ScoreUpGradeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Service\ClassService.cs" />
     <Compile Include="Service\CriticalService.cs" />
     <Compile Include="Service\RankingService.cs" />
@@ -436,6 +442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreUniversityThresholdForm.resx">
       <DependentUpon>ScoreUniversityThresholdForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreUpGradeForm.resx">
+      <DependentUpon>ScoreUpGradeForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

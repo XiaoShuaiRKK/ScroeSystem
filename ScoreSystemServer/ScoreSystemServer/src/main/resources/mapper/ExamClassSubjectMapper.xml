@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.score.system.mapper.ExamClassSubjectStatMapper">
+    <update id="updateBatchById">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE exam_class_subject_stat
+            SET
+            avg_score = #{item.avgScore},
+            synergy_count = #{item.synergyCount},
+            synergy_rate = #{item.synergyRate},
+            contribution_count = #{item.contributionCount},
+            contribution_rate = #{item.contributionRate}
+            WHERE
+            exam_id = #{item.examId}
+            AND class_id = #{item.classId}
+            AND course_id = #{item.courseId}
+            AND university_level = #{item.universityLevel}
+        </foreach>
+    </update>
+</mapper>

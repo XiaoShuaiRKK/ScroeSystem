@@ -4,6 +4,7 @@ public class ClassConverter {
     public static ClassEntity toEntity(ClassDTO classDTO){
         if (classDTO == null) return null;
         ClassEntity classEntity = new ClassEntity();
+        classEntity.setId(classDTO.getId());
         classEntity.setGrade(classDTO.getGrade());
         classEntity.setName(classDTO.getName());
         classEntity.setHeadTeacherId(classDTO.getHeadTeacherId());

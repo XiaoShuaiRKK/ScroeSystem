@@ -20,4 +20,6 @@ public class ClassEntity extends BaseEntity {
     private Long headTeacherId;
     @TableField("subject_group_id")
     private Long subjectGroupId;
+    @TableField("state")
+    private Integer state;
 }

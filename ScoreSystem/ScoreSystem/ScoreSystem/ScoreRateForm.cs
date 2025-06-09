@@ -81,7 +81,7 @@ namespace ScoreSystem
                     .ToDictionary(
                         id => id,
                         id => id == 100 ? "3+1+2" :
-                               Enum.IsDefined(typeof(CourseEnum), (int)id) ? Enum.GetName(typeof(CourseEnum), (int)id) : $"未知科目({id})"
+                               Enum.IsDefined(typeof(CourseEnum), (int)id - 1) ? Enum.GetName(typeof(CourseEnum), (int)id - 1) : $"未知科目({id})"
                     );
 
                 // 所有大学等级

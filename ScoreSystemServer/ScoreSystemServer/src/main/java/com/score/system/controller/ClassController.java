@@ -40,4 +40,14 @@ public class ClassController {
     public ResponseResult<List<ClassDTO>> getAllClasses(){
         return classService.getAllClasses();
     }
+
+    @PostMapping("/delete")
+    public ResponseResult<Boolean> deleteClass(@RequestBody ClassDTO classDTO) {
+        return classService.deleteClass(classDTO);
+    }
+
+    @PostMapping("/up/grade")
+    public ResponseResult<Boolean> upGrade(@RequestParam("grade")int grade) {
+        return classService.upGrade(grade);
+    }
 }

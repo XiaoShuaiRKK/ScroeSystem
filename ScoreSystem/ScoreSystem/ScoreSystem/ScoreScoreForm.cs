@@ -41,6 +41,7 @@ namespace ScoreSystem
             InitializeComponent();
             autoScaler = new FormAutoScaler(this);
             printDocument.PrintPage += PrintDocument_PrintPage;
+            menu_rank.Enabled = false;
         }
 
         private void ScoreScoreForm_Load(object sender, EventArgs e)

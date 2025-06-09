@@ -18,6 +18,7 @@ namespace ScoreSystem
         private FormAutoScaler autoScaler;
         private ScoreMainForm mainForm;
         private ClassService classService = ClassService.GetIntance();
+        private ScoreUpGradeForm gradeForm;
         private List<ClassEntity> classEntities;
         public ScoreClassForm(ScoreMainForm mainForm)
         {
@@ -52,7 +53,24 @@ namespace ScoreSystem
                 学科组 = ((SubjectGroupEnum)c.SubjectGroupId).ToString(),
                 班主任 = c.TeacherName
             }).ToList();
+            AddDeleteButtonColumn(); // 添加删除按钮列
         }
+
+        private void AddDeleteButtonColumn()
+        {
+            if (!dataGridView_class.Columns.Contains("DeleteLinkColumn"))
+            {
+                DataGridViewLinkColumn linkColumn = new DataGridViewLinkColumn();
+                linkColumn.Name = "DeleteLinkColumn";
+                linkColumn.HeaderText = "操作";
+                linkColumn.Text = "删除";
+                linkColumn.UseColumnTextForLinkValue = true;
+                linkColumn.LinkBehavior = LinkBehavior.HoverUnderline;
+                linkColumn.Width = 60;
+                dataGridView_class.Columns.Add(linkColumn);
+            }
+        }
+
 
         private void menu_class_import_Click(object sender, EventArgs e)
         {
@@ -86,6 +104,48 @@ namespace ScoreSystem
 
             // 可选：编辑完后刷新数据
             LoadData();
+        }
+
+        private async void dataGridView_class_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // 点击的是“删除”按钮列
+            if (dataGridView_class.Columns[e.ColumnIndex].Name == "DeleteColumn" && e.RowIndex >= 0)
+            {
+                string className = dataGridView_class.Rows[e.RowIndex].Cells["班级名称"].Value.ToString();
+                var result = MessageBox.Show($"确定要删除班级【{className}】吗？", "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var classEntity = classEntities[e.RowIndex];
+                    bool success = await classService.DeleteClass(classEntity);
+                    if (success)
+                    {
+                        MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void menu_up_grade_Click(object sender, EventArgs e)
+        {
+            if (gradeForm == null)
+            {
+                gradeForm = new ScoreUpGradeForm();
+                gradeForm.Show();
+                gradeForm.FormClosed += (s, ex) =>
+                {
+                    gradeForm = null;
+                    LoadData();
+                };
+            }
+            else
+            {
+                gradeForm.BringToFront();
+            }
         }
     }
 }

@@ -33,6 +33,7 @@
             this.menu_class_import = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_class_edit = new System.Windows.Forms.ToolStripMenuItem();
             this.button_back = new System.Windows.Forms.Button();
+            this.menu_up_grade = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_class)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -40,17 +41,19 @@
             // dataGridView_class
             // 
             this.dataGridView_class.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_class.Location = new System.Drawing.Point(29, 68);
+            this.dataGridView_class.Location = new System.Drawing.Point(29, 81);
             this.dataGridView_class.Name = "dataGridView_class";
             this.dataGridView_class.RowTemplate.Height = 23;
-            this.dataGridView_class.Size = new System.Drawing.Size(744, 355);
+            this.dataGridView_class.Size = new System.Drawing.Size(744, 342);
             this.dataGridView_class.TabIndex = 0;
+            this.dataGridView_class.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_class_CellContentClick);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_class_import,
-            this.menu_class_edit});
+            this.menu_class_edit,
+            this.menu_up_grade});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -81,6 +84,13 @@
             this.button_back.UseVisualStyleBackColor = true;
             this.button_back.Click += new System.EventHandler(this.button_back_Click);
             // 
+            // menu_up_grade
+            // 
+            this.menu_up_grade.Name = "menu_up_grade";
+            this.menu_up_grade.Size = new System.Drawing.Size(44, 21);
+            this.menu_up_grade.Text = "升班";
+            this.menu_up_grade.Click += new System.EventHandler(this.menu_up_grade_Click);
+            // 
             // ScoreClassForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -108,5 +118,6 @@
         private System.Windows.Forms.ToolStripMenuItem menu_class_import;
         private System.Windows.Forms.ToolStripMenuItem menu_class_edit;
         private System.Windows.Forms.Button button_back;
+        private System.Windows.Forms.ToolStripMenuItem menu_up_grade;
     }
 }

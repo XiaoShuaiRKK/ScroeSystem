@@ -93,3 +93,4 @@ F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\bin\Debug\ScoreSy
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.exe.manifest
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.application
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreRateForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreUpGradeForm.resources

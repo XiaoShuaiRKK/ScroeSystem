@@ -76,6 +76,43 @@ namespace ScoreSystem.Service
             }
         }
 
+        public async Task<bool> DeleteClass(ClassEntity classEntities)
+        {
+            string url = HttpUtil.GetUrl("/class/delete");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(classEntities, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+
+        public async Task<bool> UpGradeClass(int grade)
+        {
+            string url = HttpUtil.GetUrl($"/class/up/grade?grade={grade}");
+            // 序列化为 JSON
+            string jsonResult = await HttpUtil.PostAsync(url, "");
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         public int GetClassId(string className)
         {
             if(classes == null || !classes.Any())

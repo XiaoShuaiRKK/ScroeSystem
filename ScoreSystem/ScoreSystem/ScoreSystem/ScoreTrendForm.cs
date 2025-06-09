@@ -35,6 +35,8 @@ namespace ScoreSystem
         {
             label_name.Text = $"学生名字: {student.Name}";
             label_student_number.Text = $"学号: {student.StudentNumber}";
+            label_join_date.Text = $"入学时间: {student.EnrollmentDate}";
+            label_course.Text = $"选科一: {((CourseEnum)student.ElectiveCourse1Id - 1)} 选科二: {((CourseEnum)student.ElectiveCourse2Id - 1)}";
             comboBox_subject.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_grade.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox_mode.DropDownStyle = ComboBoxStyle.DropDownList;

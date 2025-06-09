@@ -12,13 +12,13 @@ namespace ScoreSystem.Model
         private string name;
         private int grade;
         private int subjectGroupId;
-        private int headTeacherId;
+        private long headTeacherId;
         private string teacherName;
 
         public string Name { get => name; set => name = value; }
         public int Grade { get => grade; set => grade = value; }
         public int SubjectGroupId { get => subjectGroupId; set => subjectGroupId = value; }
-        public int HeadTeacherId { get => headTeacherId; set => headTeacherId = value; }
+        public long HeadTeacherId { get => headTeacherId; set => headTeacherId = value; }
         public string TeacherName { get => teacherName; set => teacherName = value; }
         public int Id { get => id; set => id = value; }
     }
