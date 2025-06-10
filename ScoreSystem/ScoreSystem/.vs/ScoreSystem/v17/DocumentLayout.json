@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\statservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\statservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\statservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -35,7 +35,7 @@
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassimportform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\scoreclassform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\scoreclassform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\scoreclassform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
     {
@@ -115,7 +115,7 @@
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\loadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|f:\\scroesystem\\scroesystem\\scoresystem\\scoresystem\\scoresystem\\service\\classservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\scoresystem\\service\\classservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A079E2E4-6339-4047-9D92-11E5C81298A1}|ScoreSystem\\ScoreSystem.csproj|solutionrelative:scoresystem\\service\\classservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -417,8 +417,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalConfigForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalConfigForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:35:06.018Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:35:06.018Z"
             },
             {
               "$type": "Document",
@@ -429,8 +428,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassEditForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreClassEditForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:41:36.842Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:41:36.842Z"
             },
             {
               "$type": "Document",
@@ -441,8 +439,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreCriticalForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:35:04.01Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:35:04.01Z"
             },
             {
               "$type": "Document",
@@ -453,8 +450,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRateForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreRateForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T10:05:06.304Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-08T10:05:06.304Z"
             },
             {
               "$type": "Document",
@@ -466,8 +462,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreRateForm.cs",
               "ViewState": "AgIAAL0AAAAAAAAAAAAawMcAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T10:05:34.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T10:05:34.984Z"
             },
             {
               "$type": "Document",
@@ -491,8 +486,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassImportForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreClassImportForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:41:39.12Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:41:39.12Z"
             },
             {
               "$type": "Document",
@@ -504,8 +498,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassImportForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T03:00:57.244Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T03:00:57.244Z"
             },
             {
               "$type": "Document",
@@ -516,8 +509,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.resx",
               "RelativeToolTip": "ScoreSystem\\ScoreClassForm.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-06-10T09:00:43.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T09:00:43.912Z"
             },
             {
               "$type": "Document",
@@ -529,8 +521,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreMainForm.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAawC4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:41:37.612Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T02:41:37.612Z"
             },
             {
               "$type": "Document",
@@ -541,8 +532,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreMainForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreMainForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T06:57:53.665Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-05-14T06:57:53.665Z"
             },
             {
               "$type": "Document",
@@ -553,8 +543,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreClassForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T15:25:33.704Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-05-30T15:25:33.704Z"
             },
             {
               "$type": "Document",
@@ -565,8 +554,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRegistionForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreRegistionForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T06:35:18.785Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-05-14T06:35:18.785Z"
             },
             {
               "$type": "Document",
@@ -578,8 +566,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.cs",
               "ViewState": "AgIAAC4AAAAAAAAAAAAawD8AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:14:57.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T02:14:57.531Z"
             },
             {
               "$type": "Document",
@@ -590,8 +577,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScorePredictForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScorePredictForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:21:21.692Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:21:21.692Z"
             },
             {
               "$type": "Document",
@@ -603,8 +589,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreScoreForm.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAawEUAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T15:26:02.66Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-30T15:26:02.66Z"
             },
             {
               "$type": "Document",
@@ -615,8 +600,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreScoreForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreScoreForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T15:25:57.588Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-05-30T15:25:57.588Z"
             },
             {
               "$type": "Document",
@@ -627,8 +611,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreTeacherForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreTeacherForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:34:15.691Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:34:15.691Z"
             },
             {
               "$type": "Document",
@@ -639,8 +622,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreClassOrStudentOperateForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreClassOrStudentOperateForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:41:34.033Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:41:34.033Z"
             },
             {
               "$type": "Document",
@@ -652,8 +634,7 @@
               "RelativeToolTip": "ScoreSystem\\Service\\RankingService.cs",
               "ViewState": "AgIAAL4AAAAAAAAAAAAawMoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T16:04:27.327Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-30T16:04:27.327Z"
             },
             {
               "$type": "Document",
@@ -664,8 +645,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:34:25.098Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:34:25.098Z"
             },
             {
               "$type": "Document",
@@ -676,8 +656,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreUniversityThresholdForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityThresholdForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:34:25.382Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:34:25.382Z"
             },
             {
               "$type": "Document",
@@ -688,8 +667,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreRankingForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreRankingForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:21:24.338Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:21:24.338Z"
             },
             {
               "$type": "Document",
@@ -700,8 +678,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreLoginForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreLoginForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T15:25:02.274Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-05-09T15:25:02.274Z"
             },
             {
               "$type": "Document",
@@ -712,8 +689,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreImportForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreImportForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:35:00.9Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:35:00.9Z"
             },
             {
               "$type": "Document",
@@ -724,8 +700,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\ScoreExamForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\ScoreExamForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:35:02.344Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T09:35:02.344Z"
             },
             {
               "$type": "Document",
@@ -737,8 +712,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassEditForm.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAJMAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:36:57.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:36:57.699Z"
             },
             {
               "$type": "Document",
@@ -749,8 +723,7 @@
               "ToolTip": "F:\\ScroeSystem\\ScroeSystem\\ScoreSystem\\ScoreSystem\\ScoreSystem\\LoadForm.cs [\u8BBE\u8BA1]",
               "RelativeToolTip": "ScoreSystem\\LoadForm.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:44:38.162Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "WhenOpened": "2025-06-02T10:44:38.162Z"
             },
             {
               "$type": "Document",
@@ -774,8 +747,7 @@
               "RelativeToolTip": "ScoreSystem\\Service\\ClassService.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAAAGYAAABtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T02:38:15.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-09T02:38:15.205Z"
             },
             {
               "$type": "Document",
@@ -833,8 +805,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassForm.cs",
               "ViewState": "AgIAAH8AAAAAAAAAAADwv44AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:37:36.768Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:37:36.768Z"
             },
             {
               "$type": "Document",
@@ -846,8 +817,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T07:41:04.664Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-09T07:41:04.664Z"
             },
             {
               "$type": "Document",
@@ -916,8 +886,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreTeacherForm.cs",
               "ViewState": "AgIAAKYAAAAAAAAAAAAAwLQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:42:30.716Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:42:30.716Z"
             },
             {
               "$type": "Document",
@@ -965,8 +934,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassImportForm.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAA0wDQAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:37:59.717Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:37:59.717Z"
             },
             {
               "$type": "Document",
@@ -1098,8 +1066,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityForm.cs",
               "ViewState": "AgIAAPgAAAAAAAAAAAAAwAMBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:14:06.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T02:14:06.154Z"
             },
             {
               "$type": "Document",
@@ -1159,8 +1126,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalForm.Designer.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAhwEEAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T02:53:29.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T02:53:29.102Z"
             },
             {
               "$type": "Document",
@@ -1172,8 +1138,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassEditForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T03:00:55.163Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T03:00:55.163Z"
             },
             {
               "$type": "Document",
@@ -1185,8 +1150,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T03:00:55.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-06T03:00:55.92Z"
             },
             {
               "$type": "Document",
@@ -1258,8 +1222,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreUniversityThresholdForm.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAIwDAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:43:50.664Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:43:50.664Z"
             },
             {
               "$type": "Document",
@@ -1295,8 +1258,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreRegistionForm.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAMwBgAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:40:56.762Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:40:56.762Z"
             },
             {
               "$type": "Document",
@@ -1308,8 +1270,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreRankingForm.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAIAzwBYAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:40:39.863Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:40:39.863Z"
             },
             {
               "$type": "Document",
@@ -1321,8 +1282,7 @@
               "RelativeToolTip": "ScoreSystem\\ScorePredictForm.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAjwB0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:40:21.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:40:21.938Z"
             },
             {
               "$type": "Document",
@@ -1334,8 +1294,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreImportForm.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAvwBcAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:39:45.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:39:45.512Z"
             },
             {
               "$type": "Document",
@@ -1347,8 +1306,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreClassOrStudentOperateForm.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAlwBkAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:38:18.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:38:18.9Z"
             },
             {
               "$type": "Document",
@@ -1360,8 +1318,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreLoginForm.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAlwBUAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T01:35:49.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T01:35:49.177Z"
             },
             {
               "$type": "Document",
@@ -1433,8 +1390,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreExamForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T02:19:18.431Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-04T02:19:18.431Z"
             },
             {
               "$type": "Document",
@@ -1470,8 +1426,7 @@
               "RelativeToolTip": "ScoreSystem\\ScorePredictForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:42:19.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T02:42:19.609Z"
             },
             {
               "$type": "Document",
@@ -1483,8 +1438,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalConfigForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T11:00:46.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-02T11:00:46.269Z"
             },
             {
               "$type": "Document",
@@ -1543,8 +1497,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreCriticalConfigForm.cs",
               "ViewState": "AgIAAHMAAAAAAAAAAAAqwIAAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T09:35:08.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-02T09:35:08.873Z"
             },
             {
               "$type": "Document",
@@ -1556,8 +1509,7 @@
               "RelativeToolTip": "ScoreSystem\\ScoreExamForm.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAjwB0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T10:46:59.404Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-02T10:46:59.404Z"
             },
             {
               "$type": "Document",
