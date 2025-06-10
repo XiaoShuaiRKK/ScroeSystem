@@ -66,7 +66,7 @@ namespace ScoreSystem
             var examDisplayList = exams.Select(e => new
             {
                 Id = e.Id,
-                Name = $"{e.Name}（{(Enum.IsDefined(typeof(GradeEnum), e.Grade) ? ((GradeEnum)e.Grade).ToString() : "未知年级")}）"
+                Name = $"{e.Name}（{(Enum.IsDefined(typeof(GradeEnum), e.Grade) ? ((GradeEnum)e.Grade).ToString() : "未知年级")}）（{e.Year}）"
             }).ToList();
             comboBox_exam.DataSource = examDisplayList;
             comboBox_exam.DisplayMember = "Name";

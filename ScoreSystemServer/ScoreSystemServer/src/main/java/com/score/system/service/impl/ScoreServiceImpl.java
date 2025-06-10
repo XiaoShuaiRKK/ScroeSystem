@@ -10,6 +10,7 @@ import com.score.system.entity.rank.Ranking;
 import com.score.system.entity.rank.StudentRanking;
 import com.score.system.entity.school.*;
 import com.score.system.entity.user.Student;
+import com.score.system.entity.user.StudentClassHistory;
 import com.score.system.entity.user.StudentSubjectSelection;
 import com.score.system.mapper.*;
 import com.score.system.service.ScoreService;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements ScoreService {
+    private final StudentClassHistoryMapper historyMapper;
     private final ScoreMapper scoreMapper;
     private final StudentMapper studentMapper;
     private final CourseMapper courseMapper;
@@ -31,7 +33,8 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
     private final RedisUtil redisUtil;
     private final ClassMapper classMapper;
 
-    public ScoreServiceImpl(ScoreMapper scoreMapper, StudentMapper studentMapper, CourseMapper courseMapper, ExamMapper examMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper, RedisUtil redisUtil, ClassMapper classMapper) {
+    public ScoreServiceImpl(StudentClassHistoryMapper historyMapper, ScoreMapper scoreMapper, StudentMapper studentMapper, CourseMapper courseMapper, ExamMapper examMapper, StudentSubjectSelectionMapper studentSubjectSelectionMapper, RedisUtil redisUtil, ClassMapper classMapper) {
+        this.historyMapper = historyMapper;
         this.scoreMapper = scoreMapper;
         this.studentMapper = studentMapper;
         this.courseMapper = courseMapper;
@@ -2116,21 +2119,26 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
         }
         Integer gradeId = exam.getGrade();
 
+        List<StudentClassHistory> classHistories = historyMapper.selectList(
+                new LambdaQueryWrapper<StudentClassHistory>()
+                        .eq(StudentClassHistory::getGrade, gradeId)
+                        .eq(StudentClassHistory::getYear,exam.getYear())
+        );
+        List<Long> classIds = classHistories.stream().map(StudentClassHistory::getClassId).toList();
         // 1. 获取年级中 subjectGroupId 相同的班级
         List<ClassEntity> targetClasses = classMapper.selectList(
                 new LambdaQueryWrapper<ClassEntity>()
-                        .eq(ClassEntity::getGrade, gradeId)
+                        .in(ClassEntity::getId,classIds)
                         .eq(ClassEntity::getSubjectGroupId, subjectGroupId)
         );
-        if (targetClasses.isEmpty()) {
+        List<Integer> targetClassIds = targetClasses.stream().map(ClassEntity::getId).toList();
+        if (targetClassIds.isEmpty()) {
             return ResponseResult.fail("该年级下没有对应分科的班级");
         }
 
-        List<Integer> classIds = targetClasses.stream().map(c -> c.getId()).toList();
-
         // 2. 获取这些班级下的学生
         List<Student> students = studentMapper.selectList(
-                new LambdaQueryWrapper<Student>().in(Student::getClassId, classIds)
+                new LambdaQueryWrapper<Student>().in(Student::getClassId, targetClassIds)
         );
         if (students.isEmpty()) {
             return ResponseResult.fail("该分科下没有学生");

@@ -56,7 +56,12 @@ namespace ScoreSystem
             comboBox_subject_group.DisplayMember = "Name";
             comboBox_subject_group.ValueMember = "Value";
             exams = await scoreService.GetExams();
-            comboBox_exam.DataSource = exams;
+            var showExams = exams.Select(e => new
+            {
+                Id = e.Id,
+                Name = $"{e.Name}（{(Enum.IsDefined(typeof(GradeEnum), e.Grade) ? ((GradeEnum)e.Grade).ToString() : "未知年级")}）（{e.Year}）"
+            }).ToList();
+            comboBox_exam.DataSource = showExams;
             comboBox_exam.DisplayMember = "Name";
             comboBox_exam.ValueMember = "Id";
             isLoaded = true;

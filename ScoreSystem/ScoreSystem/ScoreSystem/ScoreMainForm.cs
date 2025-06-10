@@ -44,6 +44,7 @@ namespace ScoreSystem
             dataGridView_students.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView_students.MultiSelect = false;
             dataGridView_students.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            menu_university.Enabled = false;
             this.FormClosed += (s, ev) =>
             {
                 Environment.Exit(0);

@@ -142,5 +142,10 @@ namespace ScoreSystem
                 }
             }
         }
+
+        private void button_cancle_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }
