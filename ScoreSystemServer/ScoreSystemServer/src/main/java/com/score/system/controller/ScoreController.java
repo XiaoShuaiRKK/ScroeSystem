@@ -32,6 +32,11 @@ public class ScoreController {
         return scoreService.batchAddScores(scores);
     }
 
+    @PostMapping("/batchUpdate")
+    public ResponseResult<Boolean> batchUpdateScore(@Valid @RequestBody List<Score> scores) {
+        return scoreService.batchUpdateScores(scores);
+    }
+
     @GetMapping("/rankings/class")
     public ResponseResult<List<ClassRankingDTO>> calculateClassRankings(@RequestParam("exam_id") Long examId,
                                                                         @RequestParam("student_number")String studentNumber) {

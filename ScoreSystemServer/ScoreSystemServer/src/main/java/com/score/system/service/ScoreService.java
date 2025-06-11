@@ -11,6 +11,8 @@ import java.util.List;
 public interface ScoreService {
     ResponseResult<Boolean> addScore(Score score);
     ResponseResult<Boolean> batchAddScores(List<Score> scores);
+    ResponseResult<Boolean> updateScore(Score score);
+    ResponseResult<Boolean> batchUpdateScores(List<Score> scores);
     ResponseResult<List<ClassRankingDTO>> calculateClassRankings(String studentNumber, Long examId);
     ResponseResult<List<GradeRankingDTO>> calculateGradeRankings(String studentNumber, Long examId);
     ResponseResult<ClassRankingDTO> calculateTotalScoreClassRankings(String studentNumber, Long examId);

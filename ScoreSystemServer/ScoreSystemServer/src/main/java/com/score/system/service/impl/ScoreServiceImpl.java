@@ -57,34 +57,36 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
             return ResponseResult.fail("考试不存在: " + score.getExamId());
         }
         Long courseId = score.getCourseId();
-//        LambdaQueryWrapper<StudentSubjectSelection> query = new LambdaQueryWrapper<>();
-//        query.eq(StudentSubjectSelection::getStudentNumber, score.getStudentNumber());
-//        StudentSubjectSelection selection = studentSubjectSelectionMapper.selectOne(query);
-//        if(selection == null){
-//            return ResponseResult.fail("学生还未设置分科: " + score.getStudentNumber());
-//        }
-//        // 查看学生是否选择了课程
-//        List<Long> mustCourseId = new ArrayList<>();
-//        mustCourseId.add(1L);
-//        mustCourseId.add(2L);
-//        mustCourseId.add(3L);
-//        mustCourseId.add(selection.getElectiveCourse1Id());
-//        mustCourseId.add(selection.getElectiveCourse2Id());
-//        if(selection.getSubjectGroupId() == 2){
-//            mustCourseId.add(5L);
-//        } else if (selection.getSubjectGroupId() == 3) {
-//            mustCourseId.add(4L);
-//        }
-//        boolean isSelected = false;
-//        for(Long l : mustCourseId){
-//            if (courseId.equals(l)) {
-//                isSelected = true;
-//                break;
-//            }
-//        }
-//        if(!isSelected){
-//            return ResponseResult.fail("学生:" + score.getStudentNumber() + "未选择该课程，无法录入成绩");
-//        }
+/*
+        LambdaQueryWrapper<StudentSubjectSelection> query = new LambdaQueryWrapper<>();
+        query.eq(StudentSubjectSelection::getStudentNumber, score.getStudentNumber());
+        StudentSubjectSelection selection = studentSubjectSelectionMapper.selectOne(query);
+        if(selection == null){
+            return ResponseResult.fail("学生还未设置分科: " + score.getStudentNumber());
+        }
+        // 查看学生是否选择了课程
+        List<Long> mustCourseId = new ArrayList<>();
+        mustCourseId.add(1L);
+        mustCourseId.add(2L);
+        mustCourseId.add(3L);
+        mustCourseId.add(selection.getElectiveCourse1Id());
+        mustCourseId.add(selection.getElectiveCourse2Id());
+        if(selection.getSubjectGroupId() == 2){
+            mustCourseId.add(5L);
+        } else if (selection.getSubjectGroupId() == 3) {
+            mustCourseId.add(4L);
+        }
+        boolean isSelected = false;
+        for(Long l : mustCourseId){
+            if (courseId.equals(l)) {
+                isSelected = true;
+                break;
+            }
+        }
+        if(!isSelected){
+            return ResponseResult.fail("学生:" + score.getStudentNumber() + "未选择该课程，无法录入成绩");
+        }
+*/
         if(score.getScore() < 0){
             return ResponseResult.fail("学生:" + score.getStudentNumber() + "|courseId:" + score.getCourseId()
                     + "|score:" + score.getScore() + " 请输入正确的成绩范围");
@@ -180,6 +182,110 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper,Score> implements 
         }
 
         return ResponseResult.success("成绩批量添加成功", true);
+    }
+
+    @Override
+    public ResponseResult<Boolean> updateScore(Score score) {
+        if (score == null || score.getId() == null) {
+            return ResponseResult.fail("更新失败：缺少成绩ID");
+        }
+
+        Score existing = scoreMapper.selectById(score.getId());
+        if (existing == null) {
+            return ResponseResult.fail("成绩记录不存在，ID: " + score.getId());
+        }
+
+        if (studentMapper.selectStudentByNumber(score.getStudentNumber()) == null) {
+            return ResponseResult.fail("学号不存在: " + score.getStudentNumber());
+        }
+
+        if (courseMapper.selectById(score.getCourseId()) == null) {
+            return ResponseResult.fail("课程不存在: " + score.getCourseId());
+        }
+
+        if (examMapper.selectById(score.getExamId()) == null) {
+            return ResponseResult.fail("考试不存在: " + score.getExamId());
+        }
+
+        if (score.getScore() < 0) {
+            return ResponseResult.fail("成绩不能小于 0");
+        }
+
+        Long courseId = score.getCourseId();
+        if (courseId >= 1 && courseId <= 3) {
+            if (score.getScore() > 150) {
+                return ResponseResult.fail("语数英成绩不能超过150分");
+            }
+        } else {
+            if (score.getScore() > 100) {
+                return ResponseResult.fail("选修科目成绩不能超过100分");
+            }
+        }
+
+        int result = scoreMapper.updateById(score);
+        if (result <= 0) {
+            return ResponseResult.error("成绩更新失败");
+        }
+
+        return ResponseResult.success("成绩更新成功", true);
+    }
+
+    @Override
+    @Transactional
+    public ResponseResult<Boolean> batchUpdateScores(List<Score> scores) {
+        if (scores == null || scores.isEmpty()) {
+            return ResponseResult.fail("成绩列表不能为空");
+        }
+
+        Set<String> studentNumbers = scores.stream().map(Score::getStudentNumber).collect(Collectors.toSet());
+        Set<Long> courseIds = scores.stream().map(Score::getCourseId).collect(Collectors.toSet());
+        Set<Long> examIds = scores.stream().map(Score::getExamId).collect(Collectors.toSet());
+
+        Map<String, Student> studentMap = studentMapper.selectBatchByStudentNumbers(studentNumbers)
+                .stream().collect(Collectors.toMap(Student::getStudentNumber, s -> s));
+        Map<Long, Course> courseMap = courseMapper.selectBatchIds(courseIds)
+                .stream().collect(Collectors.toMap(Course::getId, c -> c));
+        Map<Long, Exam> examMap = examMapper.selectBatchIds(examIds)
+                .stream().collect(Collectors.toMap(Exam::getId, e -> e));
+
+        for (Score score : scores) {
+            String stuNo = score.getStudentNumber();
+            Long courseId = score.getCourseId();
+            Long examId = score.getExamId();
+            double val = score.getScore();
+
+            if (!studentMap.containsKey(stuNo)) {
+                throw new IllegalArgumentException("学号不存在: " + stuNo);
+            }
+            if (!courseMap.containsKey(courseId)) {
+                throw new IllegalArgumentException("课程不存在: " + courseId + "，学号：" + stuNo);
+            }
+            if (!examMap.containsKey(examId)) {
+                throw new IllegalArgumentException("考试不存在: " + examId + "，学号：" + stuNo);
+            }
+
+            Score existing = scoreMapper.selectOne(
+                    new LambdaQueryWrapper<Score>()
+                            .eq(Score::getExamId,score.getExamId())
+                            .eq(Score::getCourseId,score.getCourseId())
+                            .eq(Score::getStudentNumber,score.getStudentNumber())
+            );
+            if (existing == null) {
+                throw new IllegalArgumentException("成绩不存在 !" + score.getExamId());
+            }
+            score.setId(existing.getId());
+
+            if (val < 0 || (courseId >= 1 && courseId <= 3 && val > 150) || (courseId > 3 && val > 100)) {
+                throw new IllegalArgumentException("成绩非法: " + val + "（学号：" + stuNo + "，课程ID：" + courseId + "）");
+            }
+        }
+
+        boolean success = this.updateBatchById(scores);  // MyBatis-Plus 方法
+        if (!success) {
+            throw new RuntimeException("批量成绩更新失败");
+        }
+
+        return ResponseResult.success("批量成绩更新成功", true);
     }
 
     @Override

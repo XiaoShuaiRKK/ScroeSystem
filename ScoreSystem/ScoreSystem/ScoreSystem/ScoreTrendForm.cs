@@ -23,6 +23,7 @@ namespace ScoreSystem
         private List<StudentClassHistory> classHistories;
         private TeacherService teacherService = TeacherService.GetIntance();
         private TrendService trendService = new TrendService();
+        private ScoreStudentEditForm studentEditForm;
 
         public ScoreTrendForm(Student student)
         {
@@ -406,5 +407,21 @@ namespace ScoreSystem
             LoadDataGridView();
         }
 
+        private void menu_edit_Click(object sender, EventArgs e)
+        {
+            if(studentEditForm == null)
+            {
+                studentEditForm = new ScoreStudentEditForm(student);
+                studentEditForm.Show();
+                studentEditForm.FormClosed += (s, ex) =>
+                {
+                    studentEditForm = null;
+                };
+            }
+            else
+            {
+                studentEditForm.BringToFront();
+            }
+        }
     }
 }

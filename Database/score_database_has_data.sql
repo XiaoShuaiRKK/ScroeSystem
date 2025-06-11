@@ -11,7 +11,7 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 09/06/2025 16:00:49
+ Date: 11/06/2025 14:50:39
 */
 
 SET NAMES utf8mb4;
@@ -32,6 +32,7 @@ CREATE TABLE `class_state`  (
 -- ----------------------------
 INSERT INTO `class_state` VALUES (1, '正常');
 INSERT INTO `class_state` VALUES (2, '毕业');
+INSERT INTO `class_state` VALUES (0, '删除');
 
 -- ----------------------------
 -- Table structure for classes
@@ -1658,7 +1659,7 @@ INSERT INTO `scores` VALUES (290, '2019260123', 2, 2, 76, NULL, '2025-05-29 14:4
 INSERT INTO `scores` VALUES (291, '2019260123', 3, 2, 127, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
 INSERT INTO `scores` VALUES (292, '2019260123', 5, 2, 85, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
 INSERT INTO `scores` VALUES (293, '2019260123', 9, 2, 68, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
-INSERT INTO `scores` VALUES (294, '2019260141', 1, 2, 100, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
+INSERT INTO `scores` VALUES (294, '2019260141', 1, 2, 101, NULL, '2025-05-29 14:46:49', '2025-06-11 14:36:08');
 INSERT INTO `scores` VALUES (295, '2019260141', 2, 2, 80, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
 INSERT INTO `scores` VALUES (296, '2019260141', 3, 2, 100, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
 INSERT INTO `scores` VALUES (297, '2019260141', 5, 2, 62, NULL, '2025-05-29 14:46:49', '2025-05-29 14:46:49');
@@ -13237,6 +13238,8 @@ INSERT INTO `student_class_history` VALUES ('2019260132', 1, 5, 2025, '2025-06-0
 INSERT INTO `student_class_history` VALUES ('2019260144', 1, 5, 2025, '2025-06-09 15:59:47', '2025-06-09 15:59:47');
 INSERT INTO `student_class_history` VALUES ('2019260120', 1, 5, 2025, '2025-06-09 15:59:47', '2025-06-09 15:59:47');
 INSERT INTO `student_class_history` VALUES ('2019260111', 1, 5, 2025, '2025-06-09 15:59:47', '2025-06-09 15:59:47');
+INSERT INTO `student_class_history` VALUES ('2019260141', 27, 5, 2025, '2025-06-11 12:34:06', '2025-06-11 12:34:06');
+INSERT INTO `student_class_history` VALUES ('2019260141', 1, 5, 2025, '2025-06-11 12:34:41', '2025-06-11 12:34:41');
 
 -- ----------------------------
 -- Table structure for student_state

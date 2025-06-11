@@ -124,7 +124,11 @@ public class StaffServiceImpl implements StaffService {
         }
 
         // 批量查询班级信息
-        Map<Integer, ClassEntity> classMap = classMapper.selectBatchIds(classIds).stream()
+        Map<Integer, ClassEntity> classMap = classMapper.selectList(
+                new LambdaQueryWrapper<ClassEntity>()
+                        .eq(ClassEntity::getState,1)
+                        .in(ClassEntity::getId, classIds)
+                ).stream()
                 .collect(Collectors.toMap(ClassEntity::getId, c -> c));
         if (classMap.size() < classIds.size()) {
             return ResponseResult.fail("存在无效班级 ID");
@@ -157,8 +161,7 @@ public class StaffServiceImpl implements StaffService {
         for (int i = 0; i < studentDTOList.size(); i++) {
             StudentDTO dto = studentDTOList.get(i);
             User user = users.get(i);
-            ClassEntity classEntity = classMap.get(Long.valueOf(dto.getClassId()));
-
+            ClassEntity classEntity = classMap.get(dto.getClassId());
             Student student = StudentConverter.toEntity(dto, user.getId());
             students.add(student);
 
@@ -258,6 +261,12 @@ public class StaffServiceImpl implements StaffService {
                 !studentDTO.getClassId().equals(student.getClassId())) {
 
             ClassEntity classEntity = classMapper.selectById(studentDTO.getClassId());
+            StudentClassHistory h = studentClassHistoryMapper.selectOne(
+                    new LambdaQueryWrapper<StudentClassHistory>()
+                            .eq(StudentClassHistory::getClassId, classEntity.getId())
+                            .orderByDesc(StudentClassHistory::getGrade)
+                            .last("limit 1")
+            );
             if (classEntity == null) {
                 return ResponseResult.fail("班级不存在", false);
             }
@@ -270,7 +279,7 @@ public class StaffServiceImpl implements StaffService {
             newHistory.setStudentNumber(student.getStudentNumber());
             newHistory.setClassId(studentDTO.getClassId().longValue());
             newHistory.setGrade(classEntity.getGrade());
-            newHistory.setYear(studentDTO.getYear());
+            newHistory.setYear(h.getYear());
             studentClassHistoryMapper.insert(newHistory);
         }
 
@@ -282,6 +291,7 @@ public class StaffServiceImpl implements StaffService {
         }
 
         if (studentUpdated) {
+            student.setEnrollmentDate(studentDTO.getEnrollmentDate());
             studentMapper.updateById(student);
         }
 

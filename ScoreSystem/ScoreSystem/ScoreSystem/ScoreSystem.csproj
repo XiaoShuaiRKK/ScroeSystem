@@ -15,7 +15,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>F:\ScroeSystem\ScoreSystemPack\</PublishUrl>
+    <PublishUrl>F:\ScroeSystem\WinformPack\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -316,6 +316,12 @@
     <Compile Include="ScoreSetServcer.Designer.cs">
       <DependentUpon>ScoreSetServcer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScoreStudentEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScoreStudentEditForm.Designer.cs">
+      <DependentUpon>ScoreStudentEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScoreTeacherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreSetServcer.resx">
       <DependentUpon>ScoreSetServcer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScoreStudentEditForm.resx">
+      <DependentUpon>ScoreStudentEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreTeacherForm.resx">
       <DependentUpon>ScoreTeacherForm.cs</DependentUpon>

@@ -26,10 +26,15 @@ namespace ScoreSystem
         private ClassService classService = ClassService.GetIntance();
         private RankingService rankingService = RankingService.GetIntance();
         private bool isLoaded = false;
+        // 类成员部分
+        private Dictionary<string, double> originalScores = new Dictionary<string, double>();
         //print
         private int currentRowIndex; // 确保这是类级变量
         private PrintDocument printDocument = new PrintDocument(); // 确保这是类级变量
         private int rowHeight = 30;
+        private bool isEditing = false;
+        private List<string> editableColumns = new List<string>();
+
         //private Bitmap dgvBitmap;
 
 
@@ -102,7 +107,6 @@ namespace ScoreSystem
             }
             label_threshold.Text = thresholdTextBuilder.ToString();
 
-            // 自定义科目顺序
             List<int> customCourseOrder = new List<int>
             {
                 (int)CourseEnum.语文,
@@ -125,14 +129,21 @@ namespace ScoreSystem
 
             List<string> columnNames = new List<string> { "姓名", "学号" };
             Dictionary<int, string> courseNameMap = new Dictionary<int, string>();
+            editableColumns.Clear();
 
             foreach (var courseId in allCourseIds)
             {
                 string name = GetCourseName(courseId);
                 courseNameMap[courseId] = name;
-                columnNames.Add(name);
-                columnNames.Add($"{name}-班排");
+
+                columnNames.Add(name);                      // 成绩列
+                columnNames.Add($"{name}-班排");           // 排名列
                 columnNames.Add($"{name}-年排");
+
+                if (courseId >= 0) // 仅允许普通单科成绩列可编辑，排除 -1/-2/-3 这些汇总列
+                {
+                    editableColumns.Add(name);
+                }
             }
 
             DataTable dt = new DataTable();
@@ -168,6 +179,12 @@ namespace ScoreSystem
 
             dataGridView_score.DataSource = null;
             dataGridView_score.DataSource = dt;
+
+            // 初始全部列只读
+            foreach (DataGridViewColumn col in dataGridView_score.Columns)
+            {
+                col.ReadOnly = true;
+            }
         }
 
         private string GetCourseName(int courseId)
@@ -291,7 +308,7 @@ namespace ScoreSystem
             int y = topMargin;
             int rowHeight = 30;
 
-            using (Font font = new Font("Arial", 6.5f)) // 字体略大一点
+            using (Font font = new Font("Arial", 6f)) // 字体大小适中
             using (Pen pen = new Pen(Color.Black))
             {
                 Brush brush = Brushes.Black;
@@ -299,7 +316,6 @@ namespace ScoreSystem
                 int columnCount = dataGridView_score.Columns.Count;
                 int[] columnWidths = new int[columnCount];
 
-                // 计算每列宽度（按内容比例计算，或平均分配）
                 int averageWidth = printableWidth / columnCount;
                 for (int i = 0; i < columnCount; i++)
                 {
@@ -308,59 +324,58 @@ namespace ScoreSystem
 
                 int xStart = leftMargin;
 
-                // 打印表头
-                int x = xStart;
-                for (int i = 0; i < columnCount; i++)
-                {
-                    Rectangle rect = new Rectangle(x, y, columnWidths[i], rowHeight);
-                    e.Graphics.FillRectangle(Brushes.LightGray, rect);
-                    e.Graphics.DrawRectangle(pen, rect);
-
-                    string headerText = dataGridView_score.Columns[i].HeaderText ?? string.Empty;
-                    e.Graphics.DrawString(headerText, font, brush, rect, new StringFormat
-                    {
-                        Alignment = StringAlignment.Center,
-                        LineAlignment = StringAlignment.Center,
-                        Trimming = StringTrimming.EllipsisCharacter
-                    });
-
-                    x += columnWidths[i];
-                }
-
-                y += rowHeight;
-
-                // 打印数据行
                 while (currentRowIndex < dataGridView_score.Rows.Count)
                 {
                     DataGridViewRow row = dataGridView_score.Rows[currentRowIndex];
-
                     if (dataGridView_score.AllowUserToAddRows && row.IsNewRow)
                     {
                         currentRowIndex++;
                         continue;
                     }
 
-                    x = xStart;
+                    int x = xStart;
+
+                    // 第一行：打印列头
                     for (int i = 0; i < columnCount; i++)
                     {
                         Rectangle rect = new Rectangle(x, y, columnWidths[i], rowHeight);
+                        e.Graphics.FillRectangle(Brushes.LightGray, rect);
                         e.Graphics.DrawRectangle(pen, rect);
 
-                        string text = row.Cells[i].Value?.ToString() ?? string.Empty;
-                        e.Graphics.DrawString(text, font, brush, rect, new StringFormat
+                        string headerText = dataGridView_score.Columns[i].HeaderText ?? "";
+                        e.Graphics.DrawString(headerText, font, brush, rect, new StringFormat
                         {
                             Alignment = StringAlignment.Center,
-                            LineAlignment = StringAlignment.Center,
-                            Trimming = StringTrimming.EllipsisCharacter
+                            LineAlignment = StringAlignment.Center
                         });
 
                         x += columnWidths[i];
                     }
 
-                    currentRowIndex++;
                     y += rowHeight;
+                    x = xStart;
 
-                    if (y + rowHeight > e.MarginBounds.Bottom)
+                    // 第二行：打印学生数据
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        Rectangle rect = new Rectangle(x, y, columnWidths[i], rowHeight);
+                        e.Graphics.DrawRectangle(pen, rect);
+
+                        string valueText = row.Cells[i].Value?.ToString() ?? "";
+                        e.Graphics.DrawString(valueText, font, brush, rect, new StringFormat
+                        {
+                            Alignment = StringAlignment.Center,
+                            LineAlignment = StringAlignment.Center
+                        });
+
+                        x += columnWidths[i];
+                    }
+
+                    y += rowHeight + 10; // 增加间隔
+                    currentRowIndex++;
+
+                    // 如果剩余空间不足以再打印下一组（两行），则分页
+                    if (y + 2 * rowHeight > e.MarginBounds.Bottom)
                     {
                         e.HasMorePages = true;
                         return;
@@ -377,5 +392,122 @@ namespace ScoreSystem
             PrintData(e);
         }
 
+        private async void button_edit_Click(object sender, EventArgs e)
+        {
+            if (!isEditing)
+            {
+                // 进入编辑状态
+                isEditing = true;
+                button_edit.Text = "保存";
+
+                dataGridView_score.ReadOnly = false;
+                // 允许可编辑列编辑，禁止其它列编辑
+                foreach (DataGridViewColumn col in dataGridView_score.Columns)
+                {
+                    string header = col.HeaderText;
+                    if (editableColumns.Contains(header) && !header.Contains("-班排") && !header.Contains("-年排"))
+                        col.ReadOnly = false;
+                    else
+                        col.ReadOnly = true;
+                }
+
+                CacheOriginalScores();
+            }
+            else
+            {
+                // 退出编辑状态，保存数据
+                isEditing = false;
+                button_edit.Text = "修改";
+
+                int currentExamId = (int)comboBox_exam.SelectedValue;
+                List<ScoreEntity> updatedScores = new List<ScoreEntity>();
+
+                foreach (DataGridViewRow row in dataGridView_score.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    string studentNumber = row.Cells["学号"]?.Value?.ToString();
+                    if (string.IsNullOrEmpty(studentNumber)) continue;
+
+                    foreach (DataGridViewColumn col in dataGridView_score.Columns)
+                    {
+                        string courseName = col.HeaderText;
+
+                        if (!editableColumns.Contains(courseName) || courseName.Contains("-班排") || courseName.Contains("-年排"))
+                            continue;
+
+                        object val = row.Cells[col.Index].Value;
+                        if (val == null) continue;
+
+                        if (double.TryParse(val.ToString(), out double newScore))
+                        {
+                            string key = $"{studentNumber}_{courseName}";
+
+                            if (!originalScores.TryGetValue(key, out double oldScore) || oldScore != newScore)
+                            {
+                                if (Enum.TryParse<CourseEnum>(courseName, out CourseEnum courseEnum))
+                                {
+                                    updatedScores.Add(new ScoreEntity
+                                    {
+                                        StudentNumber = studentNumber,
+                                        CourseId = (int)courseEnum + 1,
+                                        ExamId = currentExamId,
+                                        Score = newScore
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (updatedScores.Count > 0)
+                {
+                    bool result = await scoreService.UpdateScoreList(updatedScores);
+                    if (result)
+                    {
+                        MessageBox.Show("成绩保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ScoreInit(); // 刷新数据
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("没有修改任何成绩，无需保存。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // 保存后全部列只读
+                foreach (DataGridViewColumn col in dataGridView_score.Columns)
+                {
+                    col.ReadOnly = true;
+                }
+            }
+        }
+
+        // 缓存当前所有可编辑成绩的原始值，方便比较是否修改
+        private void CacheOriginalScores()
+        {
+            originalScores.Clear();
+
+            foreach (DataGridViewRow row in dataGridView_score.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string studentNumber = row.Cells["学号"]?.Value?.ToString();
+                if (string.IsNullOrEmpty(studentNumber)) continue;
+
+                foreach (DataGridViewColumn col in dataGridView_score.Columns)
+                {
+                    string courseName = col.HeaderText;
+
+                    if (!editableColumns.Contains(courseName) || courseName.Contains("-班排") || courseName.Contains("-年排"))
+                        continue;
+
+                    if (double.TryParse(row.Cells[col.Index].Value?.ToString(), out double score))
+                    {
+                        string key = $"{studentNumber}_{courseName}";
+                        originalScores[key] = score;
+                    }
+                }
+            }
+        }
     }
 }

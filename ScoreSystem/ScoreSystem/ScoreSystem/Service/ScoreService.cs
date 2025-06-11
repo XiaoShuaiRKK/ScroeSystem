@@ -91,6 +91,24 @@ namespace ScoreSystem.Service
             }
         }
 
+        public async Task<bool> UpdateScoreList(List<ScoreEntity> scoreEntities)
+        {
+            string url = HttpUtil.GetUrl("/score/batchUpdate");
+            // 序列化为 JSON
+            string jsonBody = JsonSerializer.Serialize(scoreEntities, JsonUtil.GetRequestOptions());
+            string jsonResult = await HttpUtil.PostAsync(url, jsonBody);
+            var response = JsonSerializer.Deserialize<ApiResponse<bool?>>(jsonResult, JsonUtil.GetOptions());
+            if (response.Code == 200 && response.Data == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(response.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         public async Task<List<StudentScore>> GetScoresByClass(int examId,int classId)
         {
             string url = HttpUtil.GetUrl($"/teacher/getClass/studentScore?exam_id={examId}&class_id={classId}");

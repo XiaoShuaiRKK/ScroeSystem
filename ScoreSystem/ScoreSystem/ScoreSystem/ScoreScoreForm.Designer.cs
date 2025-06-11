@@ -36,9 +36,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menu_import = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_rank = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_print = new System.Windows.Forms.ToolStripMenuItem();
             this.button_back = new System.Windows.Forms.Button();
             this.label_threshold = new System.Windows.Forms.Label();
-            this.menu_print = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_edit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_score)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +118,13 @@
             this.menu_rank.Text = "排行";
             this.menu_rank.Click += new System.EventHandler(this.menu_rank_Click);
             // 
+            // menu_print
+            // 
+            this.menu_print.Name = "menu_print";
+            this.menu_print.Size = new System.Drawing.Size(44, 21);
+            this.menu_print.Text = "打印";
+            this.menu_print.Click += new System.EventHandler(this.menu_print_Click);
+            // 
             // button_back
             // 
             this.button_back.Location = new System.Drawing.Point(41, 39);
@@ -137,18 +145,22 @@
             this.label_threshold.TabIndex = 7;
             this.label_threshold.Text = "达标线";
             // 
-            // menu_print
+            // button_edit
             // 
-            this.menu_print.Name = "menu_print";
-            this.menu_print.Size = new System.Drawing.Size(44, 21);
-            this.menu_print.Text = "打印";
-            this.menu_print.Click += new System.EventHandler(this.menu_print_Click);
+            this.button_edit.Location = new System.Drawing.Point(679, 449);
+            this.button_edit.Name = "button_edit";
+            this.button_edit.Size = new System.Drawing.Size(75, 23);
+            this.button_edit.TabIndex = 8;
+            this.button_edit.Text = "修改";
+            this.button_edit.UseVisualStyleBackColor = true;
+            this.button_edit.Click += new System.EventHandler(this.button_edit_Click);
             // 
             // ScoreScoreForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 496);
+            this.Controls.Add(this.button_edit);
             this.Controls.Add(this.label_threshold);
             this.Controls.Add(this.button_back);
             this.Controls.Add(this.dataGridView_score);
@@ -182,5 +194,6 @@
         private System.Windows.Forms.ToolStripMenuItem menu_rank;
         private System.Windows.Forms.Label label_threshold;
         private System.Windows.Forms.ToolStripMenuItem menu_print;
+        private System.Windows.Forms.Button button_edit;
     }
 }

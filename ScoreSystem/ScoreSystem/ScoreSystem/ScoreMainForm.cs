@@ -99,6 +99,13 @@ namespace ScoreSystem
             }
         }
 
+        private void LoadData()
+        {
+            TimerInit();
+            UserInfoInit();
+            ClassInfoInit();
+        }
+
         private async void StudentDataInit()
         {
             if (!isLoadClass) return;
@@ -158,7 +165,7 @@ namespace ScoreSystem
         {
             ExitEditModeIfNeeded();
             new ScoreClassOrStudentOperateForm().ShowDialog();
-            StudentDataInit();
+            LoadData();
         }
 
         private void menu_score_Click(object sender, EventArgs e)
@@ -172,6 +179,7 @@ namespace ScoreSystem
         {
             ExitEditModeIfNeeded();
             new ScoreExamForm().ShowDialog();
+            LoadData();
         }
 
         private void menu_university_Click(object sender, EventArgs e)
@@ -179,6 +187,7 @@ namespace ScoreSystem
             ExitEditModeIfNeeded();
             this.Hide();
             new ScoreUniversityThresholdForm(this).Show();
+            LoadData();
         }
 
         private void menu_trend_Click(object sender, EventArgs e)
@@ -213,6 +222,7 @@ namespace ScoreSystem
         {
             ExitEditModeIfNeeded();
             new ScoreTeacherForm().ShowDialog();
+            LoadData();
         }
 
         private void menu_class_Click(object sender, EventArgs e)
@@ -220,6 +230,7 @@ namespace ScoreSystem
             ExitEditModeIfNeeded();
             new ScoreClassForm(this).Show();
             this.Hide();
+            LoadData();
         }
 
         private async void button_edit_Click(object sender, EventArgs e)

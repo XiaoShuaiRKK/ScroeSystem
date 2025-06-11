@@ -4,10 +4,10 @@
 
 <mapper namespace="com.score.system.mapper.ClassMapper">
     <insert id="batchInsertClass">
-        INSERT INTO classes (name, grade,head_teacher_id, subject_group_id,created_at,updated_at)
+        INSERT INTO classes (name, grade,head_teacher_id, subject_group_id,state,created_at,updated_at)
         VALUES
         <foreach collection="classList" item="item" separator=",">
-            (#{item.name},#{item.grade},#{item.headTeacherId},#{item.subjectGroupId},#{item.createdAt},#{item.updatedAt})
+            (#{item.name},#{item.grade},#{item.headTeacherId},#{item.subjectGroupId},#{item.state},#{item.createdAt},#{item.updatedAt})
         </foreach>
     </insert>
 </mapper>

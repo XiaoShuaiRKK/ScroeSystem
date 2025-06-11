@@ -61,6 +61,9 @@ public class UserServiceImpl implements UserService {
         //1.查redis
         if(redisUtil.exists(redisKey)){
             cachedUser = (UserVO)redisUtil.get(redisKey, UserVO.class);
+            if(!passwordEncoder.matches(loginRequest.getPassword(), cachedUser.getPasswordHash())){
+                return ResponseResult.fail("用户名或密码错误");
+            }
             String tokenKey = "login:token:username:" + username;
             String token = (String) redisUtil.get(tokenKey,String.class);
             return ResponseResult.success("登录成功", new LoginResult(token,cachedUser));

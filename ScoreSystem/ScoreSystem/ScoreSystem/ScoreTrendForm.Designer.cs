@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart_trend = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label_name = new System.Windows.Forms.Label();
             this.label_student_number = new System.Windows.Forms.Label();
@@ -43,22 +43,25 @@
             this.dataGridView_history = new System.Windows.Forms.DataGridView();
             this.label_course = new System.Windows.Forms.Label();
             this.label_join_date = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menu_edit = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart_trend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_history)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart_trend
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart_trend.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart_trend.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart_trend.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart_trend.Legends.Add(legend2);
             this.chart_trend.Location = new System.Drawing.Point(417, 161);
             this.chart_trend.Name = "chart_trend";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart_trend.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart_trend.Series.Add(series2);
             this.chart_trend.Size = new System.Drawing.Size(535, 406);
             this.chart_trend.TabIndex = 1;
             this.chart_trend.Text = "chart2";
@@ -161,6 +164,23 @@
             this.label_join_date.TabIndex = 12;
             this.label_join_date.Text = "JoinDate";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menu_edit});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(987, 25);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menu_edit
+            // 
+            this.menu_edit.Name = "menu_edit";
+            this.menu_edit.Size = new System.Drawing.Size(44, 21);
+            this.menu_edit.Text = "转班";
+            this.menu_edit.Click += new System.EventHandler(this.menu_edit_Click);
+            // 
             // ScoreTrendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -178,11 +198,15 @@
             this.Controls.Add(this.label_student_number);
             this.Controls.Add(this.label_name);
             this.Controls.Add(this.chart_trend);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "ScoreTrendForm";
             this.Text = "ScoreTrendForm";
             this.Load += new System.EventHandler(this.ScoreTrendForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart_trend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_history)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,5 +226,7 @@
         private System.Windows.Forms.DataGridView dataGridView_history;
         private System.Windows.Forms.Label label_course;
         private System.Windows.Forms.Label label_join_date;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menu_edit;
     }
 }

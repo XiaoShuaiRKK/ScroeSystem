@@ -94,3 +94,4 @@ F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSy
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.application
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreRateForm.resources
 F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreUpGradeForm.resources
+F:\ScroeSystem\ScroeSystem\ScoreSystem\ScoreSystem\ScoreSystem\obj\Debug\ScoreSystem.ScoreStudentEditForm.resources

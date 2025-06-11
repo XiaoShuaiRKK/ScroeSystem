@@ -59,9 +59,10 @@ public class ClassServiceImpl implements ClassService {
             if(classMapper.selectByClassName(classDTO.getName()) != null){
                 return ResponseResult.fail("班级名称 " + classDTO.getName() + "已存在");
             }
-            classEntities.add(ClassConverter.toEntity(classDTO));
+            ClassEntity entity = ClassConverter.toEntity(classDTO);
+            entity.setState(1);
+            classEntities.add(entity);
         }
-        classEntities.forEach(classEntity -> classEntity.setState(1));
         int result = classMapper.batchInsertClass(classEntities);
         return result > 0
                 ? ResponseResult.success("导入成功",true)
@@ -118,7 +119,9 @@ public class ClassServiceImpl implements ClassService {
         if(classDTO == null || classMapper.selectById(classDTO.getId()) == null){
             return ResponseResult.fail("未找到对应班级",false);
         }
-        classMapper.deleteById(classDTO.getId());
+        ClassEntity entity = ClassConverter.toEntity(classDTO);
+        entity.setState(0);
+        classMapper.updateById(entity);
         return ResponseResult.success("删除成功",true);
     }
 
