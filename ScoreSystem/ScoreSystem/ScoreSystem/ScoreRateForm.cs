@@ -21,10 +21,12 @@ namespace ScoreSystem
         private StatService statService = StatService.GetIntance();
         private List<Exam> exams;
         private List<ExamClassSubjectStat> examClassSubjectStats;
+        private FormAutoScaler autoScaler;
         private bool isLoaded = false;
         public ScoreRateForm()
         {
             InitializeComponent();
+            autoScaler = new FormAutoScaler(this);
         }
 
         private void ScoreRateForm_Load(object sender, EventArgs e)
